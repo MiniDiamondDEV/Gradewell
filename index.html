@@ -1,0 +1,1108 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><title>Gradewell · Gradebook</title>
+<style>
+:root{color-scheme:light;--bg:#f4f4f4;--fg:#000;--cd:#fff;--ln:#c8c8c8;--g:#8dc63f;--nv:#fff;--bl:#1271b8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}body{margin:0;font:13px Arial,Helvetica,sans-serif;background:var(--bg);color:var(--fg)}
+button,input,select,textarea{font:inherit;color:#000}button{cursor:pointer}td,th,.card,.lb,.dr,.mc{color:#000}.ib{position:relative;cursor:pointer;padding:4px;display:inline-flex}.bd{position:absolute;top:-3px;right:-4px;background:#f26522;color:#fff;border-radius:8px;font-size:10px;padding:1px 5px;font-style:normal}.nt{position:absolute;right:60px;top:44px;background:#fff;color:#000;border:1px solid var(--ln);box-shadow:0 3px 8px #0003;width:290px;z-index:9;display:none}.nt div{padding:10px;border-bottom:1px solid var(--ln)}.gh{background:#1a9fd9;color:#fff!important;text-align:center}.pp{text-align:center}nav a svg{margin-right:10px;color:#555}.g2{color:#888;background:#eee}.top .logo{margin:0}.top .sep{width:1px;height:22px;background:#fff8}
+.lg{min-height:100vh;background:var(--g);padding:30px 14px;text-align:center}.logo{color:#fff;font-size:22px}.logo i{font-weight:400}
+.card{background:#fff;border:1px solid var(--ln);border-radius:3px;padding:14px;margin-bottom:12px}
+.lb{max-width:420px;margin:30px auto;background:#fff;padding:26px;text-align:left;position:relative;box-shadow:0 2px 6px #0004}
+.rib{position:absolute;top:-14px;right:-8px;background:#f26522;color:#fff;font-weight:700;padding:7px 14px}
+.lb input{width:100%;padding:9px;margin:4px 0 12px;border:1px solid var(--ln)}
+.btn{background:var(--bl);color:#fff;border:0;border-radius:3px;padding:8px 14px}.btn.w{width:100%;padding:11px;font-size:15px}.btn.s{background:#fff;color:var(--fg);border:1px solid var(--ln)}.btn.r{background:#c0392b}.btn.sv{background:#2e7d32}
+.tabs{display:flex;margin-bottom:14px}.tabs button{flex:1;padding:9px;border:1px solid var(--ln);background:var(--bg)}.tabs .on{background:var(--bl);color:#fff}
+.err{color:#c0392b;margin-bottom:8px}
+.top{background:var(--g);color:#fff;display:flex;align-items:center;gap:10px;padding:6px 12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top button{background:none;border:1px solid #fff9;color:#fff;border-radius:3px;padding:4px 9px}.top button.sv{background:#2e7d32;border-color:#2e7d32}.top small{background:#f26522;padding:2px 6px;border-radius:2px}.sp{flex:1}
+.wrap{display:flex;min-height:calc(100vh - 44px)}nav{width:190px;background:#fff;border-right:1px solid var(--ln);padding-top:6px;flex:none}
+nav a{display:flex;align-items:center;color:#000;padding:11px 14px;cursor:pointer;border-left:4px solid transparent}nav a.on{background:#e6e6e6;font-weight:700;border-color:var(--g)}
+body.c nav{display:none}main{flex:1;padding:14px;min-width:0}
+h2{font-size:18px;margin:0 0 10px;font-weight:400}h3{font-size:14px;margin:0 0 8px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.bar input,.bar select,td input,.dr input,.dr select,.dr textarea{padding:6px;border:1px solid var(--ln);background:#fff}
+.dr input,.dr select,.dr textarea{width:100%;margin:3px 0 10px}
+.ov{overflow-x:auto;max-width:100%}table{border-collapse:collapse;background:#fff}
+th,td{border:1px solid var(--ln);padding:5px 7px;text-align:left;white-space:nowrap}th{background:var(--bg);font-size:12px;vertical-align:top}
+td.c0{padding:0;min-width:84px}td.c0 input{width:100%;height:34px;border:0;background:transparent;text-align:center;border-radius:0;padding:0;outline:0}td.c0 input:focus{box-shadow:inset 0 0 0 2px var(--bl)}
+.f{background:#ff4d4d!important}.p{background:#4cdc4c!important}.x{background:#b0b0b0!important}.x input{text-decoration:line-through}.m{background:#ff4d4d!important;color:#000}
+.ch{display:inline-block;padding:1px 7px;border-radius:9px;background:#e3e3e3;font-size:11px;font-weight:700}.ch.M,.ch.CH{background:#ff4d4d}.ch.L{background:#ffc107}.ch.X{background:#b0b0b0}.ch.T{background:#29b6f6}
+.g3{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}.big{font-size:26px;font-weight:700}
+.pa button{border:1px solid var(--ln);background:#fff;padding:4px 11px}.pa .on{background:#1a9fd9;color:#fff}.lnk{color:var(--bl);cursor:pointer}small.n{opacity:.7}
+.hv{position:relative;cursor:pointer;color:var(--bl);font-weight:700}.pop{display:none;position:absolute;left:0;top:100%;z-index:4;background:#fff;border:1px solid var(--ln);box-shadow:0 3px 8px #0003;padding:9px;color:var(--fg);font-weight:400;min-width:190px}.hv:hover .pop{display:block}
+.dr{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:#fff;z-index:20;box-shadow:-4px 0 14px #0004;padding:16px;overflow-y:auto;transform:translateX(105%);transition:transform .3s}.dr.open{transform:none}
+.bk{position:fixed;inset:0;background:#0005;z-index:19;opacity:0;pointer-events:none;transition:opacity .3s}.bk.open{opacity:1;pointer-events:auto}
+.dh{display:flex;justify-content:space-between;margin-bottom:12px;font-size:16px}
+.mb{position:fixed;inset:0;background:#0006;z-index:30;display:flex;align-items:center;justify-content:center}.mc{background:#fff;padding:22px;border-radius:4px;max-width:560px;width:92%;max-height:90vh;overflow:auto}
+.pp{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#2f3338;color:#fff;padding:22px 38px;font-size:18px;border-radius:6px;z-index:40;box-shadow:0 4px 18px #0006;animation:fo 1.8s forwards}@keyframes fo{0%,70%{opacity:1}100%{opacity:0}}
+.stc{max-width:860px;margin:0 auto;background:#fff;border:1px solid var(--ln);padding:14px}.ct{color:#1f3a5f;font-size:19px;font-weight:700;margin:14px 8px}
+.st2{display:flex;gap:18px;border-bottom:1px solid var(--ln);padding:0 8px;margin-bottom:12px}.st2 span{padding:8px 4px;cursor:pointer;font-weight:700;border-bottom:2px solid transparent}.st2 .on{color:var(--bl);border-color:var(--bl)}
+details{border:1px solid var(--ln);margin-bottom:10px}summary{background:#f1f1f1;padding:11px 12px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between}summary i{background:var(--bl);color:#fff;border-radius:50%;width:16px;height:16px;text-align:center;font-size:11px;font-style:normal}
+.ch2{background:#efefef;padding:6px 12px;font-weight:700;font-size:11px}.ar{display:flex;align-items:center;gap:12px;padding:12px;border-top:1px solid var(--ln);cursor:pointer}.ar b{display:block}.ar .d{font-size:10px;width:140px}.ar .sc2{margin-left:auto}.doc{width:11px;height:14px;background:#6fa8dc;border-radius:2px;flex:none}
+.sec{border:1px solid var(--ln);margin-bottom:14px}.sec .hh{background:#efefef;padding:10px;font-weight:700}.sec .rr{display:flex;justify-content:space-between;padding:10px}.nb{background:#cfe4f5;border-left:4px solid var(--bl);margin:10px;padding:10px}
+
+main>*{animation:up .3s ease both}@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{transition:box-shadow .2s,transform .2s}.card:hover{box-shadow:0 3px 10px #0002;transform:translateY(-1px)}
+.btn{transition:transform .12s,filter .15s}.btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.96)}
+nav a{transition:background .2s,padding-left .2s}nav a:hover{background:#f0f0f0;padding-left:20px}
+tr:hover td{background:#f7fbff}.mb{animation:fade .2s ease}@keyframes fade{from{opacity:0}to{opacity:1}}
+.mc{animation:pop .25s ease}@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+.nt{animation:up .2s ease}.ib:has(.bd) svg{animation:shk 2.4s infinite}@keyframes shk{0%,90%,100%{transform:rotate(0)}92%{transform:rotate(14deg)}96%{transform:rotate(-12deg)}}
+body{padding-bottom:28px}#ft{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ccc;font-size:11px;text-align:center;padding:5px;z-index:2}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.ch{background:#fff!important;border:1px solid #888;text-transform:uppercase;font-size:10px;letter-spacing:.3px;padding:2px 6px;border-radius:3px;color:#000}
+.ch.M,.ch.CH{color:#c00;border-color:#c00}.ch.L{color:#b26a00;border-color:#b26a00}.ch.T{color:#1f7a1f;border-color:#1f7a1f}.ch.X{color:#555}
+textarea{resize:none!important}
+.dr label{display:block}.dr input[type=checkbox]{width:auto;margin:0}
+.cbx{display:flex;gap:18px;margin:6px 0 12px}.cbx label{display:inline-flex!important;align-items:center;gap:6px;margin:0}
+.dr table input[type=date]{width:128px;margin:0;padding:4px}.dr table input[type=number]{width:56px;margin:0;padding:4px}.dr table th,.dr table td{white-space:normal;font-size:12px}
+.al{width:100%;font-size:12px}.al th,.al td{padding:7px 9px;border:1px solid var(--ln)}.al th{background:#f1f1f1;text-align:center}.al td{text-align:center}
+.al th:first-child,.al td:first-child{text-align:left}.al td:first-child{white-space:normal;min-width:200px}
+.al .cg td{background:#e8eef5;text-align:left;font-weight:700}.al tbody tr:not(.cg):hover td{background:#f7fbff}
+.gl{background:#fff;border:1px solid #d6d6d6}
+.gh2{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid #d6d6d6;font-size:13px;cursor:pointer}
+.gh2 small{display:block;font-size:10px;color:#333;font-weight:400}.gh2 .tg{font-size:18px;width:20px;text-align:center}
+.gr2{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid #e5e5e5;cursor:pointer;font-size:12px}
+.gr2:hover{background:#f7fbff}.gr2 .nm{flex:1;min-width:0}.gr2 .nm b{font-size:13px;display:block}.gr2 .nm small{font-size:10px;color:#333}
+.gr2 .du{width:150px;color:#333}.gr2 .sv2{width:110px;text-align:right;font-size:13px;font-weight:700}.gr2 .cv{width:14px;text-align:center;font-size:18px}
+.pa2{border:1px solid #bbb;background:#fff;padding:4px 10px;margin-right:4px;border-radius:3px;cursor:pointer}
+.mc.fg{width:min(1000px,96vw);max-width:none;height:80vh;overflow:hidden;display:flex;flex-direction:column;padding:0}
+.fgh{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--ln);background:#f5f5f5}
+.fgb{display:grid;grid-template-columns:250px 290px 1fr;flex:1;min-height:0}
+.fgc{overflow-y:auto;border-right:1px solid var(--ln);padding:10px}.fgc h3{margin:4px 0 8px}.fgr{border-right:0;padding:16px 18px;overflow-y:auto}
+.fgi{display:flex;justify-content:space-between;gap:8px;padding:8px;border-radius:3px;cursor:pointer;border:1px solid transparent}.fgi:hover{background:#f0f7ff}
+.fgi.on{background:#1a6fc4;color:#fff}.fgi.on small{color:#fff}.fgi small{opacity:.8;white-space:nowrap}
+#cx{position:fixed;display:none;background:#fff;border:1px solid #888;box-shadow:2px 3px 8px #0004;z-index:50;min-width:190px;font-family:Arial,sans-serif}
+#cx div{padding:6px 14px;cursor:pointer;font-size:13px;color:#000}#cx div:hover{background:#1a6fc4;color:#fff}#cx .sep{height:0;padding:0;border-top:1px solid #aaa}
+.seg{display:inline-flex;border:1px solid #1a6fc4;border-radius:4px;overflow:hidden;margin-left:6px}
+.seg span{padding:6px 14px;cursor:pointer;background:#fff;color:#1a6fc4;user-select:none}.seg span.on{background:#1a6fc4;color:#fff}
+summary{list-style:none}summary::-webkit-details-marker{display:none}
+.pbx{display:flex;gap:10px;flex-wrap:wrap;margin:0 8px 14px}.pb{flex:1;min-width:110px;border:1px solid var(--ln);border-top:3px solid #1a9fd9;padding:8px 12px;background:#fff}.pb small{display:block;color:#555}.pb b{font-size:20px}
+details.pn{border:1px solid var(--ln);margin-bottom:10px}details.pn>summary.ps{background:#eef3f8;padding:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+details.cd{border:0;margin:0}summary.cs{background:#efefef;padding:7px 12px;font-size:11px;font-weight:700;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ln)}
+.sg::before{content:'+';font-size:16px;margin-left:10px}details[open]>summary .sg::before{content:'−'}
+svg,img,.ib,.doc,.sg,.bd{-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+button,.btn,nav,nav a,.top,.tabs,.st2,.seg,summary,th,.ch,.pb,.pa2,.dh,.fgh,.hh,.ch2,.cs,.ps,.rib,.logo,#ft,#cx,.pp{-webkit-user-select:none;user-select:none}
+input,textarea,select{-webkit-user-select:text;user-select:text}
+::selection{background:#bcd9f5}
+.lg2{display:inline-flex;cursor:pointer;border-radius:10px;transition:transform .18s,filter .18s;-webkit-user-select:none;user-select:none}
+.lg2:hover{transform:scale(1.08) rotate(-3deg);filter:drop-shadow(0 2px 4px #0003)}.lg2:active{transform:scale(.94)}
+.icp{display:inline-flex;margin:4px;padding:5px;border:2px solid transparent;border-radius:12px;cursor:pointer}.icp.on{border-color:#1a6fc4;background:#eaf3fb}
+.stc{max-width:1200px;width:100%}
+.arw{display:grid;grid-template-columns:26px minmax(200px,1fr) 150px 190px 90px 20px;gap:10px;align-items:center;padding:12px;border-top:1px solid var(--ln);cursor:pointer}
+.arw:hover{background:#f7fbff}.arw b{display:block}.arm{margin-top:3px}
+.ard{text-align:right;white-space:nowrap;font-size:12px;color:#333}
+.arf{display:flex;gap:4px;justify-content:flex-end;flex-wrap:nowrap;white-space:nowrap}
+.ars{text-align:right;font-weight:700;white-space:nowrap}
+.arc{text-align:center;font-size:18px;line-height:1}
+.arh{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#efefef;border-top:1px solid var(--ln)}
+.ch{display:inline-flex;align-items:center;background:#fff!important;border:1.5px solid #888;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:.4px;padding:1px 8px;margin-right:3px;text-transform:uppercase;line-height:1.6;color:#000;white-space:nowrap;vertical-align:middle}
+.ch.M,.ch.CH{color:#d32f2f;border-color:#d32f2f}.ch.L{color:#e08600;border-color:#e08600}.ch.T{color:#2e7d32;border-color:#2e7d32}.ch.I{color:#1565c0;border-color:#1565c0}.ch.X{color:#6b6b6b;border-color:#9e9e9e}
+td.c0{position:relative}
+td.fl-L input{color:#d32f2f!important;font-weight:700}
+td.fl-DR input{text-decoration:line-through;opacity:.6}
+td.m{background:transparent!important}td.m input{color:#d32f2f;font-weight:700}
+td.dr{background:#f2f2f2!important}
+.ind{position:absolute;pointer-events:none}
+.ind.t{left:3px;top:3px;width:8px;height:8px;background:#2e7d32}
+.ind.m{left:3px;bottom:3px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid #1565c0}
+.ind.c{right:0;top:0;width:0;height:0;border-top:9px solid #d32f2f;border-left:9px solid transparent}
+.ch.DR{color:#555;border-color:#555}
+div.pn{border:1px solid var(--ln);margin-bottom:10px;background:#fff}
+div.pn>.ps{background:#eef3f8;padding:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.ov{overflow-x:auto;overflow-y:hidden;padding-bottom:10px}
+.ov::-webkit-scrollbar{height:14px}.ov::-webkit-scrollbar-track{background:#e6e6e6;border-radius:7px}.ov::-webkit-scrollbar-thumb{background:#8a9aa6;border-radius:7px;border:3px solid #e6e6e6}.ov::-webkit-scrollbar-thumb:hover{background:#5f7180}
+.ov{scrollbar-width:auto;scrollbar-color:#8a9aa6 #e6e6e6}
+.ind{display:none!important}
+.appg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.apt{border:1px solid var(--ln);padding:18px 10px;text-align:center;cursor:pointer;border-radius:6px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:background .15s,transform .15s}
+.apt:hover{background:#f0f7ff;transform:translateY(-2px)}
+.hs{overflow-x:auto;overflow-y:hidden;height:18px;margin-top:4px;border:1px solid var(--ln);background:#eee;border-radius:9px}
+.hs>div{height:1px}.hs::-webkit-scrollbar{height:14px}.hs::-webkit-scrollbar-track{background:#e6e6e6;border-radius:7px}.hs::-webkit-scrollbar-thumb{background:#8a9aa6;border-radius:7px;border:3px solid #e6e6e6}
+.ov{scrollbar-width:none}.ov::-webkit-scrollbar{display:none}
+td.dft{background:#fff3a8!important;box-shadow:inset 0 0 0 1px #e0b800}
+td.dft input{background:#fff3a8!important;font-style:italic}
+.sqb{width:38px;height:38px;border:1px solid #888;background:#fff;margin-right:6px;cursor:pointer;font-weight:700;border-radius:2px}
+.sqb.on{background:#1a6fc4;color:#fff;border-color:#1a6fc4}
+.proj{color:#7a5d00!important;font-style:italic;background:#fff3a8!important}
+.pst{display:flex;gap:10px;margin:0 8px 12px;text-align:center}
+.pst>div{flex:1;border-top:2px solid #1a6fc4;padding:6px 4px;background:#fff}
+.pst small{display:block;color:#555}.pst b{font-size:18px}
+.pright{display:flex;align-items:center;gap:14px;margin-left:auto}
+.pnum{width:96px;flex:none;text-align:center;line-height:1.15;font-size:14px}
+.pnum small{display:block;font-size:9px;font-weight:400;opacity:.75}
+.pnum{font-weight:400}
+.pnum b{font-weight:700}
+details.pn>summary.ps,div.pn>.ps{background:#f3f3f3!important}
+.ps span[style*="text-align:right"],.ps small[style*="text-align:right"]{text-align:center!important}
+.ps span[style*="text-align:right"]{display:inline-block;min-width:84px}
+td.nmc{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.nmg{font-weight:700;color:#000;padding-left:8px}
+.fgt{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.fgt h3{margin:4px 0}
+.fgi{display:flex;align-items:center;gap:6px}.fgi input[type=checkbox]{margin:0;flex:none}
+.fgi .fgn{flex:1;cursor:pointer}
+</style><script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-app-compat.js"></script><script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-auth-compat.js"></script><script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-database-compat.js"></script></head><body><div id="app"></div><div id="bk" class="bk" onclick="closeDr()"></div><div id="dr" class="dr"></div><div id="md"></div><div id="pp"></div><div id="cx"></div><div id="dz"></div><div id="ft">Gradewell is an unofficial fan-made project. It is not owned by, affiliated with, or endorsed by Infinite Campus, Inc.</div>
+<script>const MEM={getItem:()=>null,setItem:()=>{},removeItem:()=>{}};
+const K='fanIC3',$=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let D,U=null,pg='cc',cid=null,sel=null,gt='g',lr='t',err='',T,dirty=false,warned=false,DR=null;
+const today=new Date().toISOString().slice(0,10),uid=()=>Math.random().toString(36).slice(2,8);let dt=today;
+const fd=d=>d?d.slice(5,7)+'/'+d.slice(8)+'/'+d.slice(0,4):'—';
+const PER={sem:[['S1','18 Week Progress'],['S2','18 Week Progress']],qtr:[['Q1','9 Week Progress'],['Q2','9 Week Progress'],['Q3','9 Week Progress'],['Q4','9 Week Progress']],tri:[['T1','12 Week Progress'],['T2','12 Week Progress'],['T3','12 Week Progress']],term:[['Term 1','Term Progress'],['Term 2','Term Progress'],['Term 3','Term Progress'],['Term 4','Term Progress']]};
+const PD={S1:'08/05/2026 - 12/18/2026',S2:'01/05/2027 - 05/28/2027',Q1:'08/05/2026 - 10/09/2026',Q2:'10/12/2026 - 12/18/2026',Q3:'01/05/2027 - 03/12/2027',Q4:'03/15/2027 - 05/28/2027',T1:'08/05/2026 - 11/20/2026',T2:'11/23/2026 - 03/05/2027',T3:'03/08/2027 - 05/28/2027','Term 1':'08/05/2026 - 10/09/2026','Term 2':'10/12/2026 - 12/18/2026','Term 3':'01/05/2027 - 03/12/2027','Term 4':'03/15/2027 - 05/28/2027'};
+const MODES={sem:'Semester mode',qtr:'Quarters',tri:'Trimesters',term:'Terms mode'};
+const per=()=>PER[D.mode],tm0=a=>per().some(p=>p[0]==a.term)?a.term:per()[0][0],closed=()=>!!D.closed[T];
+function seed(){const st=[['Alex Rivera','alex','pass1'],['Bella Chen','bella','pass2'],['Carlos Diaz','carlos','pass3'],['Dana Smith','dana','pass4']].map(x=>({id:uid(),name:x[0],user:x[1],pass:x[2]}));
+const mk=(name,per,cats,as)=>{const c={id:uid(),name,per,cats,show:true,preset:'classic',as:[],sc:{},stu:st.map(s=>s.id)};
+as.forEach((a,i)=>{const o={id:uid(),name:a[0],cat:cats[a[1]].id,pts:a[2],due:a[3],start:a[3],mult:a[4]==null?1:a[4],cm:'',term:'S1'};c.as.push(o);st.forEach((s,j)=>{(c.sc[s.id]=c.sc[s.id]||{})[o.id]=(i+j)%7==3?'M':(i+j)%9==5?'X':String(Math.round(a[2]*(0.55+((i*7+j*3)%5)/11)))})});return c};
+const c1=[{id:uid(),name:'Formative',weight:40,mult:1},{id:uid(),name:'Summative',weight:60,mult:1}],c2=[{id:uid(),name:'Homework',weight:0,mult:1},{id:uid(),name:'Tests',weight:0,mult:2}];
+return{t:{u:'teacher',p:'teacher123',name:'Ms. Johnson'},mode:'sem',cur:'S1',closed:{},st,att:{},classes:[mk('Integrated Marketing Comm','Block 2',c1,[['Basics of Marketing',0,100,'2026-08-14'],['Marketing Rules',0,100,'2026-08-14'],['How to Ace This Class?',0,100,'2026-08-21',0],['Ethics Quiz',0,20,'2026-09-04'],['7 Functions Exam',1,100,'2026-08-14'],['Goods PPT',1,50,'2026-08-10'],['Bonus Poster',0,0,'2026-09-10']]),mk('Algebra II','Block 4',c2,[['HW 1',0,10,'2026-09-01'],['HW 2',0,10,'2026-09-08'],['Unit 1 Test',1,50,'2026-09-15']])]}}
+function load(){try{D=JSON.parse(MEM.getItem(K));U=JSON.parse(MEM.getItem(K+'u'))}catch(e){}if(!D)D=seed();T=D.cur;if(U)pg=U.role=='t'?'cc':'td'}
+const svt=()=>dirty?'● Unsaved changes':'✓ All changes saved';
+function save(){dirty=true;const t=$('#sv');if(t)t.textContent=svt()}
+function commit(){try{MEM.setItem(K,JSON.stringify(D))}catch(e){}dirty=false;const t=$('#sv');if(t)t.textContent=svt();pop('✓ Saved')}
+function pop(m){$('#pp').innerHTML=`<div class="pp">${m}</div>`;clearTimeout(pop.t);pop.t=setTimeout(()=>$('#pp').innerHTML='',1800)}
+function cfm(m,fn){$('#md').innerHTML=`<div class="mb"><div class="mc"><p>${m}</p><button class="btn r" onclick="md();${fn}">Yes</button> <button class="btn s" onclick="md()">Cancel</button></div></div>`}
+const md=()=>$('#md').innerHTML='';
+function P(v){v=String(v||'').toUpperCase();const f=v.match(/[A-Z]+/g)||[],n=parseFloat(v.replace(/[A-Z]+/g,' '));return{f,n:isNaN(n)?null:n,z:f.includes('M')||f.includes('CH'),x:f.includes('X')}}
+const kof=(c,a)=>c.cats.find(k=>k.id==a.cat)||{mult:1,weight:0,name:'?'},am=a=>a.mult==null?1:+a.mult,nc=(c,a)=>am(a)==0||+kof(c,a).mult==0&&kof(c,a).mult!==''; 
+function calc(c,sid,t=T,ids){const r={};c.cats.forEach(k=>r[k.id]={e:0,p:0,k});
+c.as.forEach(a=>{if(tm(a)!=t||ids&&!ids.has(a.id))return;const q=P((c.sc[sid]||{})[a.id]),k=r[a.cat];if(!k||q.x)return;const km=k.k.mult==null?1:+k.k.mult,m=am(a)*km;if(!m)return;const e=q.z?0:q.n;if(e==null)return;k.e+=e*m;k.p+=(+a.pts||0)*m});
+let ws=0,wt=0,E=0,Tp=0;Object.values(r).forEach(k=>{E+=k.e;Tp+=k.p;k.pct=k.p>0?k.e/k.p*100:null;if(k.pct!=null){ws+=k.k.weight*k.pct;wt+=+k.k.weight}});
+return{pct:wt>0?ws/wt:(Tp>0?E/Tp*100:null),r,E,T:Tp}}
+const L0=p=>p==null?'—':p>=93?'A':p>=90?'A-':p>=87?'B+':p>=83?'B':p>=80?'B-':p>=77?'C+':p>=73?'C':p>=70?'C-':p>=67?'D+':p>=63?'D':p>=60?'D-':'F',RG=p=>p==null?'—':Math.round(p)+'%',F=p=>p==null?'—':'<b>'+Math.round(p)+'%</b>';
+const colr=(c,p)=>c.preset=='colored'&&p!=null?(L(p,c)=='F'?'f':'p'):'';
+function cellCls(c,a,v){const q=P(v);if(q.x)return'x';if(q.z)return c.preset=='colored'?'f':'m';return c.preset=='colored'&&q.n!=null&&a.pts>0?(q.n/a.pts*100<60?'f':'p'):''}
+const FN={M:'Missing',X:'Exempt',L:'Late',T:'Turned In',I:'Incomplete',CH:'Cheated',DR:'Dropped'},chips=v=>P(v).f.map(f=>`<span class="ch ${f}">${FN[f]||f}</span>`).join(' ');
+const C=()=>D.classes.find(c=>c.id==cid)||(U.role=='t'?D.classes:mine())[0];
+const mine=()=>U.role=='t'?D.classes:D.classes.filter(c=>c.stu.includes(U.id));
+const csel=()=>`<select onchange="cid=this.value;R()">${mine().map(c=>`<option value="${c.id}" ${c.id==C().id?'selected':''}>${esc(c.per)} – ${esc(c.name)}</option>`).join('')}</select>`;
+const psel0=()=>`<select onchange="T=this.value;R()">${per().map(p=>`<option value="${p[0]}" ${p[0]==T?'selected':''}>${p[0]}${D.closed[p[0]]?' (Closed)':''}</option>`).join('')}</select>`;
+const stu=c=>c.stu.map(i=>D.st.find(s=>s.id==i)).filter(Boolean);
+const aCount=(c,sid)=>{let a=0,t=0;Object.keys(D.att).forEach(k=>{if(k.split('|')[0]==c.id){const v=D.att[k][sid];if(v&&v.s=='A')a++;if(v&&v.s=='T')t++}});return[a,t]};
+function login(){const u=$('#lu').value.trim().toLowerCase(),p=$('#lp').value;U=null;
+if(lr=='t'){if(u==D.t.u&&p==D.t.p)U={role:'t'}}else{const s=D.st.find(x=>x.user.toLowerCase()==u&&x.pass==p);if(s)U={role:'s',id:s.id}}
+if(!U){err='Invalid username or password.';R();return}err='';cid=null;sel=null;T=D.cur;pg=U.role=='t'?'cc':'td';try{MEM.setItem(K+'u',JSON.stringify(U))}catch(e){}R()}
+function out(f){if(dirty&&!f){cfm('You have unsaved changes. Log out and discard them?','out(true)');return}if(dirty){try{D=JSON.parse(MEM.getItem(K))||seed()}catch(e){D=seed()}dirty=false}U=null;closeDr();try{MEM.setItem(K+'u','null')}catch(e){}R()}
+/* drawer */
+function dr(h){$('#dr').innerHTML=h;$('#dr').classList.add('open');$('#bk').classList.add('open')}
+function closeDr(){$('#dr').classList.remove('open');$('#bk').classList.remove('open')}
+const lab=(t,h)=>`<label><b>${t}</b>${h}</label>`;
+function openA(id){if(closed())return pop('Grading period is closed');const c=C(),a=id?c.as.find(x=>x.id==id):{name:'',cat:c.cats[0].id,start:today,due:today,pts:100,mult:1,cm:''};DR=id||null;
+dr(`<div class="dh"><b>${id?'Edit':'Add'} Assignment</b><span class="lnk" onclick="closeDr()">✕</span></div>${lab('Name',`<input id="da_n" value="${esc(a.name)}">`)}${lab('Category',`<select id="da_c">${c.cats.map(k=>`<option value="${k.id}" ${k.id==a.cat?'selected':''}>${esc(k.name)}</option>`).join('')}</select>`)}
+${lab('Start Date',`<input id="da_s" type="date" value="${a.start||today}">`)}${lab('Due Date',`<input id="da_d" type="date" value="${a.due||today}">`)}${lab('Total Points',`<input id="da_p" type="number" value="${a.pts}">`)}${lab('Multiplier (0 = not counted in grade)',`<input id="da_m" type="number" step="0.1" value="${am(a)}">`)}${lab('Comment (shown to students)',`<textarea id="da_cm" rows="3">${esc(a.cm)}</textarea>`)}
+<button class="btn" onclick="saveA()">${id?'Save Changes':'Add Assignment'}</button> ${id?`<button class="btn r" onclick="cfm('Delete this assignment and all its scores?','delA()')">Delete</button>`:''}
+${id?`<hr><b>Auto-fill scores</b><p><small class="n">Enter a score or flag (e.g. 100, 0, M, X).</small></p><input id="da_f" placeholder="Value"><button class="btn s" onclick="fillA(false)">Fill blanks</button> <button class="btn s" onclick="fillA(true)">Fill all students</button>`:''}`)}
+function saveA(){const c=C(),n=$('#da_n').value.trim();if(!n)return pop('Enter a name');const o={name:n,cat:$('#da_c').value,start:$('#da_s').value,due:$('#da_d').value,pts:+$('#da_p').value||0,mult:$('#da_m').value===''?1:+$('#da_m').value,cm:$('#da_cm').value,term:T};
+if(DR)Object.assign(c.as.find(a=>a.id==DR),o);else c.as.push(Object.assign({id:uid()},o));save();closeDr();R();pop(DR?'Assignment updated':'Assignment added')}
+function delA(){const c=C();c.as=c.as.filter(a=>a.id!=DR);save();closeDr();R();pop('Assignment deleted')}
+function fillA(all){const c=C(),v=$('#da_f').value.trim();if(!v)return;stu(c).forEach(s=>{const m=c.sc[s.id]=c.sc[s.id]||{};if(all||!m[DR])m[DR]=v});save();R();pop('Scores filled')}
+function openS(sid){const c=C(),s=D.st.find(x=>x.id==sid),g=calc(c,sid),at=aCount(c,sid),rows=c.as.filter(a=>tm(a)==T);
+dr(`<div class="dh"><b>${esc(s.name)} – Student View</b><span class="lnk" onclick="closeDr()">✕</span></div><div class="card ${colr(c,g.pct)}"><b>${esc(c.name)} (${T})</b><div class="big">${F(g.pct)} ${L(g.pct)}</div>Absences: ${at[0]} · Tardies: ${at[1]}</div><h3>Assignments</h3>${rows.map(a=>{const v=(c.sc[sid]||{})[a.id]||'',q=P(v);return`<div class="ar" style="cursor:default"><span class="doc"></span><span><b>${esc(a.name)}</b>${nc(c,a)?'<small>(not included in the grade calculation)</small>':''}<small class="n">Due: ${fd(a.due)}</small></span><span class="sc2">${q.n!=null?q.n+'/'+a.pts:''} ${chips(v)}</span></div>`}).join('')||'None'}<h3 style="margin-top:14px">Attendance</h3>${Object.keys(D.att).filter(k=>k.split('|')[0]==c.id&&D.att[k][sid]&&D.att[k][sid].s).sort().reverse().map(k=>`<div class="ar" style="cursor:default">${fd(k.split('|')[1])} <b>${{P:'Present',A:'Absent',T:'Tardy',O:'Out'}[D.att[k][sid].s]}</b> ${esc(D.att[k][sid].c||'')}</div>`).join('')||'No records'}`)}
+function setSc(aid,sid,el){if(closed()){R();return}const c=C(),a=c.as.find(x=>x.id==aid);(c.sc[sid]=c.sc[sid]||{})[aid]=el.value.trim();el.parentNode.className='c0 '+cellCls(c,a,el.value);save();const g=calc(c,sid);
+$('#p'+sid).textContent=F(g.pct);$('#p'+sid).className=colr(c,g.pct);$('#l'+sid).textContent=L(g.pct);$('#t'+sid).textContent=g.E.toFixed(1)+'/'+g.T}
+function setAt(sid,s){const k=C().id+'|'+dt;(D.att[k]=D.att[k]||{})[sid]=Object.assign(D.att[k][sid]||{},{s});save();R()}
+function setAc(sid,v){const k=C().id+'|'+dt;(D.att[k]=D.att[k]||{})[sid]=Object.assign(D.att[k][sid]||{},{c:v});save()}
+function addSt(){const n=$('#nn').value.trim(),u=$('#nu').value.trim(),p=$('#np').value;if(!n||!u||!p){err='Fill in name, username and password.';R();return}
+if(D.st.some(s=>s.user.toLowerCase()==u.toLowerCase())){err='Username already exists.';R();return}err='';const s={id:uid(),name:n,user:u,pass:p};D.st.push(s);C().stu.push(s.id);save();R()}
+function enr(){const v=$('#ex').value;if(v)C().stu.push(v);save();R()}
+function unenr(id){const c=C();c.stu=c.stu.filter(i=>i!=id);save();R()}
+function stSet(id,f,v){D.st.find(s=>s.id==id)[f]=v;save()}
+function cSet(f,v){C()[f]=v;save();if(f!='name'&&f!='per')R()}
+function kSet(id,f,v){const k=C().cats.find(x=>x.id==id);k[f]=f=='name'?v:(v===''?0:+v);save();R()}
+function addK(){C().cats.push({id:uid(),name:'New Category',weight:0,mult:1});save();R()}
+function delK(id){const c=C();if(c.as.some(a=>a.cat==id)){err='Delete or move that category’s assignments first.';R();return}c.cats=c.cats.filter(k=>k.id!=id);err='';save();R()}
+function addC(){const n=$('#cn').value.trim();if(!n)return;const c={id:uid(),name:n,per:$('#cp').value||'Block',cats:[{id:uid(),name:'Formative',weight:40,mult:1},{id:uid(),name:'Summative',weight:50,mult:1},{id:uid(),name:'Final',weight:10,mult:1}],maxPts:100,show:true,preset:'classic',as:[],sc:{},stu:[]};D.classes.push(c);cid=c.id;save();R()}
+function delC(){if(D.classes.length<2)return;D.classes=D.classes.filter(c=>c.id!=C().id);cid=null;save();R()}
+function setMode(v){D.mode=v;D.cur=per()[0][0];T=D.cur;D.closed={};save();R()}
+function togP(k){D.closed[k]=!D.closed[k];save();R();pop(D.closed[k]?'Grading period closed':'Grading period reopened')}
+function openMd(aid){const c=C(),a=c.as.find(x=>x.id==aid),sid=U.id,v=(c.sc[sid]||{})[aid]||'',q=P(v);
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc"><div style="display:flex;justify-content:space-between"><span class="lnk">Curriculum › ${esc(a.name)}</span><span class="lnk" onclick="md()">✕</span></div><h2 style="font-weight:700;margin-top:12px">${esc(a.name)}</h2><small>Due: ${fd(a.due)}</small><div class="sec" style="margin-top:12px"><div class="hh">Section Settings</div><div class="rr"><b>Class:</b><span>${esc(c.name)}</span></div><div class="rr"><b>Category:</b><span>${esc(kof(c,a).name)}</span></div><div class="rr"><b>Due Date:</b><span>${fd(a.due)}</span></div></div>
+<div class="sec"><div class="hh">Grading</div>${flagsH(v)?`<div class="rr"><b>Flags:</b><span>${flagsH(v)}</span></div>`:''}${nc(c,a)?'<div class="nb">This assignment is not included in the grade calculation</div>':''}${a.cm?`<div class="rr"><b>Comment:</b><span>${esc(a.cm)}</span></div>`:''}<div class="hh" style="font-size:11px">${T} ${((per().find(p=>p[0]==tm(a,a.term))||["","Progress"])[1])}</div><div class="rr"><span><b>Score:</b><br>${scTxt(v)}</span><span><b>Total Points:</b><br>${a.pts==0?'Not Set':a.pts}</span><span></span></div></div><button class="btn w" onclick="md()">Close</button></div></div>`}
+/* pages */
+const PG={
+cc(){return`<h2>Control Center</h2><div class="card">Grading period: <b>${T}</b> (${MODES[D.mode]}) ${closed()?'· <b>Closed</b>':''}</div><div class="g3">${D.classes.map(c=>{const ps=stu(c).map(s=>calc(c,s.id).pct).filter(x=>x!=null),av=ps.length?ps.reduce((a,b)=>a+b)/ps.length:null;return`<div class="card"><h3>${esc(c.per)} – ${esc(c.name)}</h3><div>${c.stu.length} students · ${c.as.filter(a=>tm(a)==T).length} assignments</div><div class="big">${F(av)}</div><small class="n">Class average</small><p><button class="btn" onclick="cid='${c.id}';pg='gb';R()">Grade Book</button> <button class="btn s" onclick="cid='${c.id}';pg='att';R()">Attendance</button></p></div>`}).join('')}</div>`},
+gb(){const c=C(),as=c.as.filter(a=>tm(a)==T),cl=closed();return`<h2>Grade Book</h2><div class="bar">${csel()}<label>Period ${psel()}</label>${cl?'<b style="color:#c0392b">CLOSED</b>':''}<label>Preset <select onchange="cSet('preset',this.value)"><option value="classic" ${c.preset=='classic'?'selected':''}>Default Classic</option><option value="colored" ${c.preset=='colored'?'selected':''}>Colored</option></select></label><button class="btn" onclick="openA()">+ Add Assignment</button><button class="btn s" onclick="cfm('${cl?'Reopen':'Close'} grading period ${T}?','togP(\\'${T}\\')')">${cl?'Reopen':'Close'} Period</button><button class="btn sv" onclick="commit()">Save</button></div>
+<div class="ov"><table><tr><th>Student</th><th>Posted %</th><th>Grade</th><th>Total Score</th>${as.map(a=>{const k=kof(c,a);return`<th style="cursor:pointer" onclick="openA('${a.id}')"><span class="lnk">${esc(a.name)}</span><br><small class="n">${esc(k.name)}${c.show&&k.weight?' ('+k.weight+'%)':''} ×${am(a)}<br>Due ${fd(a.due)} · ${a.pts} pts${a.pts==0?' (EC)':''}${nc(c,a)?'<br><b>Not counted</b>':''}</small></th>`}).join('')}</tr>
+${stu(c).map(s=>{const g=calc(c,s.id),at=aCount(c,s.id);return`<tr><td><span class="hv" onclick="openS('${s.id}')">${esc(s.name)}<div class="pop">Grade: <b>${F(g.pct)} ${L(g.pct)}</b><br>Absences: ${at[0]} · Tardies: ${at[1]}<br><small class="n">Click for full student view</small></div></span></td><td id="p${s.id}" class="${colr(c,g.pct)}">${F(g.pct)}</td><td id="l${s.id}">${L(g.pct)}</td><td id="t${s.id}">${g.E.toFixed(1)}/${g.T}</td>${as.map(a=>{const v=(c.sc[s.id]||{})[a.id]||'';return`<td class="c0 ${cellCls(c,a,v)}"><input value="${esc(v)}" ${cl?'readonly':''} onchange="setSc('${a.id}','${s.id}',this)"></td>`}).join('')}</tr>`}).join('')}</table></div>
+<p><small class="n"><b>Flags</b>: <b>M</b> Missing=0 · <b>X</b> Exempt (excluded) · <b>L</b> Late (e.g. “85 L”) · <b>T</b> Turned in (no effect until scored) · <b>I</b> Incomplete · <b>CH</b> Cheated=0. <b>/0</b> = extra credit. Multiplier 0 = not counted. Hover a student name for a summary; click it for the student view. Press <b>Save</b> to store changes.</small></p>`},
+att(){const c=C(),d=D.att[c.id+'|'+dt]||{};const n=k=>stu(c).filter(s=>(d[s.id]||{}).s==k).length;return`<h2>Attendance</h2><div class="bar">${csel()}<input type="date" value="${dt}" onchange="dt=this.value;R()"><button class="btn sv" onclick="commit()">Save</button></div><div class="card"><b>${esc(c.per)} – ${esc(c.name)}</b> · Present ${n('P')} · Absent ${n('A')} · Tardy ${n('T')}</div>
+<table><tr><th>Student</th><th>P / A / T</th><th>Comments</th></tr>${stu(c).map(s=>{const v=d[s.id]||{};return`<tr><td>${esc(s.name)}</td><td class="pa">${['P','A','T'].map(k=>`<button class="${v.s==k?'on':''}" onclick="setAt('${s.id}','${k}')">${k}</button>`).join('')}</td><td><input value="${esc(v.c)}" style="width:260px" onchange="setAc('${s.id}',this.value)"></td></tr>`}).join('')}</table>`},
+ro(){const c=C(),free=D.st.filter(s=>!c.stu.includes(s.id));return`<h2>Roster</h2><div class="bar">${csel()}<button class="btn sv" onclick="commit()">Save</button></div>${err?`<div class="err">${err}</div>`:''}
+<div class="card"><h3>Add new student (creates their login)</h3><div class="bar"><input id="nn" placeholder="Full name"><input id="nu" placeholder="Username"><input id="np" placeholder="Password"><button class="btn" onclick="addSt()">Add &amp; Enroll</button></div>
+${free.length?`<div class="bar"><select id="ex">${free.map(s=>`<option value="${s.id}">${esc(s.name)}  —  ${gNum(calc(c,s.id).pct)}</option>`).join('')}</select><button class="btn s" onclick="enr()">Enroll existing student</button></div>`:''}</div>
+<table><tr><th>Student</th><th>Username</th><th>Password</th><th>Grade</th><th></th></tr>${stu(c).map(s=>`<tr><td><span class="lnk" onclick="pg='gb';openS('${s.id}');R()">${esc(s.name)}</span></td><td><input value="${esc(s.user)}" onchange="stSet('${s.id}','user',this.value)"></td><td><input value="${esc(s.pass)}" onchange="stSet('${s.id}','pass',this.value)"></td><td>${L(calc(c,s.id).pct)}</td><td><button class="btn s" onclick="askUn('${s.id}')">Remove</button></td></tr>`).join('')}</table>`},
+set(){const c=C(),tw=c.cats.reduce((a,k)=>a+(+k.weight||0),0);return`<h2>Class Settings</h2><div class="bar">${csel()}<button class="btn sv" onclick="commit()">Save</button></div>${err?`<div class="err">${err}</div>`:''}
+<div class="card"><h3>Grading Periods</h3><div class="bar"><label>Type <select onchange="setMode(this.value)">${Object.keys(MODES).map(m=>`<option value="${m}" ${m==D.mode?'selected':''}>${MODES[m]}</option>`).join('')}</select></label><label>Current period <select onchange="D.cur=this.value;T=D.cur;save();R()">${per().map(p=>`<option ${p[0]==D.cur?'selected':''}>${p[0]}</option>`).join('')}</select></label></div>
+${per().map(p=>`<div class="bar">${p[0]}: <b>${D.closed[p[0]]?'Closed':'Open'}</b> <button class="btn s" onclick="cfm('${D.closed[p[0]]?'Reopen':'Close'} grading period ${p[0]}?','togP(\\'${p[0]}\\')')">${D.closed[p[0]]?'Reopen':'Close'}</button></div>`).join('')}<small class="n">Changing the type resets closed periods. A closed period locks scores and assignments.</small></div>
+<div class="card"><h3>Final Average &amp; Progress Weights</h3><div class="bar"><label><b>Final Avg</b> <select onchange="cSet('fa',this.value)"><option value="current" ${(c.fa||'current')=='current'?'selected':''}>Current Average (default)</option><option value="weighted" ${c.fa=='weighted'?'selected':''}>Weighted (recommended for AP / Honors)</option></select></label></div><div class="bar">${per().map(p=>`<label>${p[0]} <small class="n">${p[1]}</small><br><input type="number" value="${((c.pw||{})[p[0]])??100}" style="width:90px" onchange="pwSet('${p[0]}',this.value)"></label>`).join(' &nbsp; ')}</div><small class="n">Weights are used only in Weighted mode. Students see Final Avg under Grading Information.</small></div><div class="card"><h3>Periods: Show &amp; Include</h3>${per().map(p=>`<div class="bar"><b>${p[0]}</b> ${p[1]} &nbsp; <label><input type="checkbox" ${(c.pv||{})[p[0]]===false?'':'checked'} onchange="pfSet('${p[0]}','pv',this.checked)"> Show to student</label> &nbsp; <label><input type="checkbox" ${(c.pi||{})[p[0]]===false?'':'checked'} onchange="pfSet('${p[0]}','pi',this.checked)"> Include in Weighted Final Avg</label></div>`).join('')}<small class="n">Hidden periods do not appear in the student view. Include controls which periods count in Weighted Final Avg.</small></div><div class="card"><h3>Auto Save</h3><select onchange="asSet(this.value)"><option value="draft" ${asMode()=='draft'?'selected':''}>Save as draft grades (yellow) — default</option><option value="gb" ${asMode()=='gb'?'selected':''}>Save straight to gradebook</option><option value="off" ${asMode()=='off'?'selected':''}>Off — keep drafts until I press Save</option></select><br><small class="n">Yellow cells are draft grades. Drafts are not counted in grades and are not shown to students until you press Save, which saves them to the gradebook.</small></div><div class="card"><h3>Score Rounding</h3><div class="bar"><span>Status: <b>${rdOf(c).on?'On · '+rdOf(c).dp+' decimal place(s) · '+({nearest:'nearest',up:'round up',down:'round down',half:'nearest 0.5'})[rdOf(c).m]:'Off (default)'}</b></span> <button class="btn" onclick="rdAsk()">Change rounding…</button></div><small class="n">Scores are not rounded unless you turn rounding on. Rounding applies to scores you enter from now on, unless you use Apply to existing scores.</small></div><div class="card"><h3>Semester Dates</h3><div class="bar"><label><b>S1</b> start <input type="date" value="${semOf('S1').s}" onchange="semSet('S1','s',this.value)"></label> <label>end <input type="date" value="${semOf('S1').e}" onchange="semSet('S1','e',this.value)"></label></div><div class="bar"><label><b>S2</b> start <input type="date" value="${semOf('S2').s}" onchange="semSet('S2','s',this.value)"></label> <label>end <input type="date" value="${semOf('S2').e}" onchange="semSet('S2','e',this.value)"></label></div><table class="al" style="width:100%"><thead><tr><th>Progress period</th><th>Ends</th></tr></thead><tbody>${Object.keys(PW).map(k=>`<tr><td>${esc(({'S1-4.5':'4 1/2 Week Progress','S1-9':'9 Week Progress','S1-13.5':'13 1/2 Weeks Progress','S1-18':'18 Week Progress'})[k])}</td><td>${esc((PD[k]||'').split(' - ')[1]||'')}</td></tr>`).join('')}</tbody></table><small class="n">Progress periods adjust automatically from the semester dates, in the same proportions as 4 1/2, 9, 13 1/2 and 18 weeks. Posted grades use these end dates.</small></div><div class="card"><h3>Letter Grade Scale</h3><div class="bar">${['A','B','C','D'].map(k=>`${k} ≥ <input type="number" value="${(c.scale||DSC)[k]}" style="width:70px" onchange="scSet('${k}',this.value)">`).join(' &nbsp; ')} &nbsp; F = below D</div><small class="n">Defaults: A 90 · B 80 · C 71 · D 70 · F 0. Under these defaults D covers 70 to 70.99 because C starts at 71.</small></div>
+<div class="card"><h3>Attendance</h3><label><input type="checkbox" ${c.lunch?'checked':''} onchange="cSet('lunch',this.checked)"> Enable Lunch Count on Attendance</label></div>
+<div class="card"><h3>Section</h3><div class="bar"><input value="${esc(c.name)}" onchange="cSet('name',this.value)"><input value="${esc(c.per)}" style="width:90px" onchange="cSet('per',this.value)"><label>Default max points <input type="number" value="${c.maxPts||100}" style="width:90px" onchange="cSet('maxPts',+this.value||100)"></label><label><input type="checkbox" ${c.show?'checked':''} onchange="cSet('show',this.checked)"> Show category weights in Grade Book &amp; student view</label></div></div>
+<div class="card"><h3>Categories, Weights &amp; Multipliers</h3><table><tr><th>Category</th><th>Weight %</th><th>Multiplier</th><th></th></tr>${c.cats.map(k=>`<tr><td><input value="${esc(k.name)}" onchange="kSet('${k.id}','name',this.value)"></td><td><input type="number" value="${k.weight}" style="width:70px" onchange="kSet('${k.id}','weight',this.value)"></td><td><input type="number" step="0.1" value="${k.mult}" style="width:70px" onchange="kSet('${k.id}','mult',this.value)"></td><td><button class="btn s" title="Move up" onclick="mvK('${k.id}',-1)">▲</button> <button class="btn s" title="Move down" onclick="mvK('${k.id}',1)">▼</button> <button class="btn s" onclick="askDelK('${k.id}')">Delete</button></td></tr>`).join('')}</table>
+<p><button class="btn" onclick="addK()">Add Category</button> Total weight: <b>${tw}%</b> <small class="n">${tw>0?'(weighted)':'(0 = points-based)'} · multiplier 0 = not counted</small></p></div>
+<div class="card"><h3>Total score in class (${T})</h3>${stu(c).map(s=>{const g=calc(c,s.id);return`<div>${esc(s.name)}: <b>${g.E.toFixed(1)} / ${g.T}</b> · ${F(g.pct)} (${L(g.pct)})</div>`}).join('')||'No students.'}</div>
+<div class="card"><h3>New section</h3><div class="bar"><input id="cn" placeholder="Class name"><input id="cp" placeholder="Block 1" style="width:90px"><button class="btn" onclick="addC()">Create</button></div></div><div class="card"><h3>Remove class</h3><p>Permanently removes this class with its assignments, scores, roster links and attendance records. Student accounts are kept.</p><button class="btn r" onclick="cfm('Remove this class and all its data? This cannot be undone.','delC()')">Remove this class</button></div>`},
+td(){const s=D.st.find(x=>x.id==U.id);return`<h2>Today</h2><div class="card">Welcome, <b>${esc(s.name)}</b>.</div><div class="g3">${mine().map(c=>{const g=calc(c,s.id,D.cur);return`<div class="card"><h3>${esc(c.per)} – ${esc(c.name)}</h3><div class="big">${F(g.pct)} ${L(g.pct)}</div><span class="lnk" onclick="cid='${c.id}';sel=1;pg='gr';R()">View grades</span></div>`}).join('')}</div>`},
+gr(){const s=D.st.find(x=>x.id==U.id);if(!sel)return`<h2>Classes</h2><div class="g3">${mine().map(c=>{const g=calc(c,s.id,D.cur);return`<div class="card"><h3>${esc(c.name)}</h3><small>${esc(c.per)}</small><div class="big">${F(g.pct)} ${L(g.pct)}</div><span class="lnk" onclick="cid='${c.id}';sel=1;R()">Open</span></div>`}).join('')}</div>`;
+const c=C(),row=a=>{const v=(c.sc[s.id]||{})[a.id]||'',q=P(v);return`<div class="ar" onclick="openMd('${a.id}')"><span class="doc"></span><span style="flex:1"><b>${esc(a.name)}</b>${am(a)!=1?`<br><small class="n">Multiplier: ${am(a)}</small>`:''}${nc(c,a)?'<br><small>(not included in the grade calculation)</small>':''}</span><span class="d">Due: ${fd(a.due)}</span><span class="sc2">${chips(v)} ${q.n!=null?q.n+'/'+a.pts:''}</span><span>›</span></div>`};
+return`<div class="stc"><div style="display:flex;justify-content:space-between"><span>Term ${T}</span><span class="lnk" onclick="sel=null;R()">‹ All classes</span></div><div class="ct">${esc(c.name)}</div><div class="st2"><span class="${gt=='g'?'on':''}" onclick="gt='g';R()">Grades</span><span class="${gt=='a'?'on':''}" onclick="gt='a';R()">Assignments</span></div>
+${gt=='a'?c.as.slice().sort(cmpA).map(row).join(''):per().map(p=>{const g=calc(c,s.id,p[0]);return`<details ${(p[0]==T||T=='S1')?'open':''}><summary>(${p[0]}) ${p[1]} <i>i</i></summary>${c.cats.map(k=>{const as=c.as.filter(a=>a.cat==k.id&&tm(a,p[0])==p[0]);return as.length?`<div class="ch2">${esc(k.name)}${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''} · ${FU(g.r[k.id].pct)}</div>${as.map(row).join('')}`:''}).join('')}<div class="ch2">Term grade: ${F(g.pct)} ${L(g.pct)}</div></details>`}).join('')+`<details><summary>(${T}) Final Avg <i>i</i></summary><div class="ar" style="cursor:default"><b>${F(calc(c,s.id).pct)} ${L(calc(c,s.id).pct)}</b></div></details>`}</div>`},
+as(){const s=D.st.find(x=>x.id==U.id),rows=[];mine().forEach(c=>c.as.forEach(a=>rows.push([c,a,(c.sc[s.id]||{})[a.id]||''])));rows.sort((x,y)=>cmpA(x[1],y[1]));
+return`<h2>Assignments</h2><table><tr><th>Due</th><th>Assignment</th><th>Class</th><th>Score</th></tr>${rows.map(([c,a,v])=>{const q=P(v);return`<tr><td>${fd(a.due)}</td><td>${esc(a.name)}${nc(c,a)?' <small class="n">(not counted)</small>':''}</td><td>${esc(c.name)}</td><td>${q.n!=null?q.n+'/'+a.pts:''} ${chips(v)}</td></tr>`}).join('')}</table>`},
+at(){const s=D.st.find(x=>x.id==U.id),rows=[];Object.keys(D.att).forEach(k=>{const[ci,d]=k.split('|'),c=D.classes.find(x=>x.id==ci),v=D.att[k][s.id];if(c&&v&&v.s)rows.push([d,c.name,v.s,v.c||''])});rows.sort().reverse();
+return`<h2>Attendance</h2>${rows.length?`<table><tr><th>Date</th><th>Class</th><th>Status</th><th>Comment</th></tr>${rows.map(r=>`<tr><td>${fd(r[0])}</td><td>${esc(r[1])}</td><td>${{P:'Present',A:'Absent',T:'Tardy',O:'Out'}[r[2]]}</td><td>${esc(r[3])}</td></tr>`).join('')}</table>`:'<div class="card">No attendance records yet.</div>'}`}};
+const NAV={t:[['cc','Control Center'],['gb','Grade Book'],['att','Attendance'],['ro','Roster'],['set','Class Settings']],s:[['td','Today'],['gr','Grades'],['as','Assignments'],['at','Attendance']]};
+function R(){const a=$('#app');
+if(!U){a.innerHTML=`<div class="lg"><div class="logo" style="display:flex;align-items:center;justify-content:center;gap:10px">${LOGO(48)}<span style="font-size:30px"><b>Grade</b><i>well</i></span></div><div class="lb"><div class="rib">Campus ${lr=='t'?'Teacher':'Student'}</div><h2 style="margin-top:12px">Gradewell Schools (demo)</h2><div class="tabs"><button class="${lr=='t'?'on':''}" onclick="lr='t';err='';R()">Teacher Login</button><button class="${lr=='s'?'on':''}" onclick="lr='s';err='';R()">Student Login</button></div>
+<label><b>${lr=='t'?'Teacher':'Student'} Username</b></label><input id="lu" autocomplete="username"><label><b>Password</b></label><input id="lp" type="password" onkeydown="if(event.key=='Enter')login()">${err?`<div class="err">${err}</div>`:''}<button class="btn w" onclick="login()">Log In</button><p><small class="n">Demo — teacher: teacher / teacher123 · student: alex / pass1 (bella/pass2, carlos/pass3, dana/pass4)</small></p></div></div>`;return}
+const t=U.role=='t',nm=t?D.t.name:D.st.find(s=>s.id==U.id).name;
+if(!NAV[U.role].some(n=>n[0]==pg))pg=NAV[U.role][0][0];
+a.innerHTML=`<div class="top"><button onclick="document.body.classList.toggle('c')">☰</button><b class="logo"><i>Infinite</i> Campus</b><small>${t?'Instruction':'Student'}</small><span class="sp"></span>${t?`<span id="sv">${svt()}</span><button class="sv" onclick="commit()">Save</button>`:''}<span>${esc(nm)}</span><button onclick="out()">${t?'Close Session':'Log Out'}</button></div><div class="wrap"><nav>${NAV[U.role].map(n=>`<a class="${n[0]==pg?'on':''}" onclick="pg='${n[0]}';sel=null;err='';R()">${n[1]}</a>`).join('')}</nav><main>${PG[pg]()}</main></div>`}
+
+/* ---- v3 overrides ---- */
+function seed(){return{t:null,mode:'sem',cur:'S1',closed:{},st:[],att:{},classes:[]}}
+const IP={menu:'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z',bell:'M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z',apps:'M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z',user:'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z',check:'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',home:'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z',doc:'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z',group:'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z',tune:'M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z'};
+const ic=(n,z=20,c='currentColor')=>`<svg width="${z}" height="${z}" viewBox="0 0 24 24" fill="${c}" style="vertical-align:middle;flex:none"><path d="${IP[n]}"/></svg>`;
+const svh0=()=>dirty?'● Unsaved changes':ic('check',16,'#fff')+' All changes saved';
+function save(){dirty=true;const t=$('#sv');if(t)t.innerHTML=svh()}
+function commit(){try{MEM.setItem(K,JSON.stringify(D))}catch(e){}dirty=false;const t=$('#sv');if(t)t.innerHTML=svh();pop('Saved')}
+function pop(m){$('#pp').innerHTML=`<div class="pp">${ic('check',44,'#5ee05e')}<br>${m}</div>`;clearTimeout(pop.t);pop.t=setTimeout(()=>$('#pp').innerHTML='',1800)}
+function spark(c,sid){const as=c.as.filter(a=>tm(a)==T).sort(cmpA),W=80,H=26,pts=[];
+as.forEach((a,i)=>{const g=calc(c,sid,T,new Set(as.slice(0,i+1).map(x=>x.id)));if(g.pct!=null)pts.push(g.pct)});
+const n=pts.length,xy=pts.map((p,i)=>(n>1?i/(n-1)*W:W/2).toFixed(1)+','+(H-Math.max(0,Math.min(100,p))/100*H).toFixed(1)).join(' ');
+return`<svg width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="#cfe6ff"/><rect y="${H*.4}" width="${W}" height="${H*.6}" fill="#ff8f8f"/>${n>1?`<polyline points="${xy}" fill="none" stroke="#0a2fd0" stroke-width="1.6"/>`:''}</svg>`}
+function rowU(c,sid,g){const u=(i,h,cl)=>{const e=$('#'+i+sid);if(e){e.innerHTML=h;if(cl!=null)e.className=cl}};u('p',F(g.pct),colr(c,g.pct));u('l',L(g.pct,c),colr(c,g.pct));u('t',+g.E.toFixed(2));u('u',g.T);u('sp',spark(c,sid));c.cats.forEach(k=>u('k'+k.id+'_',FU(g.r[k.id].pct)))}
+function setSc(aid,sid,el){if(closed()){R();return}const c=C(),a=c.as.find(x=>x.id==aid);(c.sc[sid]=c.sc[sid]||{})[aid]=el.value.trim();el.parentNode.className='c0 '+cellCls(c,a,el.value);save();rowU(c,sid,calc(c,sid))}
+function postG(){const c=C();c.post=c.post||{};c.post[T]={};stu(c).forEach(s=>c.post[T][s.id]=calc(c,s.id).pct);save();R();pop('Grades posted')}
+PG.gb=function(){const c=C(),as=c.as.filter(a=>tm(a)==T).sort(cmpA),cl=closed(),po=(c.post||{})[T]||{};
+return`<h2>Grade Book</h2><div class="bar">${csel()}<label>Term ${psel()}</label>${cl?'<b style="color:#c00">CLOSED</b>':''}<label>Preset <select onchange="cSet('preset',this.value)"><option value="classic" ${c.preset=='classic'?'selected':''}>Default Classic</option><option value="colored" ${c.preset=='colored'?'selected':''}>Colored</option></select></label><button class="btn s" title="Scroll left" onclick="gScroll(-300)">◀</button> <button class="btn s" title="Scroll right" onclick="gScroll(300)">▶</button> <button class="btn s" title="Automatic keeps the order sorted; Manual keeps the order you set and new assignments go to the end" onclick="aoToggle()">Order: ${(C()&&C().ao=='manual')?'Manual':'Automatic'}</button> <button class="btn s" onclick="draftsOpen()">Drafts (${draftCount()})</button> <button class="btn s" onclick="rdAsk()">Rounding</button> <button class="btn" onclick="fgOpen()">Fill Grades</button> <button class="btn" onclick="openA()">+ Add</button><button class="btn s" onclick="cfm('${cl?'Reopen':'Close'} grading period ${T}?','togP(\\'${T}\\')')">${cl?'Reopen':'Close'} Period</button><button class="btn sv" onclick="commit()">Save</button></div>
+<div class="ov"><table><tr><th rowspan="2" class="gh">Students</th><th rowspan="2" class="gh">Trend</th><th colspan="2" class="gh">Posted</th><th colspan="4" class="gh">In Progress</th><th colspan="${c.cats.length||1}" class="gh">Categories</th>${as.length?`<th colspan="${as.length}" class="gh">Assignments</th>`:''}</tr>
+<tr><th>%</th><th>Grade</th><th>Points</th><th>Possible</th><th>%</th><th><button class="btn" style="padding:2px 8px" onclick="askPost()">Post</button><br>Grade</th>${c.cats.map(k=>`<th>${esc(k.name)}${c.show&&k.weight?`<br><small>${k.weight}%</small>`:''}${(k.mult==null?1:+k.mult)!=1?` ×${k.mult}`:''}</th>`).join('')}${as.map(a=>{const k=kof(c,a);return`<th style="cursor:pointer" onclick="openA('${a.id}')"><span class="lnk">${esc(a.name)}</span><br><small>${esc(k.name)}${c.show&&k.weight?' ('+k.weight+'%)':''} ×${am(a)}<br>Due ${fd(a.due)} · ${a.pts} pts${a.pts==0?' (EC)':''}${nc(c,a)?'<br><b>Not counted</b>':''}</small></th>`}).join('')}</tr>
+${stu(c).map(s=>{const g=calc(c,s.id),at=aCount(c,s.id),pp=po[s.id];return`<tr><td><span class="hv" onclick="openS('${s.id}')">${esc(s.name)}<div class="pop">Grade: <b>${F(g.pct)} ${L(g.pct)}</b><br>Absences: ${at[0]} · Tardies: ${at[1]}<br><small class="n">Click for full student view</small></div></span></td><td id="sp${s.id}" style="padding:2px">${spark(c,s.id)}</td><td class="${colr(c,pp)}"><b>${F(pp)}</b></td><td class="${colr(c,pp)}">${pp==null?'—':L(pp,c)}</td><td id="t${s.id}">${+g.E.toFixed(2)}</td><td id="u${s.id}">${g.T}</td><td id="p${s.id}" class="${colr(c,g.pct)}">${F(g.pct)}</td><td id="l${s.id}" class="${colr(c,g.pct)}">${L(g.pct,c)}</td>${c.cats.map(k=>`<td id="k${k.id}_${s.id}">${FU(g.r[k.id].pct)}</td>`).join('')}${as.map(a=>{const v=(c.sc[s.id]||{})[a.id]||'';return`<td class="c0 ${cellCls(c,a,v)}"><input value="${esc(v)}" ${cl?'readonly':''} onchange="setSc('${a.id}','${s.id}',this)"></td>`}).join('')}</tr>`}).join('')}</table></div>
+<p><small class="n"><b>Scores &amp; flags</b>: type a number, a flag, or both (e.g. <b>85T</b> = 85 and Turned In). <b>M</b> Missing=0 · <b>X</b> Exempt · <b>L</b> Late · <b>T</b> Turned in · <b>I</b> Incomplete · <b>CH</b> Cheated=0. /0 = extra credit; multiplier 0 = not counted. The Trend graph shows the running grade over time. Press <b>Post</b> to post current grades, <b>Save</b> to store changes.</small></p>`};
+const genPw=()=>[1+Math.floor(Math.random()*12),1+Math.floor(Math.random()*31),Math.floor(Math.random()*100)].map(x=>String(x).padStart(2,'0')).join('');
+function mkU(n){let b=n.toLowerCase().replace(/[^a-z ]/g,'').trim().split(/\s+/);b=b.length>1?b[0]+'.'+b[b.length-1]:b[0]||'student';let u=b,i=1;while(D.st.some(s=>s.user.toLowerCase()==u))u=b+(++i);return u}
+function addSt(){const ns=$('#bn').value.split('\n').map(x=>x.trim()).filter(Boolean),u1=$('#nu').value.trim(),p1=$('#np').value;if(!ns.length){err='Enter at least one name.';R();return}
+if(ns.length==1&&u1&&D.st.some(s=>s.user.toLowerCase()==u1.toLowerCase())){err='Username already exists.';R();return}
+err='';ns.forEach(n=>{const s={id:uid(),name:n,user:ns.length==1&&u1?u1:mkU(n),pass:ns.length==1&&p1?p1:genPw()};D.st.push(s);C().stu.push(s.id)});save();R();pop(ns.length+' student'+(ns.length>1?'s':'')+' added')}
+function rp(id){stSet(id,'pass',genPw());R()}
+PG.ro=function(){const c=C(),free=D.st.filter(s=>!c.stu.includes(s.id));return`<h2>Roster</h2><div class="bar">${csel()}<button class="btn sv" onclick="commit()">Save</button></div>${err?`<div class="err">${err}</div>`:''}
+<div class="card"><h3>Add students</h3><small class="n">Type one full name per line to add many at once, or a single name. Usernames (first.last) and passwords are made automatically — passwords are birthdate-style numbers (MMDDYY, 010101–123199).</small><textarea id="bn" rows="4" style="width:100%;padding:6px;margin:8px 0;border:1px solid var(--ln)" placeholder="Jane Doe&#10;John Smith"></textarea><div class="bar"><input id="nu" placeholder="Username (single student, optional)"><input id="np" placeholder="Password (optional)"><button class="btn s" onclick="$('#np').value=genPw()">Generate password</button><button class="btn" onclick="addSt()">Add &amp; Enroll</button></div>
+${free.length?`<div class="bar"><select id="ex">${free.map(s=>`<option value="${s.id}">${esc(s.name)}  —  ${gNum(calc(c,s.id).pct)}</option>`).join('')}</select><button class="btn s" onclick="enr()">Enroll existing student</button></div>`:''}</div>
+<table><tr><th>Student</th><th>Username</th><th>Password</th><th>Grade</th><th></th></tr>${stu(c).map(s=>`<tr><td><span class="lnk" onclick="pg='gb';R();openS('${s.id}')">${esc(s.name)}</span></td><td><input value="${esc(s.user)}" onchange="stSet('${s.id}','user',this.value)"></td><td><input value="${esc(s.pass)}" onchange="stSet('${s.id}','pass',this.value)"></td><td>${RG(calc(c,s.id).pct)}</td><td><button class="btn s" onclick="askRp('${s.id}')">New password</button> <button class="btn s" onclick="askUn('${s.id}')">Remove</button></td></tr>`).join('')}</table>`};
+const noC=()=>`<div class="card"><h3>Create your first class</h3><p>You have no classes yet. Add one to start building your gradebook, roster and attendance.</p><div class="bar"><input id="cn" placeholder="Class name"><input id="cp" placeholder="Block 1" style="width:90px"><button class="btn" onclick="addC()">Create Class</button></div></div>`;
+const oc=PG.cc;PG.cc=()=>D.classes.length?oc():'<h2>Control Center</h2>'+noC();
+PG.td=function(){const s=D.st.find(x=>x.id==U.id);return`<h2>Today</h2><div class="card">Welcome, <b>${esc(s.name)}</b>.</div>${mine().length?'':'<div class="card">You are not enrolled in any classes yet.</div>'}<div class="g3">${mine().map(c=>{const g=calc(c,s.id,D.cur);return`<div class="card"><h3>${esc(c.per)} – ${esc(c.name)}</h3><div class="big">${gNum(g.pct)}</div><span class="lnk" onclick="cid='${c.id}';sel=1;pg='gr';R()">View grades</span></div>`}).join('')}</div>`};
+PG.gr=function(){const s=D.st.find(x=>x.id==U.id);if(!mine().length)return'<div class="card">You are not enrolled in any classes yet.</div>';
+if(!sel)return`<h2>Classes</h2><div class="g3">${mine().map(c=>{const g=calc(c,s.id,D.cur);return`<div class="card"><h3>${esc(c.name)}</h3><small>${esc(c.per)}</small><div class="big">${gNum(g.pct)}</div><span class="lnk" onclick="cid='${c.id}';sel=1;R()">Open</span></div>`}).join('')}</div>`;
+const c=C(),row=a=>{const v=(c.sc[s.id]||{})[a.id]||'',q=P(v);return`<div class="ar" onclick="openMd('${a.id}')"><span class="doc"></span><span style="flex:1"><b>${esc(a.name)}</b>${nc(c,a)?'<small>(not included in the grade calculation)</small>':''}</span><span class="d">Due: ${fd(a.due)}</span><span class="sc2">${chips(v)} ${q.n!=null?q.n+'/'+a.pts:''}</span><span style="font-size:18px">›</span></div>`};
+return`<div class="stc"><div style="display:flex;justify-content:space-between;align-items:center"><span>Term <b>${T}</b> <small class="n">(${PD[T]||''})</small></span><span>${ic('bell',18)} &nbsp; Settings ⌄ &nbsp; <span class="lnk" onclick="sel=null;R()">‹ Classes</span></span></div><div class="ct">${esc(c.name)}</div><div class="st2"><span class="${gt=='g'?'on':''}" onclick="gt='g';R()">Grades</span><span class="${gt=='a'?'on':''}" onclick="gt='a';R()">Assignments</span></div>
+${gt=='a'?c.as.slice().sort(cmpA).map(row).join(''):per().map(p=>{const g=calc(c,s.id,p[0]);return`<details ${(p[0]==T||T=='S1')?'open':''}><summary>(${p[0]}) ${p[1]} <i>i</i></summary>${c.cats.map(k=>{const as=c.as.filter(a=>a.cat==k.id&&tm(a,p[0])==p[0]);return as.length?`<div class="ch2" style="display:flex;justify-content:space-between"><span>${esc(k.name)}${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''}</span><span>${g.r[k.id].e.toFixed(1)}/${g.r[k.id].p} (${FU(g.r[k.id].pct)})</span></div>${as.map(row).join('')}`:''}).join('')}</details>`}).join('')+`<details><summary>(${T}) Final Avg <i>i</i></summary><div class="ar" style="cursor:default"><b>${RG(calc(c,s.id).pct)}</b></div></details>`}</div>`};
+function notes(){const n=[];if(U.role=='t'){if(dirty)n.push('You have unsaved changes.');D.classes.forEach(c=>{let m=0;stu(c).forEach(s=>c.as.forEach(a=>{if(tm(a)==T&&P((c.sc[s.id]||{})[a.id]).f.includes('M'))m++}));if(m)n.push(m+' missing score(s) in '+esc(c.name))});if(closed())n.push('Grading period '+T+' is closed.')}else mine().forEach(c=>{let m=0;c.as.forEach(a=>{if(P((c.sc[U.id]||{})[a.id]).f.includes('M'))m++});if(m)n.push(m+' missing assignment(s) in '+esc(c.name))});return n}
+function bell(){const e=$('#nt');e.style.display=e.style.display=='block'?'none':'block'}
+function reg(){const n=$('#rn').value.trim(),u=$('#ru').value.trim(),p=$('#rp').value;if(D.t){err='A teacher account already exists on this device. Please log in.';R();return}if(!n||!u||p.length<4){err='Enter your name, a username and a password (4+ characters).';R();return}if($('#rp2').value!=p){err='Passwords do not match.';R();return}D.t={u,p,name:n};U={role:'t'};err='';pg='cc';commit();try{MEM.setItem(K+'u',JSON.stringify(U))}catch(e){}R()}
+function login(){const u=$('#lu').value.trim().toLowerCase(),p=$('#lp').value;U=null;
+if(lr=='t'){if(!D.t){err='No teacher account yet. Choose Register to create one.';R();return}if(u==D.t.u.toLowerCase()&&p==D.t.p)U={role:'t'}}else{const s=D.st.find(x=>x.user.toLowerCase()==u&&x.pass==p);if(s)U={role:'s',id:s.id}}
+if(!U){err='Invalid username or password.';R();return}err='';cid=null;sel=null;T=D.cur;pg=U.role=='t'?'cc':'td';try{MEM.setItem(K+'u',JSON.stringify(U))}catch(e){}R()}
+const NI={cc:'home',gb:'doc',att:'check',ro:'group',set:'tune',td:'home',gr:'doc',as:'doc',at:'check'};
+function R(){const a=$('#app');
+if(!U){const reg2=lr=='r';a.innerHTML=`<div class="lg"><div class="logo"><i>Infinite</i> <b>Campus</b> <small>(fanmade)</small></div><div class="lb"><div class="rib">${lr=='s'?'Student':'Teacher'} Portal</div><h2 style="margin-top:12px">Fanmade Schools</h2><div class="tabs"><button class="${lr=='t'?'on':''}" onclick="lr='t';err='';R()">Teacher Login</button><button class="${lr=='s'?'on':''}" onclick="lr='s';err='';R()">Student Login</button><button class="${reg2?'on':''}" onclick="lr='r';err='';R()">Register</button></div>
+${reg2?`<label><b>Full name</b></label><input id="rn"><label><b>Username</b></label><input id="ru"><label><b>Password</b></label><input id="rp" type="password"><label><b>Confirm password</b></label><input id="rp2" type="password">`:`<label><b>${lr=='t'?'Teacher':'Student'} Username</b></label><input id="lu" autocomplete="username"><label><b>Password</b></label><input id="lp" type="password" onkeydown="if(event.key=='Enter')login()">`}${err?`<div class="err">${err}</div>`:''}<button class="btn w" onclick="${reg2?'reg()':'login()'}">${reg2?'Create Teacher Account':'Log In'}</button>
+<p style="text-align:center"><button class="btn s" disabled style="width:100%;padding:9px;color:#777">Sign in with Google · Email — coming soon</button></p><p><small class="n">${reg2?'Create your teacher account here. Student logins are made automatically when you add students on the Roster page.':'Teachers: register first. Students: use the username and password your teacher gave you.'}</small></p></div></div>`;return}
+const t=U.role=='t',nm=t?D.t.name:D.st.find(s=>s.id==U.id).name,ns=notes();
+if(!NAV[U.role].some(n=>n[0]==pg))pg=NAV[U.role][0][0];
+const h=t&&!D.classes.length&&['gb','att','ro','set'].includes(pg)?noC():PG[pg]();
+a.innerHTML=`<div class="top"><span class="ib" onclick="document.body.classList.toggle('c')">${ic('menu',24)}</span><span class="lg2" title="Home" onclick="goHome()">${LOGO(34)}</span><span class="sep"></span><b>${t?'Instruction':'Student'}</b><span class="sp"></span>${t?`<span id="sv">${svh()}</span><button class="sv" onclick="commit()">Save</button>`:''}<span>${esc(nm)}</span><span class="ib" onclick="bell()">${ic('bell',22)}${ns.length?`<i class="bd">${ns.length}</i>`:''}</span><span class="ib" onclick="appsOpen()">${ic('apps',22)}</span><button onclick="out()">${t?'Close Session':'Log Out'}</button><div class="nt" id="nt">${ns.map(x=>`<div>${x}</div>`).join('')||'<div>No new notifications.</div>'}</div></div><div class="wrap"><nav>${NAV[U.role].map(n=>`<a class="${n[0]==pg?'on':''}" onclick="pg='${n[0]}';sel=null;err='';R()">${ic(NI[n[0]],20)}${n[1]}</a>`).join('')}</nav><main>${h}</main></div>`}
+
+/* ---- v4: fixes, multi-section assignments, student detail, disclaimer ---- */
+function calc(c,sid,t=T,ids){const r={};c.cats.forEach(k=>r[k.id]={e:0,p:0,k});
+c.as.forEach(a=>{if(tm(a)!=t||ids&&!ids.has(a.id))return;const q=P((c.sc[sid]||{})[a.id]),k=r[a.cat];if(!k||q.x)return;const km=k.k.mult==null||k.k.mult===''?1:+k.k.mult,m=am(a)*km;if(!m)return;const e=q.z?0:q.n;if(e==null)return;k.e+=e*m;k.p+=(+a.pts||0)*m});
+let ws=0,wt=0,E=0,Tp=0;Object.values(r).forEach(k=>{E+=k.e;Tp+=k.p;k.pct=k.p>0?k.e/k.p*100:null;if(k.pct!=null){const w=(+k.k.weight||0)*(k.k.mult==null||k.k.mult===''?1:+k.k.mult);ws+=w*k.pct;wt+=w}});
+return{pct:wt>0?ws/wt:(Tp>0?E/Tp*100:null),r,E,T:Tp}}
+function openA(id){if(closed())return pop('Grading period is closed');const c=C(),a=id?c.as.find(x=>x.id==id):null;DR=id||null;
+const A=a||{name:'',abbr:'',cat:c.cats[0]&&c.cats[0].id,pts:C().maxPts||100,mult:1,cm:'',desc:'',res:'',draft:false,portal:true};
+const rows=(a?[c]:D.classes).map(k=>`<tr><td><input type="checkbox" class="sx" value="${k.id}" ${a||k.id==c.id?'checked':''} ${a?'disabled':''}></td><td>${esc(k.per)} – ${esc(k.name)}</td><td><input type="date" id="as_${k.id}" value="${a?a.start||today:today}"></td><td><input type="date" id="ad_${k.id}" value="${a?a.due||today:today}"></td><td><input type="number" id="aq_${k.id}" value="${a?a.seq||1:1}" style="width:60px"></td></tr>`).join('');
+dr(`<div class="dh"><b>${a?'Edit':'Add'} Assignment</b><span class="lnk" onclick="closeDr()">✕</span></div>${lab('Name',`<input id="da_n" value="${esc(A.name)}">`)}${lab('Abbreviation',`<input id="da_b" value="${esc(A.abbr||'')}" style="width:120px">`)}<div class="cbx"><label><input type="checkbox" id="da_dr" ${A.draft?'checked':''}> Draft</label><label><input type="checkbox" id="da_pt" ${A.portal!==false?'checked':''}> Show on Campus Portal</label></div>
+${lab('Category',`<select id="da_c">${c.cats.map(k=>`<option value="${k.id}" ${k.id==A.cat?'selected':''}>${esc(k.name)}</option>`).join('')}</select>`)}
+${lab('Total Points',`<input id="da_p" type="number" value="${A.pts}">`)}${lab('Multiplier (0 = not counted)',`<input id="da_m" type="number" step="0.1" value="${am(A)}">`)}
+<div class="sec"><div class="hh">Section Placement ${a?'':'(check every section to add it to)'}</div>${a?'':'<div class="rr"><small class="n">Sections are added with the Assigned/Due dates and GB Seq you set per row.</small></div>'}<table style="width:100%"><tr><th></th><th>Section</th><th>Assigned</th><th>Due</th><th>GB Seq</th></tr>${rows}</table></div>
+${lab('Description (student view)',`<textarea id="da_ds" rows="2">${esc(A.desc||'')}</textarea>`)}${lab('Resources (one link per line)',`<textarea id="da_rs" rows="2">${esc(A.res||'')}</textarea>`)}${lab('Comment (shown to students)',`<textarea id="da_cm" rows="2">${esc(A.cm)}</textarea>`)}
+<button class="btn" onclick="saveA()">${a?'Save Changes':'Add to Selected Sections'}</button> ${a?`<button class="btn r" onclick="cfm('Delete this assignment and all its scores?','delA()')">Delete</button>`:''}
+${a?`<hr><b>Auto-fill scores</b><p><small class="n">Enter a score or flag (e.g. 100, 0, M, X).</small></p><input id="da_f" placeholder="Value"> <button class="btn s" onclick="fillA(false)">Fill blanks</button> <button class="btn s" onclick="fillA(true)">Fill all students</button>`:''}`)}
+function saveA(){const c=C(),n=$('#da_n').value.trim();if(!n)return pop('Enter a name');
+const base={name:n,abbr:$('#da_b').value.trim(),draft:$('#da_dr').checked,portal:$('#da_pt').checked,pts:+$('#da_p').value||0,mult:$('#da_m').value===''?1:+$('#da_m').value,cm:$('#da_cm').value,desc:$('#da_ds').value,res:$('#da_rs').value};
+if(DR){const a=c.as.find(x=>x.id==DR);if(!a)return;Object.assign(a,base,{cat:$('#da_c').value,start:$('#as_'+c.id).value,due:$('#ad_'+c.id).value,seq:+$('#aq_'+c.id).value||1,term:T});}
+else{const picks=[...document.querySelectorAll('.sx:checked')].map(e=>e.value);if(!picks.length)return pop('Select at least one section');const g=uid(),ct=$('#da_c').selectedOptions[0].textContent;let n2=0;
+picks.forEach(pid=>{const k=D.classes.find(x=>x.id==pid);if(!k)return;const cat=k.cats.find(x=>x.name==ct)||k.cats[0];if(!cat)return;k.as.push(Object.assign({id:uid(),grp:g,cat:cat.id,start:$('#as_'+pid).value,due:$('#ad_'+pid).value,seq:+$('#aq_'+pid).value||1,term:T},base));n2++});
+if(!n2)return pop('Create a category in that section first')}
+save();closeDr();R();pop(DR?'Assignment updated':'Assignment added')}
+function openMd(aid){const c=C(),a=c.as.find(x=>x.id==aid),v=(c.sc[U.id]||{})[aid]||'',q=P(v),links=(a.res||'').split('\n').map(x=>x.trim()).filter(x=>/^https?:\/\//.test(x));
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc"><div style="display:flex;justify-content:space-between"><span class="lnk">Curriculum › ${esc(a.name)}</span><span class="lnk" onclick="md()">✕</span></div><h2 style="font-weight:700;margin-top:12px">${esc(a.name)}</h2><small>Due: ${fd(a.due)}</small>
+<div class="sec" style="margin-top:12px"><div class="hh">Section Settings</div><div class="rr"><b>Class:</b><span>${esc(c.name)}</span></div><div class="rr"><b>Category:</b><span>${esc(kof(c,a).name)}</span></div><div class="rr"><b>Due Date:</b><span>${fd(a.due)}</span></div></div>
+${a.desc?`<div class="sec"><div class="hh">Description</div><div class="rr" style="white-space:pre-wrap">${esc(a.desc)}</div></div>`:''}${links.length?`<div class="sec"><div class="hh">Resources</div>${links.map(l=>`<div class="rr"><a href="${esc(l)}" target="_blank" rel="noopener" class="lnk">${esc(l)}</a></div>`).join('')}</div>`:''}
+<div class="sec"><div class="hh">Grading</div>${flagsH(v)?`<div class="rr"><b>Flags:</b><span>${flagsH(v)}</span></div>`:''}${nc(c,a)?'<div class="nb">This assignment is not included in the grade calculation</div>':''}${a.cm?`<div class="rr"><b>Comment:</b><span>${esc(a.cm)}</span></div>`:''}<div class="hh" style="font-size:11px">${T} ${((per().find(p=>p[0]==tm(a,a.term))||["","Progress"])[1])}</div><div class="rr"><span><b>Score:</b><br>${scTxt(v)}</span><span><b>Total Points:</b><br>${a.pts==0?'Not Set':a.pts}</span><span></span></div></div><button class="btn w" onclick="md()">Close</button></div></div>`}
+function disc(){$('#dz').innerHTML=`<div class="mb"><div class="mc" style="max-width:480px;text-align:left"><h2 style="font-weight:700">Before you continue</h2><p>Gradewell is an <b>unofficial, fan-made</b> gradebook and student portal made for practice and demonstration. It is <b>not</b> Infinite Campus and is not owned by, affiliated with, or endorsed by Infinite Campus, Inc. Infinite Campus is a trademark of its owner.</p><p>Do not use this tool for official grades, records or student data. Everything is stored only in this browser.</p><label><input type="checkbox" id="dk" onchange="$('#dgo').disabled=!this.checked"> I understand this is a fan-made tool and I do not own Infinite Campus.</label><p><button id="dgo" class="btn w" disabled onclick="ack()">I Agree &amp; Continue</button></p></div></div>`}
+function ack(){try{MEM.setItem(K+'ack','1')}catch(e){}$('#dz').innerHTML=''}
+
+/* ---- v5: Assignments page with student lists + assignment popups ---- */
+NAV.t.splice(2,0,['asg','Assignments']);NI.asg='doc';
+PG.asg=function(){const c=C(),as=c.as.filter(a=>tm(a)==T).sort(cmpA),ss=stu(c);
+return`<h2>Assignments</h2><div class="bar">${csel()}<label>Term ${psel()}</label><button class="btn" onclick="openA()">+ Add Assignment</button><button class="btn sv" onclick="commit()">Save</button></div>
+${as.length?`<div class="ov"><table style="width:100%"><tr><th>Assignment</th><th>Category</th><th>Assigned</th><th>Due</th><th>Points</th><th>Multiplier</th><th>Average</th><th>Missing</th><th>Students</th></tr>${as.map(a=>{const sc=ss.map(s=>(c.sc[s.id]||{})[a.id]||''),nums=sc.map(v=>{const q=P(v);return q.x?null:q.z?0:q.n}).filter(x=>x!=null),avg=nums.length&&a.pts?nums.reduce((x,y)=>x+y,0)/nums.length/a.pts*100:null,mi=sc.filter(v=>P(v).f.includes('M')).length;
+return`<tr style="cursor:pointer" onclick="openT('${a.id}')"><td><span class="lnk">${esc(a.name)}</span>${a.abbr?` <small class="n">(${esc(a.abbr)})</small>`:''}${a.draft?' <small class="n">[Draft]</small>':''}</td><td>${esc(kof(c,a).name)}</td><td>${fd(a.start)}</td><td>${fd(a.due)}</td><td>${a.pts}</td><td>${am(a)}${nc(c,a)?' <small class="n">(not counted)</small>':''}</td><td>${F(avg)}</td><td>${mi}</td><td>${ss.length}</td></tr>`}).join('')}</table></div>`:'<div class="card">No assignments in this term yet. Click + Add Assignment.</div>'}`};
+function openT(aid){const c=C(),a=c.as.find(x=>x.id==aid),ss=stu(c);if(!a)return;
+const rows=ss.map(s=>{const v=(c.sc[s.id]||{})[a.id]||'',q=P(v);const pc=q.x?'—':nc(c,a)?'Not counted':a.pts?F(q.z?0:q.n==null?null:q.n/a.pts*100):'—';return`<tr><td>${esc(s.name)}</td><td>${q.z?'0/'+a.pts:(q.n!=null?q.n+'/'+a.pts:'')}</td><td>${chips(v)||'—'}</td><td>${pc}</td></tr>`}).join('');
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc" style="max-width:720px"><div style="display:flex;justify-content:space-between"><span class="lnk">Curriculum › ${esc(a.name)}</span><span class="lnk" onclick="md()">✕</span></div><h2 style="font-weight:700;margin-top:10px">${esc(a.name)}</h2><small>Due: ${fd(a.due)}</small>
+<div class="sec" style="margin-top:12px"><div class="hh">Assignment Info</div><div class="rr"><b>Class:</b><span>${esc(c.name)}</span></div><div class="rr"><b>Category:</b><span>${esc(kof(c,a).name)}</span></div><div class="rr"><b>Assigned / Due:</b><span>${fd(a.start)} / ${fd(a.due)}</span></div><div class="rr"><b>Total Points:</b><span>${a.pts}</span></div><div class="rr"><b>Multiplier:</b><span>${am(a)}${nc(c,a)?' (not counted)':''}</span></div><div class="rr"><b>Abbreviation:</b><span>${esc(a.abbr||'—')}</span></div><div class="rr"><b>Campus Portal:</b><span>${a.portal===false?'Hidden':'Visible'}${a.draft?' · Draft':''}</span></div>${a.desc?`<div class="rr"><b>Description:</b><span>${esc(a.desc)}</span></div>`:''}${a.cm?`<div class="rr"><b>Comment:</b><span>${esc(a.cm)}</span></div>`:''}</div>
+<div class="sec"><div class="hh">Students (${ss.length})</div><table style="width:100%"><tr><th>Student</th><th>Score</th><th>Flags</th><th>Percent</th></tr>${rows||'<tr><td colspan=4>No students enrolled</td></tr>'}</table></div>
+<button class="btn" onclick="md();openA('${a.id}')">Edit</button> <button class="btn s" onclick="md()">Close</button></div></div>`}
+
+/* ---- v6: assignments page layout, sidebar fixes ---- */
+PG.asg=function(){const c=C(),as=c.as.filter(a=>tm(a)==T),ss=stu(c);
+const row=a=>{const sc=ss.map(s=>(c.sc[s.id]||{})[a.id]||''),nums=sc.map(v=>{const q=P(v);return q.x?null:q.z?0:q.n}).filter(x=>x!=null),avg=nums.length&&a.pts?nums.reduce((x,y)=>x+y,0)/nums.length/a.pts*100:null,mi=sc.filter(v=>P(v).f.includes('M')).length;
+return`<tr style="cursor:pointer" onclick="openT('${a.id}')"><td><span class="lnk">${esc(a.name)}</span>${a.abbr?` <small class="n">(${esc(a.abbr)})</small>`:''}${a.draft?' <small class="n">[Draft]</small>':''}</td><td>${fd(a.start)}</td><td>${fd(a.due)}</td><td>${a.pts}</td><td>${am(a)}${nc(c,a)?'<br><small class="n">not counted</small>':''}</td><td>${F(avg)}</td><td>${mi}</td><td>${ss.length}</td></tr>`};
+const cats=[...c.cats,{id:'_',name:'Uncategorized'}],grp=cats.map(k=>{const xs=as.filter(a=>a.cat==k.id||(k.id=='_'&&!c.cats.some(x=>x.id==a.cat))).sort(cmpA);if(!xs.length)return'';
+return`<tbody><tr class="cg"><td colspan="8">${esc(k.name)}${c.show&&k.weight?` <small class="n">Weight: ${k.weight}</small>`:''} <span class="n" style="float:right;font-weight:400">${xs.length} assignment${xs.length>1?'s':''}</span></td></tr>${xs.map(row).join('')}</tbody>`}).join('');
+return`<h2>Assignments</h2><div class="bar">${csel()}<label>Term ${psel()}</label><button class="btn" onclick="openA()">+ Add Assignment</button><button class="btn sv" onclick="commit()">Save</button></div>
+${as.length?`<div class="ov"><table class="al"><thead><tr><th>Assignment</th><th>Assigned</th><th>Due</th><th>Points</th><th>Multiplier</th><th>Average</th><th>Missing</th><th>Students</th></tr></thead>${grp}</table></div>`:'<div class="card">No assignments in this term yet. Click + Add Assignment.</div>'}`};
+
+/* ---- v8: reorder categories ---- */
+function mvK(id,d){const c=C(),i=c.cats.findIndex(k=>k.id==id),j=i+d;if(i<0||j<0||j>=c.cats.length)return;[c.cats[i],c.cats[j]]=[c.cats[j],c.cats[i]];save();R()}
+
+/* ---- v9: remove class (works for the last class too) ---- */
+function delC(){const c=C();if(!c)return;D.classes=D.classes.filter(x=>x.id!=c.id);Object.keys(D.att).forEach(k=>{if(k.split('|')[0]==c.id)delete D.att[k]});cid=null;sel=null;save();commit();R();pop('Class removed')}
+
+
+/* ---- v12: letter scale, attendance statuses + lunch count, progress reports ---- */
+const DSC={A:90,B:80,C:71,D:70,F:0};
+function L(p,c){if(p==null)return'—';const z=(c||C()||{}).scale||DSC;return p>=z.A?'A':p>=z.B?'B':p>=z.C?'C':p>=z.D?'D':'F'}
+function scSet(k,v){const c=C();if(!c)return;c.scale=Object.assign({},c.scale||DSC);c.scale[k]=+v;save();R()}
+function setAll(k){const c=C(),key=c.id+'|'+dt,m=D.att[key]=D.att[key]||{};stu(c).forEach(s=>m[s.id]=Object.assign(m[s.id]||{},{s:k}));save();R()}
+function setLu(sid,v){const c=C(),key=c.id+'|'+dt;(D.att[key]=D.att[key]||{})[sid]=Object.assign(D.att[key][sid]||{},{l:v});save()}
+PG.att=function(){const c=C(),d=D.att[c.id+'|'+dt]||{},ST={P:['#1a6fc4','#fff'],A:['#d32f2f','#fff'],T:['#f2c200','#000'],O:['#9e9e9e','#000']};
+const n=k=>stu(c).filter(s=>(d[s.id]||{}).s==k).length;
+return`<h2>Attendance</h2><div class="bar">${csel()}<input type="date" value="${dt}" onchange="dt=this.value;R()"><button class="btn sv" onclick="commit()">Save</button></div>
+<div class="card"><b>${esc(c.per)} – ${esc(c.name)}</b> · Present ${n('P')} · Absent ${n('A')} · Tardy ${n('T')} · Out ${n('O')}</div>
+<div class="bar"><b>Set all students:</b> ${Object.keys(ST).map(k=>`<button class="btn" style="background:${ST[k][0]};color:${ST[k][1]}" onclick="setAll('${k}')">${k}</button>`).join(' ')}</div>
+<div class="ov"><table class="al"><thead><tr><th>Student</th><th>Status</th>${c.lunch?'<th>Lunch Count</th>':''}<th>Comment</th></tr></thead><tbody>${stu(c).map(s=>{const v=d[s.id]||{};return`<tr><td style="text-align:left">${esc(s.name)}</td><td>${Object.keys(ST).map(k=>`<button class="pa2" style="${v.s==k?`background:${ST[k][0]};color:${ST[k][1]};border-color:${ST[k][0]}`:''}" onclick="setAt('${s.id}','${k}')">${k}</button>`).join('')}</td>${c.lunch?`<td><input type="number" value="${v.l||''}" style="width:80px" onchange="setLu('${s.id}',this.value)"></td>`:''}<td><input value="${esc(v.c||'')}" style="width:260px" onchange="setAc('${s.id}',this.value)" placeholder="Comment"></td></tr>`}).join('')}</tbody></table></div>`};
+PG.rep=function(){if(!D.classes.length)return noC();const c=C(),ps=per(),ss=stu(c);
+return`<h2>Progress Reports &amp; Report Cards</h2><div class="bar">${csel()}<button class="btn" onclick="window.print()">Print</button></div>
+<div class="ov"><table class="al"><thead><tr><th>Student</th>${ps.map(p=>`<th>${p[0]}<br><small class="n">${p[1]}</small></th>`).join('')}<th>Current (${T})</th><th>Letter</th></tr></thead><tbody>${ss.map(s=>{const g=calc(c,s.id,T);return`<tr><td style="text-align:left">${esc(s.name)}</td>${ps.map(p=>`<td>${F(calc(c,s.id,p[0]).pct)}</td>`).join('')}<td>${F(g.pct)}</td><td><b>${L(g.pct,c)}</b></td></tr>`}).join('')||'<tr><td colspan=9>No students</td></tr>'}</tbody></table></div><small class="n">Percentages show the rounded value, with the exact value faded beside it.</small>`};
+NAV.t.push(['rep','Progress Reports']);NI.rep='doc';
+
+/* ---- v13: arrow-key entry, right-click flag menu, Fill Grades window ---- */
+let FG=null,CT=null,CTI=null;
+function parseOn(inp){const m=(inp.getAttribute('onchange')||'').match(/setSc\('([^']+)','([^']+)'/);return m?{aid:m[1],sid:m[2]}:null}
+function fgOpen(sid,aid){const c=C();if(!c)return pop('Create a class first');if(closed())return pop('Grading period is closed');
+const ss=stu(c),as=c.as.filter(a=>tm(a)==T).sort(cmpA);
+if(!ss.length||!as.length)return pop('Add students and assignments first');FG={sid:sid||ss[0].id,aid:aid||as[0].id};fgDraw()}
+function fgDraw(){const c=C(),ss=stu(c),as=c.as.filter(a=>tm(a)==T).sort(cmpA);
+if(!ss.length||!as.length)return fgClose();
+if(!FG||!ss.find(x=>x.id==FG.sid)||!as.find(x=>x.id==FG.aid))FG={sid:ss[0].id,aid:as[0].id};
+const s=ss.find(x=>x.id==FG.sid),a=as.find(x=>x.id==FG.aid),v=(c.sc[s.id]||{})[a.id]||'',q=P(v),flag=['M','X','CH','L','T','I'].find(f=>q.f.includes(f))||'',cm=((c.cm2||{})[s.id]||{})[a.id]||'',g=calc(c,s.id);
+$('#md').innerHTML=`<div class="mb"><div class="mc fg"><div class="fgh"><b>Fill Grades · ${esc(c.name)} (${T})</b><span class="lnk" onclick="fgClose()">✕ Close</span></div>
+<div class="fgb"><div class="fgc"><h3>Students</h3>${ss.map(x=>`<div class="fgi ${x.id==s.id?'on':''}" onclick="FG.sid='${x.id}';fgDraw()"><span>${esc(x.name)}</span><small>${RG(calc(c,x.id).pct)}</small></div>`).join('')}</div>
+<div class="fgc"><h3>Assignments</h3>${as.map(x=>`<div class="fgi ${x.id==a.id?'on':''}" onclick="FG.aid='${x.id}';fgDraw()"><span>${esc(x.name)}</span><small>${esc(kof(c,x).name)} · ${fd(x.due)}</small></div>`).join('')}</div>
+<div class="fgr"><h3>${esc(s.name)} — ${esc(a.name)}</h3>
+<div class="bar"><label>Score <input id="fg_n" type="number" value="${q.n!=null?q.n:''}" style="width:100px"></label> <span>/ ${a.pts} pts</span></div>
+<div class="bar"><label>Status <select id="fg_f">${[['','None'],['M','M · Missing'],['X','X · Exempt'],['L','L · Late'],['T','T · Turned in'],['I','I · Incomplete'],['CH','CH · Cheated'],['DR','DR · Dropped']].map(o=>`<option value="${o[0]}" ${o[0]==flag?'selected':''}>${o[1]}</option>`).join('')}</select></label></div>
+<div><b>Comment</b><br><textarea id="fg_c" rows="6" style="width:100%;padding:6px;border:1px solid var(--ln)">${esc(cm)}</textarea></div>
+<div class="bar"><button class="btn sv" onclick="fgSave(0)">Save</button><button class="btn" onclick="fgSave(1)">Save &amp; Next Student</button><button class="btn" onclick="rndOpen()">Random / Quiz Fill</button> <button class="btn s" onclick="fgClose()">Close</button></div>
+<p><small class="n">Student average: ${RG(g.pct)} · Multiplier ${am(a)}${nc(c,a)?' (not counted)':''}. Flags: M, X, L, T, I, CH. Late, Turned in and Incomplete add to the number (for example 85L).</small></p></div></div></div></div>`}
+function fgSave(nx){const c=C(),sid=FG.sid,aid=FG.aid,n=$('#fg_n').value.trim(),f=$('#fg_f').value,cm=$('#fg_c').value;
+const val=['M','X','CH'].includes(f)?f:((n!==''?n:'')+f);
+wv(c,sid,aid,val);c.cm2=c.cm2||{};(c.cm2[sid]=c.cm2[sid]||{})[aid]=cm;save();
+if(nx){const ss=stu(c),i=ss.findIndex(x=>x.id==sid);FG.sid=ss[(i+1)%ss.length].id}
+R();fgDraw();pop('Saved')}
+function fgClose(){FG=null;$('#md').innerHTML='';R()}
+function ctHide(){const e=$('#cx');if(e)e.style.display='none'}
+function ctApply(f){if(!CT||!CTI)return;const q=P(CTI.value.trim()),base=q.n!=null?String(q.n):'';
+CTI.value=f===''?'':['M','X','CH'].includes(f)?f:base+f;setSc(CT.aid,CT.sid,CTI);ctHide()}
+document.addEventListener('contextmenu',e=>{const inp=e.target.closest&&e.target.closest('td.c0 input');if(!inp)return;const m=parseOn(inp);if(!m)return;e.preventDefault();CT=m;CTI=inp;
+const it=[['M','Missing (M)'],['X','Exempt (X)'],['L','Late (L)'],['T','Turned In (T)'],['I','Incomplete (I)'],['CH','Cheated (CH)'],['DR','Dropped (DR)'],['-'],['','Clear score'],['-'],['OPEN','Fill Grades window…']];
+const cx=$('#cx');cx.innerHTML=it.map(x=>x[0]=='-'?'<div class="sep"></div>':x[0]=='OPEN'?`<div onclick="ctHide();fgOpen(CT.sid,CT.aid)">${x[1]}</div>`:`<div onclick="ctApply('${x[0]}')">${x[1]}</div>`).join('');
+cx.style.left=Math.min(e.clientX,innerWidth-200)+'px';cx.style.top=Math.min(e.clientY,innerHeight-240)+'px';cx.style.display='block'});
+document.addEventListener('dblclick',e=>{const inp=e.target.closest&&e.target.closest('td.c0 input');if(!inp)return;const m=parseOn(inp);if(m)fgOpen(m.sid,m.aid)});
+document.addEventListener('click',e=>{if(!e.target.closest||!e.target.closest('#cx'))ctHide()});
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){ctHide();if(FG)fgClose();return}
+const el=document.activeElement;if(!el||el.tagName!='INPUT'||!el.closest('td.c0')||e.ctrlKey||e.metaKey||e.altKey)return;
+const k=e.key;if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Enter'].includes(k))return;
+const td=el.closest('td'),tbl=td.closest('table');let nr=td.parentNode.rowIndex,nc2=td.cellIndex;
+if(k=='ArrowUp')nr--;else if(k=='ArrowDown'||k=='Enter')nr++;else if(k=='ArrowLeft')nc2--;else nc2++;
+const row=tbl.rows[nr];if(!row)return;const ni=row.cells[nc2]&&row.cells[nc2].querySelector('input');if(!ni)return;
+e.preventDefault();ni.focus();ni.select()});
+
+/* ---- v14: attendance defaults to P; Assignments Teacher | Student switch ---- */
+const _att=PG.att;
+PG.att=function(){if(D.classes.length){const c=C(),key=c.id+'|'+dt;D.att[key]=D.att[key]||{};stu(c).forEach(s=>{const v=D.att[key][s.id]=D.att[key][s.id]||{};if(!v.s)v.s='P'})}return _att()};
+let AM='t',AS=null;
+const _asgT=PG.asg;
+PG.asg=function(){if(!D.classes.length)return noC();const c=C(),seg=`<div class="seg"><span class="${AM=='t'?'on':''}" onclick="AM='t';R()">Teacher</span><span class="${AM=='s'?'on':''}" onclick="AM='s';R()">Student</span></div>`;
+if(AM!='s')return _asgT().replace('<div class="bar">','<div class="bar">'+seg);
+const ss=stu(c),as=c.as.filter(a=>tm(a)==T).sort(cmpA);
+if(!ss.find(x=>x.id==AS))AS=ss[0]&&ss[0].id;
+const rows=as.map(a=>{const v=(c.sc[AS]||{})[a.id]||'',q=P(v),cm=((c.cm2||{})[AS]||{})[a.id]||'';
+return`<tr style="cursor:pointer" onclick="asPop('${a.id}')"><td><span class="lnk">${esc(a.name)}</span>${nc(c,a)?' <small class="n">(not counted)</small>':''}</td><td>${esc(kof(c,a).name)}</td><td>${fd(a.due)}</td><td>${q.z?'0/'+a.pts:(q.n!=null?q.n+'/'+a.pts:'')}</td><td>${chips(v)||'—'}</td><td>${cm?esc(cm.length>50?cm.slice(0,50)+'…':cm):'<span class="n">—</span>'}</td></tr>`}).join('');
+return`<h2>Assignments</h2><div class="bar">${csel()}${seg}<label>Student <select onchange="AS=this.value;R()">${ss.map(x=>`<option value="${x.id}" ${x.id==AS?'selected':''}>${esc(x.name)}  —  ${gNum(calc(c,x.id).pct)}</option>`).join('')}</select></label><label>Term ${psel()}</label></div>
+${ss.length?`<div class="card">${esc(c.name)} · Class score for ${esc((D.st.find(x=>x.id==AS)||{}).name||'')}: <b>${RG(calc(c,AS).pct)}</b></div><div class="ov"><table class="al"><thead><tr><th>Assignment</th><th>Category</th><th>Due</th><th>Score</th><th>Flags</th><th>Comment</th></tr></thead><tbody>${rows||'<tr><td colspan=6>No assignments this term</td></tr>'}</tbody></table></div>`:'<div class="card">No students in this class.</div>'}`};
+function asPop(aid){const c=C(),a=c.as.find(x=>x.id==aid),st=D.st.find(x=>x.id==AS),v=(c.sc[AS]||{})[aid]||'',q=P(v),cm=((c.cm2||{})[AS]||{})[aid]||'';if(!a)return;
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc"><div style="display:flex;justify-content:space-between"><span class="lnk">Curriculum › ${esc(a.name)}</span><span class="lnk" onclick="md()">✕</span></div><h2 style="font-weight:700;margin-top:12px">${esc(a.name)}</h2><small>${esc(st?st.name:'')} · Due: ${fd(a.due)}</small>
+<div class="sec" style="margin-top:12px"><div class="hh">Section Settings</div><div class="rr"><b>Class:</b><span>${esc(c.name)}</span></div><div class="rr"><b>Category:</b><span>${esc(kof(c,a).name)}</span></div><div class="rr"><b>Due Date:</b><span>${fd(a.due)}</span></div></div>
+<div class="sec"><div class="hh">Grading</div>${flagsH(v)?`<div class="rr"><b>Flags:</b><span>${flagsH(v)}</span></div>`:''}${nc(c,a)?'<div class="nb">This assignment is not included in the grade calculation</div>':''}<div class="rr"><span><b>Score:</b><br>${scTxt(v)}</span><span><b>Total Points:</b><br>${a.pts==0?'Not Set':a.pts}</span><span></span></div>${cm?`<div class="rr"><b>Teacher comment:</b><span style="white-space:pre-wrap">${esc(cm)}</span></div>`:''}</div><button class="btn w" onclick="md()">Close</button></div></div>`}
+
+/* ---- v15: category section grades shown unrounded ---- */
+function FU(p){return p==null?'—':p.toFixed(2)+'%'}
+
+/* ---- v16: cap at course max; student list = progress boxes + category dropdowns ---- */
+const _calc=calc;
+calc=function(c,sid,t,ids){const g=_calc.apply(null,arguments),mx=+c.maxPts||100;if(g.pct!=null&&g.pct>mx){g.pct=mx;g.E=g.T*mx/100}return g};
+function stBody(c,sid,click){const ps=per().filter(p=>(c.pv||{})[p[0]]!==false);
+const row=a=>{const v=(c.sc[sid]||{})[a.id]||'',q=P(v),cm=((c.cm2||{})[sid]||{})[a.id]||'';return`<div class="ar" onclick="${click}('${a.id}')">${ic('doc',18,'#3d7ccf')}<span style="flex:1"><b>${esc(a.name)}</b>${am(a)!=1?`<br><small class="n">Multiplier: ${am(a)}</small>`:''}${nc(c,a)?'<br><small class="n">(not included in the grade calculation)</small>':''}${cm?`<br><small class="n">💬 ${esc(cm.length>60?cm.slice(0,60)+'…':cm)}</small>`:''}</span><span class="d">Due: ${fd(a.due)}</span><span class="sc2">${chips(v)} ${q.n!=null?q.n+'/'+a.pts:''}</span><span style="font-size:18px">›</span></div>`};
+const boxes=`<div class="pbx">${ps.map(p=>`<div class="pb"><small>${p[0]} · ${p[1]}</small><b>${RG(calc(c,sid,p[0]).pct)}</b></div>`).join('')}<div class="pb"><small>Final Avg</small><b>${RG(calc(c,sid,T).pct)}</b></div></div>`;
+const panels=ps.map(p=>{const g=calc(c,sid,p[0]);return`<details class="pn" ${(p[0]==T||T=='S1')?'open':''}><summary class="ps"><span>(${p[0]}) ${p[1]}</span><span style="display:flex;align-items:center;gap:14px;margin-left:auto"><span style="text-align:right;line-height:1.15;font-weight:${D.closed[p[0]]?700:400}">${gNum(g.pct)}${D.closed[p[0]]?'':'<small style="display:block;text-align:right;font-size:9px;font-weight:400;opacity:.75">In-progress</small>'}</span><span><i style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal">i</i></span></span></summary>${c.cats.map(k=>{const as=c.as.filter(a=>a.cat==k.id&&tm(a,p[0])==p[0]&&a.portal!==false&&!a.draft).sort(cmpA);if(!as.length)return'';const r=g.r[k.id];return`<details class="cd"><summary class="cs"><span><b>${esc(k.name)}</b>${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''}</span><span>${+r.e.toFixed(1)}/${+r.p.toFixed(1)} (${FU(r.pct)})<b class="sg"></b></span></summary>${as.map(row).join('')}</details>`}).join('')||'<div class="ar" style="cursor:default">No assignments</div>'}</details>`}).join('');
+return boxes+panels}
+PG.gr=function(){const s=D.st.find(x=>x.id==U.id);if(!mine().length)return'<div class="card">You are not enrolled in any classes yet.</div>';
+if(!sel)return`<h2>Classes</h2><div class="g3">${mine().map(c=>{const g=calc(c,s.id,D.cur);return`<div class="card"><h3>${esc(c.name)}</h3><small>${esc(c.per)}</small><div class="big">${gNum(g.pct)}</div><span class="lnk" onclick="cid='${c.id}';sel=1;R()">Open</span></div>`}).join('')}</div>`;
+const c=C();return`<div class="stc"><div style="display:flex;justify-content:space-between;align-items:center"><span>Term <b>${T}</b> <small class="n">(${PD[T]||''})</small></span><span class="lnk" onclick="stMenu()">Settings ⌄</span></div><div id="stm" style="display:none;text-align:right;margin:4px 8px;font-size:12px"><span class="lnk" onclick="sel=null;R()">‹ All classes</span> &nbsp;·&nbsp; <span class="lnk" onclick="out()">Log out</span></div><div class="ct">${esc(c.name)}</div>${stBody(c,s.id,'openMd')}</div>`};
+const _asg2=PG.asg;
+PG.asg=function(){if(!D.classes.length||AM!='s')return _asg2();const c=C(),ss=stu(c);if(!ss.find(x=>x.id==AS))AS=ss[0]&&ss[0].id;
+const seg=`<div class="seg"><span onclick="AM='t';R()">Teacher</span><span class="on">Student</span></div>`;
+return`<h2>Assignments</h2><div class="bar">${csel()}${seg}<label>Student <select onchange="AS=this.value;R()">${ss.map(x=>`<option value="${x.id}" ${x.id==AS?'selected':''}>${esc(x.name)}  —  ${gNum(calc(c,x.id).pct)}</option>`).join('')}</select></label><label>Term ${psel()}</label></div>
+${ss.length?`<div class="stc" style="margin:0"><div>Term <b>${T}</b> <small class="n">(${PD[T]||''})</small> · Viewing as <b>${esc(D.st.find(x=>x.id==AS).name)}</b></div><div class="ct">${esc(c.name)}</div>${stBody(c,AS,'asPop')}</div>`:'<div class="card">No students in this class.</div>'}`};
+document.addEventListener('dragstart',e=>{const t=e.target;if(t&&t.closest&&t.closest('svg,img,a,button,nav,summary,th,.ib'))e.preventDefault()});
+
+/* ---- v18: logo mark, home link, favicon & tab title ---- */
+const LOGO0=z=>`<svg width="{z}" height="{z}" viewBox="0 0 40 40"><defs><linearGradient id="gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a6dc4a"/><stop offset="1" stop-color="#4f9a1e"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="11" fill="#fff"/><rect x="3.5" y="3.5" width="33" height="33" rx="9" fill="url(#gw)"/><path d="M28 14.5A10.5 10.5 0 1 0 30.5 22H21" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 20.5l3.6 3.6 7.4-8.4" fill="none" stroke="#1a5fa8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg>`.replace(/{z}/g,z);
+function goHome(){if(!U)return;sel=null;closeDr();md();pg=U.role=='t'?'cc':'td';R()}
+(function(){const svg=LOGO(64).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" ');let l=document.querySelector('link[rel=icon]');if(!l){l=document.createElement('link');l.rel='icon';document.head.appendChild(l)}l.type='image/svg+xml';l.href='data:image/svg+xml,'+encodeURIComponent(svg)})();
+
+/* ---- v19: custom icon (preset, colour, or uploaded image) ---- */
+const GP={book:'M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z',star:'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z',bars:'M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z'};
+function LOGO(z){const o=(typeof D!=='undefined'&&D&&D.icon)||{};
+if(o.img)return`<img src="${o.img}" width="${z}" height="${z}" draggable="false" style="border-radius:${Math.round(z*.27)}px;object-fit:cover;display:block">`;
+const c=o.c||'#6aae2a',t=o.t||'g',gl=t=='g'?'<path d="M28 14.5A10.5 10.5 0 1 0 30.5 22H21" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>':`<path transform="translate(5 5) scale(1.25)" fill="#fff" d="${GP[t]||IP[t]}"/>`;
+return`<svg width="${z}" height="${z}" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#fff"/><rect x="3.5" y="3.5" width="33" height="33" rx="9" fill="${c}"/>${gl}</svg>`}
+function favUp(){let l=document.querySelector('link[rel=icon]');if(!l){l=document.createElement('link');l.rel='icon';document.head.appendChild(l)}const o=(D&&D.icon)||{};
+if(o.img){l.type='image/png';l.href=o.img}else{l.type='image/svg+xml';l.href='data:image/svg+xml,'+encodeURIComponent(LOGO(64).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '))}}
+function icSet(f,v){D.icon=Object.assign({t:'g',c:'#6aae2a'},D.icon||{});D.icon[f]=v;if(f=='t')D.icon.img='';save();favUp();R()}
+function icReset(){D.icon=null;save();favUp();R();pop('Icon reset')}
+function icUp(inp){const f=inp.files&&inp.files[0];if(!f)return;if(!/^image\//.test(f.type))return pop('Choose an image file');
+const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const cv=document.createElement('canvas');cv.width=cv.height=128;const x=cv.getContext('2d'),m=Math.min(im.width,im.height),sx=(im.width-m)/2,sy=(im.height-m)/2;x.drawImage(im,sx,sy,m,m,0,0,128,128);
+D.icon=Object.assign({t:'g',c:'#6aae2a'},D.icon||{});D.icon.img=cv.toDataURL('image/png');save();favUp();R();pop('Icon updated')};im.onerror=()=>pop('Could not read that image');im.src=fr.result};fr.readAsDataURL(f)}
+function iconCard(){const o=D.icon||{t:'g',c:'#6aae2a'};
+return`<div class="card"><h3>App Icon</h3><div class="bar"><span>Current:</span>${LOGO(44)}</div><p><b>Style</b></p><div>${['g','check','book','star','bars'].map(t=>`<span class="icp ${!o.img&&(o.t||'g')==t?'on':''}" onclick="icSet('t','${t}')">${LOGO0(0)&&''}${(()=>{const sv=D.icon;D.icon={t,c:o.c||'#6aae2a'};const h=LOGO(40);D.icon=sv;return h})()}</span>`).join('')}</div>
+<div class="bar"><label><b>Color</b> <input type="color" value="${o.c||'#6aae2a'}" onchange="icSet('c',this.value)" style="width:50px;height:32px;padding:0"></label><label class="btn s" style="cursor:pointer">Upload custom image<input type="file" accept="image/*" style="display:none" onchange="icUp(this)"></label><button class="btn s" onclick="icReset()">Reset to default</button></div>
+<small class="n">Your icon shows in the header, on the login screen and as the browser tab icon. Uploaded images are cropped square and shrunk to 128px. Press Save to keep it.</small></div>`}
+const _set19=PG.set;PG.set=function(){const h=_set19(),m='<div class="card"><h3>Letter Grade Scale</h3>';return h.includes(m)?h.replace(m,iconCard()+m):h+iconCard()};
+setTimeout(favUp,0);
+
+/* ---- v20: favicon = circular G in our green ---- */
+function favG(c){return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M35.3 12.7A16 16 0 1 0 40 24H26" fill="none" stroke="${c}" stroke-width="6.5" stroke-linejoin="miter"/></svg>`}
+function favUp(){let l=document.querySelector('link[rel=icon]');if(!l){l=document.createElement('link');l.rel='icon';document.head.appendChild(l)}
+const o=(D&&D.icon)||{};
+if(o.img){l.type='image/png';l.href=o.img}else{l.type='image/svg+xml';l.href='data:image/svg+xml,'+encodeURIComponent(favG(o.c||'#6aae2a'))}}
+
+/* ---- v23: student assignment rows: fixed columns, flags beside score, Not Set / Not scored yet ---- */
+function scTxt(v){if(!String(v==null?'':v).trim())return'Not scored yet';const q=P(v);return q.n!=null?q.n:'—'}
+function flagsH(v){return P(v).f.map(f=>`<span class="ch ${f}">${FN[f]||f}</span>`).join('')}
+function stBody(c,sid,click){const ps=per().filter(p=>(c.pv||{})[p[0]]!==false);
+const row=a=>{const v=(c.sc[sid]||{})[a.id]||'',q=P(v),cm=((c.cm2||{})[sid]||{})[a.id]||'',mu=am(a);
+const notes=(mu!=1&&mu!=0?`<small class="n">Multiplier: ${mu}</small>`:'')+(nc(c,a)?'<small class="n">(not included in the grade calculation)</small>':'');
+return`<div class="arw" onclick="${click}('${a.id}')">${ic('doc',18,'#3d7ccf')}<div><b>${esc(a.name)}</b>${notes?`<div class="arm">${notes}</div>`:''}${cm?`<div class="arm"><small class="cmp">💬 ${esc(cm.length>60?cm.slice(0,60)+'…':cm)}</small></div>`:''}</div><span class="ard">Due: ${fd(a.due)}</span><span class="arf">${flagsH(v)}</span><span class="ars">${q.z?'0/'+a.pts:(q.n!=null?q.n+'/'+a.pts:'')}</span><span class="arc">›</span></div>`};
+return ps.map(p=>{const g=calc(c,sid,p[0]);return`<details class="pn" ${(p[0]==T||T=='S1')?'open':''}><summary class="ps"><span>(${p[0]}) ${p[1]}</span><span style="display:flex;align-items:center;gap:14px;margin-left:auto"><span style="text-align:right;line-height:1.15;font-weight:${D.closed[p[0]]?700:400}">${gNum(g.pct)}${D.closed[p[0]]?'':'<small style="display:block;text-align:right;font-size:9px;font-weight:400;opacity:.75">In-progress</small>'}</span><span><i style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal">i</i></span></span></summary>${c.cats.map(k=>{const as=c.as.filter(a=>a.cat==k.id&&tm(a,p[0])==p[0]&&a.portal!==false&&!a.draft).sort(cmpA);if(!as.length)return'';return`<details class="cd"><summary class="arh"><span><b>${esc(k.name)}</b>${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''}</span><span class="sg"></span></summary>${as.map(row).join('')}</details>`}).join('')||'<div class="ar" style="cursor:default">No assignments</div>'}</details>`}).join('')}
+
+/* ---- v24: Infinite Campus style cell indicators, Dr flag, C alias, classic = transparent ---- */
+function P(v){v=String(v==null?'':v).toUpperCase();const f=(v.match(/[A-Z]+/g)||[]).map(x=>x==='C'?'CH':x);const n=parseFloat(v.replace(/[A-Z]+/g,' '));
+return{f,n:isNaN(n)?null:n,z:f.includes('M')||f.includes('CH'),x:f.includes('X')||f.includes('DR')}}
+function cellCls(c,a,v){const q=P(v);if(q.f.includes('DR'))return'dr';if(q.x)return'x';if(q.z)return c.preset=='colored'?'f':'m';
+return c.preset=='colored'&&q.n!=null&&a.pts>0?(L(q.n/a.pts*100,c)=='F'?'f':'p'):''}
+function paint1(inp){const td=inp.parentNode;if(!td||!td.classList)return;const m=parseOn(inp),c=C(),q=P(inp.value);
+td.querySelectorAll('i.ind').forEach(e=>e.remove());
+const cm=m&&c?(((c.cm2||{})[m.sid]||{})[m.aid]||''):'';
+if(q.f.includes('T'))td.insertAdjacentHTML('beforeend','<i class="ind t" title="Turned In"></i>');
+if(q.f.includes('M'))td.insertAdjacentHTML('beforeend','<i class="ind m" title="Missing"></i>');
+if(cm)td.insertAdjacentHTML('beforeend','<i class="ind c" title="Comment"></i>');
+td.classList.toggle('fl-L',q.f.includes('L'));td.classList.toggle('fl-DR',q.f.includes('DR'))}
+function paintAll(){document.querySelectorAll('td.c0 input').forEach(paint1)}
+const _setSc24=setSc;
+setSc=function(aid,sid,el){_setSc24(aid,sid,el);paint1(el)};
+const RBp=R;
+R=function(){RBp();paintAll()};
+
+/* ---- v25: warn before leaving with unsaved changes ---- */
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='You have unsaved changes. Leave this page?';return e.returnValue}});
+
+/* ---- v26: 4-progress format, Final Avg (current or weighted), Grading Information, no % in student list ---- */
+PER.p4=[['S1-4.5','4 1/2 Week Progress'],['S1-9','9 Week Progress'],['S1-13.5','13 1/2 Weeks Progress'],['S1-18','18 Week Progress']];
+MODES.p4='4 Progress (4.5 / 9 / 13.5 / 18 wk)';
+PD['S1-4.5']='08/05/2026 - 09/25/2026';PD['S1-9']='08/05/2026 - 10/23/2026';PD['S1-13.5']='08/05/2026 - 12/04/2026';PD['S1-18']='08/05/2026 - 12/18/2026';
+function finalAvg(c,sid){const ps=per().filter(p=>(c.pi||{})[p[0]]!==false),mx=+c.maxPts||100;
+if((c.fa||'current')!='weighted'){const g=calc(c,sid);return g.pct==null?null:Math.min(g.pct,mx)}
+let ws=0,wt=0;ps.forEach(p=>{const w=+(((c.pw||{})[p[0]])??100);const g=calc(c,sid,p[0]);if(g.pct!=null&&w>0){ws+=w*g.pct;wt+=w}});
+return wt>0?Math.min(ws/wt,mx):null}
+function pwSet(code,v){const c=C();if(!c)return;c.pw=Object.assign({},c.pw||{});c.pw[code]=+v;save();R()}
+function giOpen(cid,sid){const c=D.classes.find(x=>x.id==cid);if(!c)return;const fa=c.fa||'current';
+dr(`<div class="dh"><div><b>Grading Information</b><br><small class="n">${esc(T)} · ${esc(c.name)}</small></div><span class="lnk" onclick="closeDr()">✕</span></div>
+<div class="sec"><div class="hh">Calculation Setup</div><div class="rr"><span><b>Final Avg</b><br><small class="n">${fa=='weighted'?'Weighted · recommended for AP / Honors':'Current Average · follows the current overall gradebook grade'}</small></span><b>${gNum(finalAvg(c,sid))}</b></div></div>
+<div class="sec"><div class="hh">Progress Report Weights</div>${per().filter(p=>(c.pv||{})[p[0]]!==false).map(p=>`<div class="rr"><span><b>(${p[0]}) ${p[1]}</b><br><small class="n">Weight: ${+(((c.pw||{})[p[0]])??100)} · ${gNum(calc(c,sid,p[0]).pct)}</small></span></div>`).join('')}</div></div>`)}
+function finalPanel(c,sid){return`<div class="pn"><div class="ps"><span>(S1) Final Avg</span><span><i onclick="event.preventDefault();event.stopPropagation();giOpen('${c.id}','${sid}')" style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal;cursor:pointer">i</i></span></div></div>`}
+const _stBody26=stBody;
+stBody=function(c,sid,click){return _stBody26(c,sid,click)+finalPanel(c,sid)};
+
+/* ---- v27: integer grades in student view, blank instead of dash, In Progress label ---- */
+function gNum(p){return p==null?'':Math.round(p)}
+
+/* ---- v28: Final Avg box on the right, period checkboxes ---- */
+function pfSet(code,k,v){const c=C();if(!c)return;c[k]=Object.assign({},c[k]||{});c[k][code]=v;save();R()}
+function finalPanel(c,sid){const cl=!!D.closed[T],v=finalAvg(c,sid);
+return`<div class="pn"><div class="ps"><span>(S1) Final Avg</span><span style="display:flex;align-items:center;gap:14px"><span style="text-align:right;line-height:1.15;font-weight:${cl?700:400}">${gNum(v)}${cl?'':'<small style="display:block;text-align:right;font-size:9px;font-weight:400;opacity:.75">In-progress</small>'}</span><i onclick="event.preventDefault();event.stopPropagation();giOpen('${c.id}','${sid}')" style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal;cursor:pointer">i</i></span></div></div>`}
+
+/* ---- v29: grade book horizontal scroll, period labels ---- */
+function gScroll(d){const o=document.querySelector('#app .ov');if(o)o.scrollBy({left:d,behavior:'smooth'})}
+
+/* ---- v31: gradebook shows no corner shapes; only text colour for late / dropped ---- */
+function paint1(inp){const td=inp.parentNode;if(!td||!td.classList)return;const q=P(inp.value);
+td.querySelectorAll('i.ind').forEach(e=>e.remove());
+td.classList.toggle('fl-L',q.f.includes('L'));td.classList.toggle('fl-DR',q.f.includes('DR'))}
+
+/* ---- v32: apps, notifications window, confirmations, horizontal scrollbar, grade calculator ---- */
+let PR=null,PU=null,PK=null;
+function askPost(){const ps=per();$('#md').innerHTML=`<div class="mb"><div class="mc" style="max-width:460px"><b>Post Grades</b><p><small class="n">Choose what to post. Posted values are saved as the official progress report grades.</small></p>${ps.map(p=>`<label style="display:block;padding:4px 0"><input type="checkbox" class="pst" value="${p[0]}" ${p[0]==T?'checked':''}> ${p[1]} <small class="n">(${p[0]})</small></label>`).join('')}<label style="display:block;padding:4px 0"><input type="checkbox" id="pst_f" checked> Final Avg</label><div class="bar"><button class="btn sv" onclick="postSel()">Post selected</button><button class="btn s" onclick="md()">Cancel</button></div></div></div>`}
+function postSel(){const c=C(),codes=[...document.querySelectorAll('.pst:checked')].map(e=>e.value),fin=$('#pst_f').checked;if(!codes.length&&!fin)return pop('Choose at least one');
+c.post=c.post||{};codes.forEach(code=>{c.post[code]=c.post[code]||{};stu(c).forEach(s=>c.post[code][s.id]=calc(c,s.id,code).pct)});
+if(fin){c.post.FINAL=c.post.FINAL||{};stu(c).forEach(s=>c.post.FINAL[s.id]=finalAvg(c,s.id))}
+save();md();R();pop('Grades posted')}
+function askRp(id){PR=id;cfm('Generate a new password for this student? The old password will stop working.','rpGo()')}
+function rpGo(){if(PR)rp(PR);PR=null}
+function askUn(id){PU=id;cfm('Remove this student from the class? Their grades in this class will be kept but hidden.','unGo()')}
+function unGo(){if(PU)unenr(PU);PU=null}
+function askDelK(id){PK=id;cfm('Delete this category? It must have no assignments.','delKGo()')}
+function delKGo(){if(PK)delK(PK);PK=null}
+function ntOpen(){const ns=notes();dr(`<div class="dh"><div><b>Notifications</b><br><small class="n">${ns.length} new</small></div><span class="lnk" onclick="closeDr()">✕</span></div>${ns.length?ns.map(x=>`<div class="rr"><span>${x}</span></div>`).join(''):'<div class="rr"><span>You are all caught up.</span></div>'}`)}
+function bell(){ntOpen()}
+function appsOpen(){const t=U&&U.role=='t';
+const tiles=t?[['cc','Control Center','home'],['gb','Grade Book','doc'],['asg','Assignments','doc'],['att','Attendance','check'],['ro','Roster','group'],['rep','Progress Reports','doc'],['set','Class Settings','tune']]:[['td','Today','home'],['gr','Grades','doc'],['as','Assignments','doc'],['at','Attendance','check']];
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc" style="max-width:560px"><div style="display:flex;justify-content:space-between"><b>Apps</b><span class="lnk" onclick="md()">✕</span></div><div class="appg">${tiles.map(x=>`<div class="apt" onclick="md();pg='${x[0]}';sel=null;R()">${ic(x[2],28,'#1a6fc4')}<span>${x[1]}</span></div>`).join('')}<div class="apt" onclick="md();calcOpen()">${ic('tune',28,'#1a6fc4')}<span>Grade Calculator</span></div><div class="apt" onclick="md();ntOpen()">${ic('bell',28,'#1a6fc4')}<span>Notifications</span></div></div></div></div>`}
+function calcOpen(){$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc" style="max-width:560px"><div style="display:flex;justify-content:space-between"><b>Grade Calculator</b><span class="lnk" onclick="md()">✕</span></div>
+<h3>Percent</h3><div class="bar"><label>Earned <input id="ca_e" type="number" style="width:100px" oninput="calcRun()"></label> / <label>Possible <input id="ca_p" type="number" style="width:100px" oninput="calcRun()"></label></div>
+<h3>Score needed</h3><div class="bar"><label>Points so far <input id="ca_s" type="number" style="width:100px" oninput="calcRun()"></label> <label>Possible so far <input id="ca_q" type="number" style="width:100px" oninput="calcRun()"></label> <label>Remaining points <input id="ca_r" type="number" style="width:100px" oninput="calcRun()"></label> <label>Target % <input id="ca_t" type="number" style="width:100px" oninput="calcRun()"></label></div>
+<div id="ca_o" class="card"></div></div></div>`}
+function calcRun(){const v=id=>parseFloat(($('#'+id)||{}).value);let o='';
+const e=v('ca_e'),p=v('ca_p');if(p>0&&!isNaN(e)){const pc=e/p*100;o+=`<div>Percent: <b>${pc.toFixed(2)}%</b> · Letter: <b>${L(pc)}</b></div>`}
+const s2=v('ca_s'),q=v('ca_q'),r=v('ca_r'),t=v('ca_t');
+if(!isNaN(s2)&&!isNaN(q)&&!isNaN(r)&&!isNaN(t)&&r>=0){const need=t/100*(q+r)-s2;
+o+=need<=0?`<div>Target already reached.</div>`:need>r?`<div>Target not reachable: you need ${need.toFixed(1)} points but only ${r} remain.</div>`:`<div>You need <b>${need.toFixed(1)}</b> of ${r} remaining points (${(need/r*100).toFixed(1)}%).</div>`}
+const el=$('#ca_o');if(el)el.innerHTML=o||'<small class="n">Enter values to see results.</small>'}
+function hsync(){const o=document.querySelector('#app .ov');if(!o)return;let h=o.nextElementSibling;
+if(!h||!h.classList.contains('hs')){h=document.createElement('div');h.className='hs';h.innerHTML='<div></div>';o.insertAdjacentElement('afterend',h);h.onscroll=()=>{o.scrollLeft=h.scrollLeft};o.onscroll=()=>{h.scrollLeft=o.scrollLeft}}
+h.firstChild.style.width=o.scrollWidth+'px';h.style.display=o.scrollWidth>o.clientWidth?'block':'none';h.scrollLeft=o.scrollLeft}
+const RBq=R;
+R=function(){RBq();hsync()};
+
+/* ---- v33: S1 progress default, Final Avg column in gradebook, post selection, random and quiz fill with meter ---- */
+setTimeout(()=>{if(D&&!D.v33){D.mode='p4';D.cur='S1-18';T=D.cur;D.closed={};D.v33=1;try{MEM.setItem(K,JSON.stringify(D))}catch(e){}R()}},0);
+function rndOpen(){const c=C(),a=c.as.find(x=>x.id==FG.aid);if(!a)return;
+$('#md').innerHTML=`<div class="mb"><div class="mc" style="max-width:560px"><div style="display:flex;justify-content:space-between"><b>Random / Quiz Fill · ${esc(a.name)}</b><span class="lnk" onclick="md()">✕</span></div>
+<div class="bar"><label>Min <input id="rn_min" type="number" value="0" style="width:90px"></label> <label>Max <input id="rn_max" type="number" value="${a.pts}" style="width:90px"></label> <label>Step <select id="rn_st"><option value="1">1</option><option value="5" selected>5s (quiz)</option><option value="0.5">0.5</option></select></label></div>
+<div class="bar"><label><input type="checkbox" id="rn_b" checked> Only fill blank scores</label></div>
+<div class="bar"><button class="btn s" onclick="rnFill('max')">Full credit</button> <button class="btn s" onclick="rnFill('zero')">Zero all</button> <button class="btn s" onclick="rnFill('avg')">Class average</button> <button class="btn s" onclick="rnFill('round')">Round existing</button></div><div class="bar"><button class="btn" onclick="rndRun()">Fill randomly</button><button class="btn s" onclick="md()">Close</button></div><div id="rn_m"></div></div></div>`;rndMeter()}
+function rndRun(){const c=C(),a=c.as.find(x=>x.id==FG.aid),mn=+$('#rn_min').value,mx=+$('#rn_max').value,st=+$('#rn_st').value||1,bl=$('#rn_b').checked;
+if(!(mx>=mn))return pop('Max must be at least min');
+stu(c).forEach(s=>{const m=c.sc[s.id]=c.sc[s.id]||{};if(bl&&String(m[a.id]==null?'':m[a.id]).trim()!=='')return;const k=Math.floor((mx-mn)/st);m[a.id]=String(Math.round((mn+st*Math.floor(Math.random()*(k+1)))*100)/100)});
+save();R();rndMeter();pop('Filled')}
+function rndMeter(){const c=C(),a=c.as.find(x=>x.id==FG.aid),el=$('#rn_m');if(!el||!a)return;
+const vals=stu(c).map(s=>{const q=P((c.sc[s.id]||{})[a.id]);return q.x||q.z||q.n==null?null:q.n}).filter(x=>x!=null);
+if(!vals.length){el.innerHTML='<div class="card"><small class="n">No scores yet.</small></div>';return}
+const mn=Math.min(...vals),mx=Math.max(...vals),av=vals.reduce((x,y)=>x+y,0)/vals.length,pass=vals.filter(v=>a.pts&&v/a.pts*100>=60).length/vals.length*100,pos=a.pts?Math.min(100,Math.max(0,av/a.pts*100)):0;
+el.innerHTML=`<div class="card"><div>Min <b>${mn}</b> · Average <b>${av.toFixed(1)}</b> · Max <b>${mx}</b> · Passed <b>${pass.toFixed(0)}%</b> <small class="n">(of ${a.pts} pts, pass = 60%)</small></div><div style="position:relative;height:14px;margin-top:12px;border-radius:7px;background:linear-gradient(90deg,#e53935,#fbc02d,#43a047)"><div style="position:absolute;left:calc(${pos}% - 2px);top:-4px;width:4px;height:22px;background:#000;border-radius:2px"></div></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:3px"><span>0</span><span>${a.pts}</span></div></div>`}
+function gbFinal(){const tb=document.querySelector('#app .ov table');if(!tb||!tb.rows||tb.rows.length<3||!C())return;const c=C();
+const h0=tb.rows[0],h1=tb.rows[1];let ip=[...h0.cells].find(x=>/In Progress/.test(x.textContent));if(!ip)return;ip.colSpan=(+ip.colSpan||1)+1;
+const pct=[...h1.cells].filter(x=>x.textContent.trim()=='%');if(pct.length<2)return;const th=document.createElement('th');th.innerHTML='Final<br>Avg';pct[1].insertAdjacentElement('afterend',th);
+for(let i=2;i<tb.rows.length;i++){const r=tb.rows[i],hv=r.querySelector('.hv'),m=hv&&(hv.getAttribute('onclick')||'').match(/openS\('([^']+)'/);if(!m||r.cells.length<7)continue;
+const td=document.createElement('td');td.innerHTML=F(finalAvg(c,m[1]));r.cells[6].insertAdjacentElement('afterend',td)}}
+const RBr=R;
+R=function(){RBr();gbFinal()};
+
+/* ---- v34: S1 is an overall group of the four progress periods; gradebook is not split ---- */
+function tm(a,t){const tt=t===undefined?T:t;if(D.mode==='p4'&&tt==='S1')return 'S1';return tm0(a)}
+function calc(c,sid,t=T,ids){const r={};c.cats.forEach(k=>r[k.id]={e:0,p:0,k});
+c.as.forEach(a=>{if(tm(a,t)!=t||ids&&!ids.has(a.id))return;const q=P((c.sc[sid]||{})[a.id]),k=r[a.cat];if(!k||q.x)return;const km=k.k.mult==null||k.k.mult===''?1:+k.k.mult,m=am(a)*km;if(!m)return;const e=q.z?0:q.n;if(e==null)return;k.e+=e*m;k.p+=(+a.pts||0)*m});
+let ws=0,wt=0,E=0,Tp=0;Object.values(r).forEach(k=>{E+=k.e;Tp+=k.p;k.pct=k.p>0?k.e/k.p*100:null;if(k.pct!=null){const w=(+k.k.weight||0)*(k.k.mult==null||k.k.mult===''?1:+k.k.mult);ws+=w*k.pct;wt+=w}});
+return{pct:wt>0?ws/wt:(Tp>0?E/Tp*100:null),r,E,T:Tp}}
+function psel(){const o=(D.mode==='p4'?[['S1','S1 · Overall (all 4 periods)']]:[]).concat(per().map(p=>[p[0],p[1]+' ('+p[0]+')']));
+return`<select onchange="T=this.value;R()">${o.map(p=>`<option value="${p[0]}" ${p[0]==T?'selected':''}>${esc(p[1])}${D.closed[p[0]]?' (Closed)':''}</option>`).join('')}</select>`}
+function askPost(){const o=(D.mode==='p4'?[['S1','Overall S1 (all 4 periods)']]:[]).concat(per().map(p=>[p[0],p[1]+' ('+p[0]+')']));
+$('#md').innerHTML=`<div class="mb"><div class="mc" style="max-width:460px"><b>Post Grades</b><p><small class="n">Choose what to post as the official grades.</small></p>${o.map(p=>`<label style="display:block;padding:4px 0"><input type="checkbox" class="pst" value="${p[0]}" ${p[0]==T?'checked':''}> ${p[1]}</label>`).join('')}<label style="display:block;padding:4px 0"><input type="checkbox" id="pst_f" checked> Final Avg</label><div class="bar"><button class="btn sv" onclick="postSel()">Post selected</button><button class="btn s" onclick="md()">Cancel</button></div></div></div>`}
+setTimeout(()=>{if(D&&!D.v34){D.cur='S1';T='S1';D.v34=1;try{MEM.setItem(K,JSON.stringify(D))}catch(e){}R()}},1);
+
+/* ---- v35: draggable meter for Random / Quiz Fill; scale never collapses to 0 ---- */
+let RDG=false;
+const rv=id=>{const e=document.getElementById(id);return e?e.value:''};
+function rnScale(){const c=C(),a=c.as.find(x=>x.id==FG.aid);return Math.max(+rv('rn_max')||0,(a&&a.pts)||0,1)}
+function rnSet(e){const bar=document.getElementById('rn_bar');if(!bar)return;const r=bar.getBoundingClientRect();if(!r.width)return;
+const f=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)),sc=rnScale(),st=+rv('rn_st')||1,v=Math.round(f*sc/st)*st;
+const tg=document.getElementById('rn_tg');if(tg)tg.value=String(Math.round(v*100)/100);rndMeter()}
+document.addEventListener('pointermove',e=>{if(RDG)rnSet(e)});
+document.addEventListener('pointerup',()=>{RDG=false});
+function rndOpen(){const c=C(),a=c.as.find(x=>x.id==FG.aid);if(!a)return;
+$('#md').innerHTML=`<div class="mb"><div class="mc" style="max-width:560px"><div style="display:flex;justify-content:space-between"><b>Random / Quiz Fill · ${esc(a.name)}</b><span class="lnk" onclick="md()">✕</span></div>
+<div class="bar"><label>Min <input id="rn_min" type="number" value="0" style="width:90px" oninput="rndMeter()"></label> <label>Max <input id="rn_max" type="number" value="${a.pts||100}" style="width:90px" oninput="rndMeter()"></label> <label>Step <select id="rn_st" onchange="rndMeter()"><option value="1">1</option><option value="5" selected>5s (quiz)</option><option value="0.5">0.5</option></select></label></div>
+<input type="hidden" id="rn_tg" value="">
+<div class="bar"><label><input type="checkbox" id="rn_b" checked> Only fill blank scores</label></div>
+<div class="bar"><button class="btn s" onclick="rnFill('max')">Full credit</button> <button class="btn s" onclick="rnFill('zero')">Zero all</button> <button class="btn s" onclick="rnFill('avg')">Class average</button> <button class="btn s" onclick="rnFill('round')">Round existing</button></div><div class="bar"><button class="btn" onclick="rndRun()">Fill randomly</button><button class="btn s" onclick="md()">Close</button></div><div id="rn_m"></div></div></div>`;rndMeter()}
+function rndRun(){const c=C(),a=c.as.find(x=>x.id==FG.aid),mn=+rv('rn_min'),mx=+rv('rn_max'),st=+rv('rn_st')||1,bl=document.getElementById('rn_b').checked,tv=rv('rn_tg'),tg=tv===''?null:+tv;
+if(!(mx>=mn))return pop('Max must be at least min');
+stu(c).forEach(s=>{const m=c.sc[s.id]=c.sc[s.id]||{};if(bl&&String(m[a.id]==null?'':m[a.id]).trim()!=='')return;let v;
+if(tg==null){const k=Math.floor((mx-mn)/st);v=mn+st*Math.floor(Math.random()*(k+1))}
+else{v=tg+(Math.random()*2-1)*((mx-mn)/4);v=Math.min(mx,Math.max(mn,v));v=Math.round(v/st)*st;v=Math.min(mx,Math.max(mn,v))}
+m[a.id]=String(Math.round(v*100)/100)});
+save();R();rndMeter();pop('Filled')}
+function rndMeter(){const c=C(),a=c.as.find(x=>x.id==FG.aid),el=$('#rn_m');if(!el||!a)return;
+const sc=rnScale(),tg=rv('rn_tg'),pct=v=>Math.min(100,Math.max(0,v/sc*100));
+const vals=stu(c).map(s=>{const q=P((c.sc[s.id]||{})[a.id]);return q.x||q.z||q.n==null?null:q.n}).filter(x=>x!=null);
+const st=vals.length?{mn:Math.min(...vals),mx:Math.max(...vals),av:vals.reduce((x,y)=>x+y,0)/vals.length,ps:vals.filter(v=>v/sc*100>=60).length/vals.length*100}:null;
+const hasT=tg!==''&&!isNaN(+tg);
+el.innerHTML=`<div class="card"><div>${st?`Min <b>${st.mn}</b> · Average <b>${st.av.toFixed(1)}</b> · Max <b>${st.mx}</b> · Passed <b>${st.ps.toFixed(0)}%</b> <small class="n">(pass = 60% of ${sc})</small>`:'<small class="n">No scores yet.</small>'}</div>
+<div style="margin-top:8px"><small class="n">Drag on the bar to set a target average${hasT?` (target ${tg})`:''}.</small> ${hasT?'<span class="lnk" onclick="document.getElementById(\'rn_tg\').value=\'\';rndMeter()">clear target</span>':''}</div>
+<div id="rn_bar" style="position:relative;height:16px;margin-top:14px;border-radius:8px;background:linear-gradient(90deg,#e53935,#fbc02d,#43a047);cursor:pointer;touch-action:none" onpointerdown="RDG=true;rnSet(event)">
+${st?`<div title="Average" style="position:absolute;left:calc(${pct(st.av)}% - 2px);top:-5px;width:4px;height:26px;background:#000;border-radius:2px;pointer-events:none"></div>`:''}
+${hasT?`<div title="Target" style="position:absolute;left:calc(${pct(+tg)}% - 8px);top:-14px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid #1565c0;pointer-events:none"></div>`:''}
+</div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>0</span><span>${sc}</span></div></div>`}
+
+/* ---- v36: quiz grading by questions (correct answers x points per question) ---- */
+const qzOn=()=>!!(document.getElementById('rn_q')&&document.getElementById('rn_q').checked);
+const qzN=a=>Math.max(1,Math.floor(+rv('rn_qn')||a.qn||1));
+function rndOpen(){const c=C(),a=c.as.find(x=>x.id==FG.aid);if(!a)return;
+$('#md').innerHTML=`<div class="mb"><div class="mc" style="max-width:580px"><div style="display:flex;justify-content:space-between"><b>Random / Quiz Fill · ${esc(a.name)}</b><span class="lnk" onclick="md()">✕</span></div>
+<div class="bar"><label><input type="checkbox" id="rn_q" onchange="rndMeter()" ${a.qn?'checked':''}> Quiz graded by questions</label></div>
+<div class="bar" id="rn_qb" style="display:${a.qn?'flex':'none'}"><label>Questions <input id="rn_qn" type="number" min="1" value="${a.qn||10}" style="width:90px" oninput="rndMeter()"></label> <span>Points per question: <b id="rn_ppq"></b></span></div>
+<div class="bar" id="rn_rb" style="display:${a.qn?'none':'flex'}"><label>Min <input id="rn_min" type="number" value="0" style="width:90px" oninput="rndMeter()"></label> <label>Max <input id="rn_max" type="number" value="${a.pts||100}" style="width:90px" oninput="rndMeter()"></label> <label>Step <select id="rn_st" onchange="rndMeter()"><option value="1">1</option><option value="5" selected>5s (quiz)</option><option value="0.5">0.5</option></select></label></div>
+<input type="hidden" id="rn_tg" value="">
+<div class="bar"><label><input type="checkbox" id="rn_b" checked> Only fill blank scores</label></div>
+<div class="bar"><button class="btn s" onclick="rnFill('max')">Full credit</button> <button class="btn s" onclick="rnFill('zero')">Zero all</button> <button class="btn s" onclick="rnFill('avg')">Class average</button> <button class="btn s" onclick="rnFill('round')">Round existing</button></div><div class="bar"><button class="btn" onclick="rndRun()">Fill randomly</button><button class="btn s" onclick="md()">Close</button></div><div id="rn_m"></div></div></div>`;
+document.getElementById('rn_q').addEventListener('change',()=>{const q=qzOn();document.getElementById('rn_qb').style.display=q?'flex':'none';document.getElementById('rn_rb').style.display=q?'none':'flex';rndMeter()});rndMeter()}
+function rndRun(){const c=C(),a=c.as.find(x=>x.id==FG.aid),bl=document.getElementById('rn_b').checked,tv=rv('rn_tg'),tg=tv===''?null:+tv;
+let gen;
+if(qzOn()){const N=qzN(a),ppq=(a.pts||0)/N;a.qn=N;
+gen=()=>{let k;if(tg==null)k=Math.floor(Math.random()*(N+1));else{k=Math.round(tg/(ppq||1)+(Math.random()*2-1)*(N/4));k=Math.min(N,Math.max(0,k))}return Math.round(k*ppq*100)/100};}
+else{const mn=+rv('rn_min'),mx=+rv('rn_max'),st=+rv('rn_st')||1;if(!(mx>=mn))return pop('Max must be at least min');
+gen=()=>{let v;if(tg==null){const k=Math.floor((mx-mn)/st);v=mn+st*Math.floor(Math.random()*(k+1))}else{v=tg+(Math.random()*2-1)*((mx-mn)/4);v=Math.min(mx,Math.max(mn,v));v=Math.round(v/st)*st;v=Math.min(mx,Math.max(mn,v))}return Math.round(v*100)/100}}
+targets(c).forEach(s=>{if(bl&&String(dv(c,s.id,a.id)).trim()!=='')return;wv(c,s.id,a.id,String(gen()))});
+save();R();rndMeter();pop('Filled')}
+function rndMeter(){const c=C(),a=c.as.find(x=>x.id==FG.aid),el=$('#rn_m');if(!el||!a)return;
+const q=qzOn(),N=q?qzN(a):0,ppq=q?(a.pts||0)/N:0;
+if(q){const pp=document.getElementById('rn_ppq');if(pp)pp.textContent=(Math.round(ppq*100)/100)+' pts ('+N+' × '+(Math.round(ppq*100)/100)+' = '+(Math.round(N*ppq*100)/100)+')'}
+const sc=q?Math.max(a.pts||0,1):rnScale(),tg=rv('rn_tg'),pct=v=>Math.min(100,Math.max(0,v/sc*100));
+const vals=stu(c).map(s=>{const r=P((c.sc[s.id]||{})[a.id]);return r.x||r.z||r.n==null?null:r.n}).filter(x=>x!=null);
+const st=vals.length?{mn:Math.min(...vals),mx:Math.max(...vals),av:vals.reduce((x,y)=>x+y,0)/vals.length,ps:vals.filter(v=>v/sc*100>=60).length/vals.length*100}:null;
+const hasT=tg!==''&&!isNaN(+tg);
+const fmtQ=v=>q&&ppq?` <small class="n">(≈ ${(v/ppq).toFixed(1)} of ${N} correct)</small>`:'';
+el.innerHTML=`<div class="card"><div>${st?`Min <b>${st.mn}</b> · Average <b>${st.av.toFixed(1)}</b>${fmtQ(st.av)} · Max <b>${st.mx}</b> · Passed <b>${st.ps.toFixed(0)}%</b> <small class="n">(pass = 60% of ${sc})</small>`:'<small class="n">No scores yet.</small>'}</div>
+<div style="margin-top:8px"><small class="n">Drag on the bar to set a target average${hasT?` (target ${tg})`:''}.</small> ${hasT?'<span class="lnk" onclick="document.getElementById(\'rn_tg\').value=\'\';rndMeter()">clear target</span>':''}</div>
+<div id="rn_bar" style="position:relative;height:16px;margin-top:14px;border-radius:8px;background:linear-gradient(90deg,#e53935,#fbc02d,#43a047);cursor:pointer;touch-action:none" onpointerdown="RDG=true;rnSet(event)">
+${st?`<div title="Average" style="position:absolute;left:calc(${pct(st.av)}% - 2px);top:-5px;width:4px;height:26px;background:#000;border-radius:2px;pointer-events:none"></div>`:''}
+${hasT?`<div title="Target" style="position:absolute;left:calc(${pct(+tg)}% - 8px);top:-14px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid #1565c0;pointer-events:none"></div>`:''}
+</div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>0</span><span>${sc}</span></div></div>`}
+
+/* ---- v37: gradebook assignment columns shrink to fit instead of stretching the grid ---- */
+function gbFit(){const tb=document.querySelector('#app .ov table');if(!tb||!tb.rows||tb.rows.length<3||!C())return;
+const cells=[...tb.rows[2].cells];const asg=cells.map((c,i)=>c.classList.contains('c0')?i:-1).filter(i=>i>=0);if(!asg.length)return;
+const avail=tb.parentNode.clientWidth;const ws=cells.map(c=>c.getBoundingClientRect().width);
+const fixed=ws.reduce((x,w,i)=>asg.includes(i)?x:x+w,0);
+const wa=Math.max(56,(avail-fixed)/asg.length);
+const widths=ws.map((w,i)=>asg.includes(i)?wa:w);const total=widths.reduce((x,y)=>x+y,0);
+let cg=tb.querySelector('colgroup');if(cg)cg.remove();cg=document.createElement('colgroup');
+widths.forEach(w=>{const col=document.createElement('col');col.style.width=Math.floor(w)+'px';cg.appendChild(col)});
+tb.insertBefore(cg,tb.firstChild);tb.style.tableLayout='fixed';tb.style.width=Math.max(avail,Math.floor(total))+'px';
+tb.querySelectorAll('th').forEach(th=>{th.style.whiteSpace='normal';th.style.wordBreak='break-word';th.style.overflow='hidden';th.style.padding='4px 5px'});
+tb.querySelectorAll('td.c0').forEach(td=>{td.style.overflow='hidden'})}
+const RBs=R;
+R=function(){RBs();gbFit();hsync()};
+window.addEventListener('resize',()=>{gbFit();hsync()});
+
+/* ---- v38: draft grades (yellow), auto save modes, Save writes drafts to the gradebook ---- */
+const asMode=()=>D.as||'draft';
+function asSet(v){D.as=v;save();R();pop('Auto save: '+(v=='draft'?'draft grades':v=='gb'?'gradebook':'off'))}
+function dv(c,sid,aid){const d=c.dr&&c.dr[sid];return d&&d[aid]!==undefined?d[aid]:((c.sc[sid]||{})[aid]||'')}
+function draftCount(){let n=0;D.classes.forEach(c=>Object.keys(c.dr||{}).forEach(sid=>n+=Object.keys(c.dr[sid]||{}).length));return n}
+function svh(){const n=draftCount();if(n)return '● '+n+' draft grade'+(n>1?'s':'')+' · not saved to gradebook';return dirty?'● Unsaved changes':ic('check',16,'#fff')+' All changes saved'}
+function persistNow(){try{MEM.setItem(K,JSON.stringify(D))}catch(e){}}
+function wv(c,sid,aid,v){v=String(v==null?'':v).trim();
+if(asMode()=='gb'){(c.sc[sid]=c.sc[sid]||{})[aid]=v;if(c.dr&&c.dr[sid])delete c.dr[sid][aid];persistNow();dirty=false;return}
+c.dr=c.dr||{};c.dr[sid]=c.dr[sid]||{};
+if(v===((c.sc[sid]||{})[aid]||'')){delete c.dr[sid][aid]}else{c.dr[sid][aid]=v}
+if(asMode()=='draft')persistNow();else dirty=true}
+function mergeDrafts(){D.classes.forEach(c=>{Object.keys(c.dr||{}).forEach(sid=>{Object.keys(c.dr[sid]||{}).forEach(aid=>{(c.sc[sid]=c.sc[sid]||{})[aid]=c.dr[sid][aid]})});delete c.dr})}
+function commit(){const n=draftCount();mergeDrafts();persistNow();dirty=false;R();pop(n?n+' draft grade'+(n>1?'s':'')+' saved to gradebook':'Saved')}
+function setSc(aid,sid,el){const c=C();if(!c)return;if(closed()){R();return}
+wv(c,sid,aid,el.value);const a=c.as.find(x=>x.id==aid);
+if(asMode()=='gb'&&a){rowU(c,sid,calc(c,sid))}
+const v=dv(c,sid,aid);if(a)el.parentNode.className='c0 '+cellCls(c,a,v);el.value=v;
+const t=$('#sv');if(t)t.innerHTML=svh();paint1(el)}
+function paint1(inp){const td=inp.parentNode;if(!td||!td.classList)return;const m=parseOn(inp),c=C();
+const d=!!(m&&c&&c.dr&&c.dr[m.sid]&&c.dr[m.sid][m.aid]!==undefined);
+if(d)inp.value=c.dr[m.sid][m.aid];
+td.classList.toggle('dft',d);
+const q=P(inp.value);td.classList.toggle('fl-L',q.f.includes('L'));td.classList.toggle('fl-DR',q.f.includes('DR'));
+td.querySelectorAll('i.ind').forEach(e=>e.remove())}
+
+/* ---- v39: score rounding (off by default) and extra auto-grade buttons ---- */
+function rdOf(c){return Object.assign({on:false,dp:0,m:'nearest'},(c&&c.rd)||{})}
+function rdFmt(v,c){const r=rdOf(c);if(!r.on)return v;const m=String(v==null?'':v).match(/^(-?\d+(?:\.\d+)?)(.*)$/);if(!m)return v;
+const n=parseFloat(m[1]),f=Math.pow(10,r.dp),st=r.m=='half'?0.5:1/f;let x;
+if(r.m=='up')x=Math.ceil(n/st-1e-9)*st;else if(r.m=='down')x=Math.floor(n/st+1e-9)*st;else x=Math.round(n/st)*st;
+if(r.m!='half')x=Math.round(x*f)/f;return String(x)+m[2]}
+function rdSet(on,dp,m){const c=C();if(!c)return;const r=rdOf(c);c.rd={on:on,dp:dp==null?r.dp:dp,m:m||r.m};save();rdAsk();R()}
+function rdAsk(){const c=C();if(!c)return;const r=rdOf(c);
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc" style="max-width:500px"><div style="display:flex;justify-content:space-between"><b>Round scores?</b><span class="lnk" onclick="md();R()">✕</span></div>
+<p><small class="n">No by default. Turn it on to round the scores you enter to a set number of decimal places.</small></p>
+<div class="bar"><button class="btn ${r.on?'s':'sv'}" onclick="rdSet(false)">No (default)</button> <button class="btn ${r.on?'sv':'s'}" onclick="rdSet(true)">Yes</button></div>
+${r.on?`<div style="margin-top:12px"><b>Decimal places</b><div class="bar">${[0,1,2].map(d=>`<button class="sqb ${r.dp==d?'on':''}" onclick="rdSet(true,${d},null)">${d}</button>`).join('')}</div>
+<b>Method</b><div class="bar">${[['nearest','Nearest'],['up','Round up'],['down','Round down'],['half','Nearest 0.5']].map(x=>`<button class="btn ${r.m==x[0]?'sv':'s'}" onclick="rdSet(true,null,'${x[0]}')">${x[1]}</button>`).join(' ')}</div>
+<div class="bar"><button class="btn" onclick="rdApplyAll()">Apply to existing scores in this class</button></div></div>`:''}
+<div class="bar"><button class="btn s" onclick="md();R()">Done</button></div></div></div>`}
+function rdApplyAll(){const c=C();if(!c)return;let n=0;stu(c).forEach(s=>{const row=c.sc[s.id]||{};Object.keys(row).forEach(aid=>{const v=row[aid],f=rdFmt(v,c);if(f!==v){row[aid]=f;n++}})});save();md();R();pop(n+' scores rounded')}
+function wv(c,sid,aid,v){v=rdFmt(String(v==null?'':v).trim(),c);
+if(asMode()=='gb'){(c.sc[sid]=c.sc[sid]||{})[aid]=v;if(c.dr&&c.dr[sid])delete c.dr[sid][aid];persistNow();dirty=false;return}
+c.dr=c.dr||{};c.dr[sid]=c.dr[sid]||{};
+if(v===((c.sc[sid]||{})[aid]||'')){delete c.dr[sid][aid]}else{c.dr[sid][aid]=v}
+if(asMode()=='draft')persistNow();else dirty=true}
+function rnFill(k){const c=C(),a=c.as.find(x=>x.id==FG.aid);if(!a)return;const bl=!!(document.getElementById('rn_b')&&document.getElementById('rn_b').checked);
+const vals=stu(c).map(s=>P(dv(c,s.id,a.id)).n).filter(v=>v!=null);const avg=vals.length?vals.reduce((x,y)=>x+y,0)/vals.length:0;
+targets(c).forEach(s=>{if(k=='round'){const v=dv(c,s.id,a.id);if(v!=='')wv(c,s.id,a.id,v);return}
+if(bl&&String(dv(c,s.id,a.id)).trim()!=='')return;
+const v=k=='max'?(a.pts||0):k=='zero'?0:k=='avg'?avg:null;if(v!==null)wv(c,s.id,a.id,String(Math.round(v*100)/100))});
+R();rndMeter();pop('Done')}
+
+/* ---- v40: drafts review, projected grades from drafts, all-or-selected fill scope with multi-select ---- */
+let RSC='all',RSEL=new Set(),RSA=null;
+function targets(c){return RSC=='sel'?stu(c).filter(s=>RSEL.has(s.id)):stu(c)}
+function rndOpen(){const c=C(),a=c.as.find(x=>x.id==FG.aid);if(!a)return;
+if(RSA!==a.id){RSA=a.id;RSC='all';RSEL=new Set()}
+const st=stu(c);
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc" style="max-width:640px;max-height:88vh;overflow:auto"><div style="display:flex;justify-content:space-between"><b>Auto Fill · ${esc(a.name)}</b><span class="lnk" onclick="md()">✕</span></div>
+<h3>Apply to</h3><div class="bar"><label><input type="radio" name="rsc" ${RSC=='all'?'checked':''} onchange="RSC='all';rndOpen()"> All students</label> <label><input type="radio" name="rsc" ${RSC=='sel'?'checked':''} onchange="RSC='sel';rndOpen()"> Selected students only</label></div>
+${RSC=='sel'?`<div class="bar"><span class="lnk" onclick="RSEL=new Set(stu(C()).map(s=>s.id));rndOpen()">Select all</span> · <span class="lnk" onclick="RSEL=new Set();rndOpen()">Select none</span> · <b>${RSEL.size}</b> selected</div><div style="max-height:180px;overflow:auto;border:1px solid var(--ln);padding:6px">${st.map(s=>`<label style="display:block;padding:3px 0"><input type="checkbox" ${RSEL.has(s.id)?'checked':''} onchange="rsToggle('${s.id}',this.checked)"> ${esc(s.name)} <small class="n">${esc(dv(c,s.id,a.id)||'—')}</small></label>`).join('')}</div>`:''}
+<h3 style="margin-top:12px">Quick fill</h3><div class="bar"><button class="btn s" onclick="rnFill('max')">Full credit</button> <button class="btn s" onclick="rnFill('zero')">Zero</button> <button class="btn s" onclick="rnFill('avg')">Class average</button> <button class="btn s" onclick="rnFill('round')">Round existing</button> <button class="btn s" onclick="rnFill('clear')">Clear</button></div>
+<h3 style="margin-top:12px">Rounding</h3><div class="bar"><span>Decimal places</span> ${[0,1,2].map(d=>`<button class="sqb ${rdOf(c).on&&rdOf(c).dp==d?'on':''}" onclick="afRound(${d},null)">${d}</button>`).join('')}</div><div class="bar"><span>Method</span> ${[['nearest','Nearest'],['up','Round up'],['down','Round down'],['half','Nearest 0.5']].map(x=>`<button class="btn ${rdOf(c).on&&rdOf(c).m==x[0]?'sv':'s'}" onclick="afRound(null,'${x[0]}')">${x[1]}</button>`).join(' ')}</div><div class="bar"><button class="btn s" onclick="afRoundOff()">Rounding off</button> <button class="btn s" onclick="afRoundNow()">Round targets now</button> <small class="n">${rdOf(c).on?'On · '+rdOf(c).dp+' decimal place(s) · '+({nearest:'nearest',up:'round up',down:'round down',half:'nearest 0.5'})[rdOf(c).m]+'. New scores are rounded as they are entered or filled.':'Off (default). Turn on to round scores.'}</small></div><h3 style="margin-top:12px">Random / Quiz</h3>
+<div class="bar"><label><input type="checkbox" id="rn_q" onchange="rndMeter()" ${a.qn?'checked':''}> Quiz graded by questions</label></div>
+<div class="bar" id="rn_qb" style="display:${a.qn?'flex':'none'}"><label>Questions <input id="rn_qn" type="number" min="1" value="${a.qn||10}" style="width:90px" oninput="rndMeter()"></label> <span>Points per question: <b id="rn_ppq"></b></span></div>
+<div class="bar" id="rn_rb" style="display:${a.qn?'none':'flex'}"><label>Min <input id="rn_min" type="number" value="0" style="width:90px" oninput="rndMeter()"></label> <label>Max <input id="rn_max" type="number" value="${a.pts||100}" style="width:90px" oninput="rndMeter()"></label> <label>Step <select id="rn_st" onchange="rndMeter()"><option value="1">1</option><option value="5" selected>5s (quiz)</option><option value="0.5">0.5</option></select></label></div>
+<input type="hidden" id="rn_tg" value="">
+<div class="bar"><label><input type="checkbox" id="rn_b" checked> Only fill blank scores</label></div>
+<div class="bar"><button class="btn" onclick="rndRun()">Fill randomly</button><button class="btn s" onclick="md()">Close</button></div><div id="rn_m"></div></div></div>`;
+document.getElementById('rn_q').addEventListener('change',()=>{const q=qzOn();document.getElementById('rn_qb').style.display=q?'flex':'none';document.getElementById('rn_rb').style.display=q?'none':'flex';rndMeter()});rndMeter()}
+function rsToggle(id,on){if(on)RSEL.add(id);else RSEL.delete(id);rndOpen()}
+function rnFill(k){const c=C(),a=c.as.find(x=>x.id==FG.aid);if(!a)return;const bl=!!(document.getElementById('rn_b')&&document.getElementById('rn_b').checked);
+const vals=stu(c).map(s=>P(dv(c,s.id,a.id)).n).filter(v=>v!=null);const avg=vals.length?vals.reduce((x,y)=>x+y,0)/vals.length:0;
+targets(c).forEach(s=>{if(k=='round'){const v=dv(c,s.id,a.id);if(v!=='')wv(c,s.id,a.id,v);return}
+if(k=='clear'){wv(c,s.id,a.id,'');return}
+if(bl&&String(dv(c,s.id,a.id)).trim()!=='')return;
+const v=k=='max'?(a.pts||0):k=='zero'?0:k=='avg'?avg:null;if(v!==null)wv(c,s.id,a.id,String(Math.round(v*100)/100))});
+R();rndMeter();pop('Done')}
+function projPaint(){const c=C();if(!c||!c.dr)return;
+Object.keys(c.dr).forEach(sid=>{if(!Object.keys(c.dr[sid]||{}).length)return;
+const sc2=Object.assign({},c.sc);sc2[sid]=Object.assign({},c.sc[sid]||{},c.dr[sid]);const cp=Object.assign({},c,{sc:sc2});const g=calc(cp,sid);
+[['p','proj',F(g.pct)],['l','proj',L(g.pct,c)],['t','proj',+g.E.toFixed(2)],['u','proj',g.T]].forEach(x=>{const e=document.getElementById(x[0]+sid);if(e){e.innerHTML=x[2];e.classList.add('proj')}})})}
+const RBt=R;
+R=function(){RBt();projPaint()};
+function draftsOpen(){const c=C();if(!c)return;const rows=[];
+stu(c).forEach(s=>{const d=(c.dr||{})[s.id]||{};Object.keys(d).forEach(aid=>{const a=c.as.find(x=>x.id==aid);if(a)rows.push([s,a,((c.sc[s.id]||{})[aid]||'—'),d[aid]])})});
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc" style="max-width:620px;max-height:85vh;overflow:auto"><div style="display:flex;justify-content:space-between"><b>Draft grades · ${esc(c.name)}</b><span class="lnk" onclick="md()">✕</span></div>
+<p><small class="n">Drafts are yellow in the Grade Book and are not counted until you save. Projected grades show what the grade would be.</small></p>
+${rows.length?`<table class="al" style="width:100%"><thead><tr><th>Student</th><th>Assignment</th><th>Saved</th><th>Draft</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r[0].name)}</td><td>${esc(r[1].name)}</td><td>${esc(r[2])}</td><td><b>${esc(r[3])}</b></td><td><button class="btn s" onclick="dfDiscard('${r[0].id}','${r[1].id}')">Discard</button></td></tr>`).join('')}</tbody></table>
+<div class="bar" style="margin-top:12px"><button class="btn sv" onclick="md();commit()">Save all drafts to gradebook</button><button class="btn r" onclick="cfm('Discard all ${rows.length} draft grade(s)?','dfDiscardAll()')">Discard all</button></div>`:'<div class="card">No draft grades in this class.</div>'}
+</div></div>`}
+function dfDiscard(sid,aid){const c=C();if(c.dr&&c.dr[sid]){delete c.dr[sid][aid];if(!Object.keys(c.dr[sid]).length)delete c.dr[sid]}persistNow();draftsOpen();R();pop('Draft discarded')}
+function dfDiscardAll(){const c=C();if(c)c.dr={};persistNow();md();R();pop('Drafts discarded')}
+
+/* ---- v41: assignments sorted newest (top) to oldest; same date goes Z-A ---- */
+function autoCmp(x,y){const dx=x.due||'',dy=y.due||'',nx=x.name||'',ny=y.name||'';
+if(D.so=='old')return dx.localeCompare(dy)||nx.localeCompare(ny);
+return dy.localeCompare(dx)||ny.localeCompare(nx)}
+function soToggle(){D.so=D.so=='old'?'new':'old';save();R();pop('Order: '+(D.so=='old'?'oldest first':'newest first'))}
+
+/* ---- v42: Automatic / Manual assignment order; manual order does not move by itself ---- */
+function ordEnsure(c){c.ord=(c.ord||[]).filter(id=>c.as.some(a=>a.id==id));c.as.forEach(a=>{if(!c.ord.includes(a.id))c.ord.push(a.id)})}
+function cmpA(x,y){const c=C();if(c&&c.ao=='manual'){ordEnsure(c);return c.ord.indexOf(x.id)-c.ord.indexOf(y.id)}return autoCmp(x,y)}
+function aoToggle(){const c=C();if(!c)return;if(c.ao=='manual'){c.ao='auto'}else{{const o=D.so;D.so='old';c.ord=c.as.slice().sort(autoCmp).map(a=>a.id);D.so=o}c.ao='manual'}save();R();pop('Order: '+(c.ao=='manual'?'manual':'automatic'))}
+function moveCol(aid,d){const c=C();if(!c)return;ordEnsure(c);const vis=c.as.filter(a=>tm(a)==T).sort(cmpA);const i=vis.findIndex(a=>a.id==aid),j=i+d;
+if(i<0||j<0||j>=vis.length)return;const p=c.ord.indexOf(vis[i].id),q=c.ord.indexOf(vis[j].id);[c.ord[p],c.ord[q]]=[c.ord[q],c.ord[p]];save();R()}
+function gbArrows(){const c=C();if(!c||c.ao!='manual')return;const tb=document.querySelector('#app .ov table');if(!tb||tb.rows.length<2)return;
+const vis=c.as.filter(a=>tm(a)==T).sort(cmpA);
+[...tb.rows[1].cells].forEach(th=>{const m=(th.getAttribute('onclick')||'').match(/openA\('([^']+)'\)/);if(!m)return;const i=vis.findIndex(a=>a.id==m[1]);
+const box=document.createElement('div');box.style.marginBottom='3px';
+box.innerHTML=`<button class="btn s" style="padding:0 6px" ${i<=0?'disabled':''} onclick="event.stopPropagation();moveCol('${m[1]}',-1)">◀</button> <button class="btn s" style="padding:0 6px" ${i>=vis.length-1?'disabled':''} onclick="event.stopPropagation();moveCol('${m[1]}',1)">▶</button>`;
+th.insertBefore(box,th.firstChild)})}
+const RBu=R;
+R=function(){RBu();gbArrows()};
+
+/* ---- v43: Grade Book columns always run oldest to newest (automatic order) ---- */
+const _gb43=PG.gb;
+PG.gb=function(){const o=D.so;D.so='old';try{return _gb43()}finally{D.so=o}};
+
+/* ---- v44: posted grades strip; 18 Week panel lists the whole semester; other periods collapsed; empty and zero-weight periods hidden ---- */
+function stBody(c,sid,click){const ps=per().filter(p=>(c.pv||{})[p[0]]!==false);
+const row=a=>{const v=(c.sc[sid]||{})[a.id]||'',q=P(v),cm=((c.cm2||{})[sid]||{})[a.id]||'',mu=am(a);
+const notes=(mu!=1&&mu!=0?`<small class="n">Multiplier: ${mu}</small>`:'')+(nc(c,a)?'<small class="n">(not included in the grade calculation)</small>':'');
+return`<div class="arw" onclick="${click}('${a.id}')">${ic('doc',18,'#3d7ccf')}<div><b>${esc(a.name)}</b>${notes?`<div class="arm">${notes}</div>`:''}${cm?`<div class="arm"><small class="cmp">💬 ${esc(cm.length>60?cm.slice(0,60)+'…':cm)}</small></div>`:''}</div><span class="ard">Due: ${fd(a.due)}</span><span class="arf">${flagsH(v)}</span><span class="ars">${q.z?'0/'+a.pts:(q.n!=null?q.n+'/'+a.pts:'')}</span><span class="arc">›</span></div>`};
+const postV=code=>{const v=((c.post||{})[code]||{})[sid];return v==null?'':gNum(v)};
+const strip=`<div class="pst">${per().map(p=>`<div><small>${esc(p[1])}</small><b>${postV(p[0])}</b></div>`).join('')}</div>`;
+const body=ps.map(p=>{const top=p[0]=='S1-18';
+const list=(top?c.as.filter(a=>a.portal!==false&&!a.draft):c.as.filter(a=>tm(a,p[0])==p[0]&&a.portal!==false&&!a.draft)).sort(cmpA);
+if(!list.length||+(((c.pw||{})[p[0]])??100)===0)return'';
+const num=top?gNum(calc(c,sid,'S1').pct):postV(p[0]);
+const cats=c.cats.map(k=>{const as=list.filter(a=>a.cat==k.id);if(!as.length)return'';return`<details class="cd"><summary class="arh"><span><b>${esc(k.name)}</b>${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''}</span><span class="sg"></span></summary>${as.map(row).join('')}</details>`}).join('');
+return`<details class="pn" ${top?'open':''}><summary class="ps"><span>(S1) ${esc(p[1])}</span><span style="display:flex;align-items:center;gap:14px"><span style="text-align:right;line-height:1.15;font-weight:${top?400:700}">${num}${top&&num!==''?'<small style="display:block;text-align:right;font-size:9px;font-weight:400;opacity:.75">In-progress</small>':''}</span><i style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal">i</i></span></summary>${cats||'<div class="ar" style="cursor:default">No assignments</div>'}</details>`}).join('');
+return strip+body}
+
+/* ---- v45: all four progress periods always shown; only the 18 Week panel lists assignments; numbers centred on the right ---- */
+function stBody(c,sid,click){const ps=per().filter(p=>(c.pv||{})[p[0]]!==false&&+(((c.pw||{})[p[0]])??100)!==0);
+const row=a=>{const v=(c.sc[sid]||{})[a.id]||'',q=P(v),cm=((c.cm2||{})[sid]||{})[a.id]||'',mu=am(a);
+const notes=(mu!=1&&mu!=0?`<small class="n">Multiplier: ${mu}</small>`:'')+(nc(c,a)?'<small class="n">(not included in the grade calculation)</small>':'');
+return`<div class="arw" onclick="${click}('${a.id}')">${ic('doc',18,'#3d7ccf')}<div><b>${esc(a.name)}</b>${notes?`<div class="arm">${notes}</div>`:''}${cm?`<div class="arm"><small class="cmp">💬 ${esc(cm.length>60?cm.slice(0,60)+'…':cm)}</small></div>`:''}</div><span class="ard">Due: ${fd(a.due)}</span><span class="arf">${flagsH(v)}</span><span class="ars">${q.z?'0/'+a.pts:(q.n!=null?q.n+'/'+a.pts:'')}</span><span class="arc">›</span></div>`};
+const postV=code=>{const v=((c.post||{})[code]||{})[sid];return v==null?'':gNum(v)};
+const strip=`<div class="pst">${per().map(p=>`<div><small>${esc(p[1])}</small><b>${postV(p[0])}</b></div>`).join('')}</div>`;
+const icon='<i style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal">i</i>';
+const body=ps.map(p=>{const top=p[0]=='S1-18';
+if(!top){return`<div class="pn"><div class="ps"><span>(S1) ${esc(p[1])}</span><span class="pright"><span class="pnum"><b>${postV(p[0])}</b></span>${icon}</span></div></div>`}
+const list=c.as.filter(a=>a.portal!==false&&!a.draft).sort(cmpA);
+const num=gNum(calc(c,sid,'S1').pct);
+const head=`<span>(S1) ${esc(p[1])}</span><span class="pright"><span class="pnum">${num}${num!==''?'<small>In-progress</small>':''}</span>${icon}</span>`;
+if(!list.length)return`<div class="pn"><div class="ps">${head}</div></div>`;
+const cats=c.cats.map(k=>{const as=list.filter(a=>a.cat==k.id);if(!as.length)return'';return`<details class="cd"><summary class="arh"><span><b>${esc(k.name)}</b>${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''}</span><span class="sg"></span></summary>${as.map(row).join('')}</details>`}).join('');
+return`<details class="pn" open><summary class="ps">${head}</summary>${cats}</details>`}).join('');
+return strip+body}
+
+/* ---- v46: student grades laid out like the reference (grey period bars, collapsed categories, Grading Key) ---- */
+function stMenu(){const e=document.getElementById('stm');if(e)e.style.display=e.style.display=='block'?'none':'block'}
+function giOpen(cid,sid){const c=D.classes.find(x=>x.id==cid);if(!c)return;const fa=c.fa||'current',z=rdOf?(c.scale||DSC):DSC;
+const key=[['A',z.A],['B',z.B],['C',z.C],['D',z.D],['F',0]];
+dr(`<div class="dh"><div><b>Grading Information</b><br><small class="n">${esc(T)} · ${esc(c.name)}</small></div><span class="lnk" onclick="closeDr()">✕</span></div>
+<div class="sec"><div class="hh">Grading Key</div><table style="width:100%;border-collapse:collapse"><tr><th style="text-align:left;padding:8px 12px">Grade</th><th style="text-align:left;padding:8px 12px">Min percent</th></tr>${key.map(k=>`<tr><td style="padding:8px 12px;border-top:1px solid var(--ln)">${k[0]}</td><td style="padding:8px 12px;border-top:1px solid var(--ln)">${k[1]}</td></tr>`).join('')}</table></div>
+<div class="sec"><div class="hh">Calculation Setup</div><div class="rr"><span><b>Final Avg</b><br><small class="n">${fa=='weighted'?'Weighted · recommended for AP / Honors':'Current Average · follows the current overall gradebook grade'}</small></span><b>${gNum(finalAvg(c,sid))}</b></div></div>
+<div class="sec"><div class="hh">Progress Report Weights</div>${per().filter(p=>(c.pv||{})[p[0]]!==false).map(p=>`<div class="rr"><span><b>${p[1]}</b><br><small class="n">Weight: ${+(((c.pw||{})[p[0]])??100)}${gNum(calc(c,sid,p[0]).pct)!==''?' · '+gNum(calc(c,sid,p[0]).pct):''}</small></span></div>`).join('')}</div></div>`)}
+
+/* ---- v47: period bars use the same right-hand layout as Final Avg (number, In-progress label, info icon) ---- */
+function stBody(c,sid,click){const ps=per().filter(p=>(c.pv||{})[p[0]]!==false&&+(((c.pw||{})[p[0]])??100)!==0);
+const row=a=>{const v=(c.sc[sid]||{})[a.id]||'',q=P(v),cm=((c.cm2||{})[sid]||{})[a.id]||'',mu=am(a);
+const notes=(mu!=1&&mu!=0?`<small class="n">Multiplier: ${mu}</small>`:'')+(nc(c,a)?'<small class="n">(not included in the grade calculation)</small>':'');
+return`<div class="arw" onclick="${click}('${a.id}')">${ic('doc',18,'#3d7ccf')}<div><b>${esc(a.name)}</b>${notes?`<div class="arm">${notes}</div>`:''}${cm?`<div class="arm"><small class="cmp">💬 ${esc(cm.length>60?cm.slice(0,60)+'…':cm)}</small></div>`:''}</div><span class="ard">Due: ${fd(a.due)}</span><span class="arf">${flagsH(v)}</span><span class="ars">${q.z?'0/'+a.pts:(q.n!=null?q.n+'/'+a.pts:'')}</span><span class="arc">›</span></div>`};
+const postV=code=>{const v=((c.post||{})[code]||{})[sid];return v==null?'':gNum(v)};
+const strip=`<div class="pst">${per().map(p=>`<div><small>${esc(p[1])}</small><b>${postV(p[0])}</b></div>`).join('')}</div>`;
+const hr=(title,val,inprog)=>`<span>${title}</span><span style="display:flex;align-items:center;gap:14px"><span style="text-align:right;line-height:1.15;font-weight:${inprog?400:700}">${val}${inprog&&val!==''?'<small style="display:block;text-align:right;font-size:9px;font-weight:400;opacity:.75">In-progress</small>':''}</span><i onclick="event.preventDefault();event.stopPropagation();giOpen('${c.id}','${sid}')" style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal;cursor:pointer">i</i></span>`;
+const body=ps.map(p=>{const top=p[0]=='S1-18';
+if(!top)return`<div class="pn"><div class="ps">${hr('(S1) '+esc(p[1]),postV(p[0]),false)}</div></div>`;
+const list=c.as.filter(a=>a.portal!==false&&!a.draft).sort(cmpA);
+const num=gNum(calc(c,sid,'S1').pct);
+if(!list.length)return`<div class="pn"><div class="ps">${hr('(S1) '+esc(p[1]),num,true)}</div></div>`;
+const cats=c.cats.map(k=>{const as=list.filter(a=>a.cat==k.id);if(!as.length)return'';return`<details class="cd"><summary class="arh"><span><b>${esc(k.name)}</b>${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''}</span><span class="sg"></span></summary>${as.map(row).join('')}</details>`}).join('');
+return`<details class="pn" open><summary class="ps">${hr('(S1) '+esc(p[1]),num,true)}</summary>${cats}</details>`}).join('');
+return strip+body}
+
+/* ---- v48: working info buttons and drop-downs; open/closed state is remembered between redraws ---- */
+const DST={};
+function dtog(el){DST[el.dataset.k]=el.open}
+function stBody(c,sid,click){const ps=per().filter(p=>(c.pv||{})[p[0]]!==false&&+(((c.pw||{})[p[0]])??100)!==0);
+const row=a=>{const v=(c.sc[sid]||{})[a.id]||'',q=P(v),cm=((c.cm2||{})[sid]||{})[a.id]||'',mu=am(a);
+const notes=(mu!=1&&mu!=0?`<small class="n">Multiplier: ${mu}</small>`:'')+(nc(c,a)?'<small class="n">(not included in the grade calculation)</small>':'');
+return`<div class="arw" onclick="${click}('${a.id}')">${ic('doc',18,'#3d7ccf')}<div><b>${esc(a.name)}</b>${notes?`<div class="arm">${notes}</div>`:''}${cm?`<div class="arm"><small class="cmp">💬 ${esc(cm.length>60?cm.slice(0,60)+'…':cm)}</small></div>`:''}</div><span class="ard">Due: ${fd(a.due)}</span><span class="arf">${flagsH(v)}</span><span class="ars">${q.z?'0/'+a.pts:(q.n!=null?q.n+'/'+a.pts:'')}</span><span class="arc">›</span></div>`};
+const postV=code=>{const v=((c.post||{})[code]||{})[sid];return v==null?'':gNum(v)};
+const strip=`<div class="pst">${per().map(p=>`<div><small>${esc(p[1])}</small><b>${postV(p[0])}</b></div>`).join('')}</div>`;
+const info=`<i title="Grading information" onclick="event.preventDefault();event.stopPropagation();giOpen('${c.id}','${sid}')" style="background:#1271b8;color:#fff;border-radius:50%;width:16px;height:16px;display:inline-block;text-align:center;font-size:11px;font-style:normal;cursor:pointer">i</i>`;
+const hr=(title,val,inprog)=>`<span>${title}</span><span style="display:flex;align-items:center;gap:14px"><span style="text-align:right;line-height:1.15;font-weight:${inprog?400:700}">${val}${inprog&&val!==''?'<small style="display:block;text-align:right;font-size:9px;font-weight:400;opacity:.75">In-progress</small>':''}</span>${info}</span>`;
+const body=ps.map(p=>{const top=p[0]=='S1-18';
+if(!top)return`<div class="pn"><div class="ps">${hr('(S1) '+esc(p[1]),postV(p[0]),false)}</div></div>`;
+const list=c.as.filter(a=>a.portal!==false&&!a.draft).sort(cmpA);
+const num=gNum(calc(c,sid,'S1').pct);
+if(!list.length)return`<div class="pn"><div class="ps">${hr('(S1) '+esc(p[1]),num,true)}</div></div>`;
+const pk='p-'+p[0],pOpen=DST[pk]===undefined?true:DST[pk];
+const cats=c.cats.map(k=>{const as=list.filter(a=>a.cat==k.id);if(!as.length)return'';const ck='c-'+p[0]+'-'+k.id;
+return`<details class="cd" data-k="${ck}" ${DST[ck]?'open':''} ontoggle="dtog(this)"><summary class="arh"><span><b>${esc(k.name)}</b>${c.show?`<br><span style="font-weight:400">Weight: ${k.weight}</span>`:''}</span><span class="sg"></span></summary>${as.map(row).join('')}</details>`}).join('');
+return`<details class="pn" data-k="${pk}" ${pOpen?'open':''} ontoggle="dtog(this)"><summary class="ps">${hr('(S1) '+esc(p[1]),num,true)}</summary>${cats}</details>`}).join('');
+return strip+body}
+
+/* ---- v49: rounded grade shown on the right of each student's name in the gradebook ---- */
+function nameGrades(){const c=C();if(!c)return;const tb=document.querySelector('#app .ov table');if(!tb)return;
+for(let i=2;i<tb.rows.length;i++){const r=tb.rows[i],hv=r.querySelector('.hv');if(!hv)continue;const m=(hv.getAttribute('onclick')||'').match(/openS\('([^']+)'/);if(!m)continue;
+const td=hv.parentNode;if(td.querySelector('.nmg'))continue;td.classList.add('nmc');
+const b=document.createElement('span');b.className='nmg';b.textContent=gNum(calc(c,m[1]).pct);td.appendChild(b)}}
+const RBv=R;
+R=function(){RBv();nameGrades()};
+
+/* ---- v50: Fill Grades with multi-select students and assignments ---- */
+let FGS=new Set(),FGA=new Set();
+const FGFLAGS=[['','None'],['M','M · Missing'],['X','X · Exempt'],['L','L · Late'],['T','T · Turned in'],['I','I · Incomplete'],['CH','CH · Cheated'],['DR','DR · Dropped']];
+function fgOpen(sid,aid){const c=C();if(!c)return pop('Create a class first');if(closed())return pop('Grading period is closed');
+const ss=stu(c),as=c.as.filter(a=>tm(a)==T).sort(cmpA);
+if(!ss.length||!as.length)return pop('Add students and assignments first');
+FG={sid:sid||ss[0].id,aid:aid||as[0].id};FGS=new Set([FG.sid]);FGA=new Set([FG.aid]);fgDraw()}
+function fgTog(kind,id,on){const set=kind=='S'?FGS:FGA;if(on)set.add(id);else set.delete(id);fgDraw()}
+function fgAllS(on){const c=C();FGS=on?new Set(stu(c).map(x=>x.id)):new Set([FG.sid]);fgDraw()}
+function fgAllA(on){const c=C();FGA=on?new Set(c.as.filter(a=>tm(a)==T).map(a=>a.id)):new Set([FG.aid]);fgDraw()}
+function fgDraw(){const c=C(),ss=stu(c),as=c.as.filter(a=>tm(a)==T).sort(cmpA);
+if(!ss.length||!as.length)return fgClose();
+if(!FG||!ss.find(x=>x.id==FG.sid)||!as.find(x=>x.id==FG.aid))FG={sid:ss[0].id,aid:as[0].id};
+FGS=new Set([...FGS].filter(id=>ss.some(x=>x.id==id)));FGA=new Set([...FGA].filter(id=>as.some(x=>x.id==id)));
+if(!FGS.size)FGS.add(FG.sid);if(!FGA.size)FGA.add(FG.aid);
+const s=ss.find(x=>x.id==FG.sid),a=as.find(x=>x.id==FG.aid),v=dv(c,s.id,a.id),q=P(v),flag=['M','X','CH','L','T','I','DR'].find(f=>q.f.includes(f))||'',cm=((c.cm2||{})[s.id]||{})[a.id]||'';
+const n=FGS.size,m=FGA.size,multi=n*m>1;
+const sameScore=(()=>{const vals=[...FGS].flatMap(sid=>[...FGA].map(aid=>dv(c,sid,aid)));return vals.every(x=>x===vals[0])?vals[0]:null})();
+const shownScore=multi?(sameScore==null?'':(P(sameScore).n!=null&&!P(sameScore).f.length?P(sameScore).n:'')):(q.n!=null?q.n:'');
+$('#md').innerHTML=`<div class="mb"><div class="mc fg"><div class="fgh"><b>Fill Grades · ${esc(c.name)} (${T})</b><span class="lnk" onclick="fgClose()">✕ Close</span></div>
+<div class="fgb">
+<div class="fgc"><div class="fgt"><h3>Students</h3><small><span class="lnk" onclick="fgAllS(true)">All</span> · <span class="lnk" onclick="fgAllS(false)">None</span></small></div>
+${ss.map(x=>`<div class="fgi ${x.id==s.id?'on':''}"><input type="checkbox" ${FGS.has(x.id)?'checked':''} onchange="fgTog('S','${x.id}',this.checked)"><span class="fgn" onclick="FG.sid='${x.id}';fgDraw()">${esc(x.name)}</span><small>${gNum(calc(c,x.id).pct)}</small></div>`).join('')}</div>
+<div class="fgc"><div class="fgt"><h3>Assignments</h3><small><span class="lnk" onclick="fgAllA(true)">All</span> · <span class="lnk" onclick="fgAllA(false)">None</span></small></div>
+${as.map(x=>`<div class="fgi ${x.id==a.id?'on':''}"><input type="checkbox" ${FGA.has(x.id)?'checked':''} onchange="fgTog('A','${x.id}',this.checked)"><span class="fgn" onclick="FG.aid='${x.id}';fgDraw()">${esc(x.name)}</span><small>${esc(kof(c,x).name)} · ${fd(x.due)}</small></div>`).join('')}</div>
+<div class="fgr"><h3>${multi?`${n} student${n>1?'s':''} × ${m} assignment${m>1?'s':''} selected`:`${esc(s.name)} — ${esc(a.name)}`}</h3>
+${multi?'<p><small class="n">Every selected student and assignment gets these values. A blank box keeps each entry as it is.</small></p>':''}
+<div class="bar"><label>Score <input id="fg_n" type="number" value="${esc(shownScore)}" style="width:100px"></label> <span>/ ${a.pts} pts</span></div>
+<div class="bar"><label>Status <select id="fg_f">${FGFLAGS.map(o=>`<option value="${o[0]}" ${o[0]==flag?'selected':''}>${o[1]}</option>`).join('')}</select></label></div>
+<div><b>Comment</b><br><textarea id="fg_c" rows="6" style="width:100%;padding:6px;border:1px solid var(--ln)">${esc(multi?'':cm)}</textarea></div>
+<div class="bar"><button class="btn sv" onclick="fgSave(0)">${multi?'Save selected':'Save'}</button>${multi?'':' <button class="btn" onclick="fgSave(1)">Save &amp; Next Student</button>'} <button class="btn s" onclick="rndOpen()">Random / Quiz Fill</button> <button class="btn s" onclick="fgClose()">Close</button></div>
+<p><small class="n">${multi?'Random / Quiz Fill works on the assignment shown above.':`Student average: ${gNum(calc(c,s.id).pct)} · Multiplier ${am(a)}${nc(c,a)?' (not counted)':''}.`} Flags: M, X, L, T, I, CH, DR. Late, Turned in and Incomplete add to the number (for example 85L).</small></p></div></div></div></div>`}
+function fgSave(nx){const c=C(),multi=FGS.size*FGA.size>1,nv=(document.getElementById('fg_n').value||'').trim(),f=document.getElementById('fg_f').value,cm=(document.getElementById('fg_c').value||'').trim();
+let count=0;
+[...FGS].forEach(sid=>[...FGA].forEach(aid=>{
+  let val=null;
+  if(f){if(['M','X','CH'].includes(f))val=f;else{const base=nv!==''?nv:(P(dv(c,sid,aid)).n!=null?String(P(dv(c,sid,aid)).n):'');val=base+f}}
+  else if(nv!=='')val=nv;
+  else if(!multi)val='';
+  if(val!==null){wv(c,sid,aid,val);count++}
+  if(cm!==''||!multi){c.cm2=c.cm2||{};(c.cm2[sid]=c.cm2[sid]||{})[aid]=cm}
+}));
+save();
+if(nx&&!multi){const ss=stu(c),i=ss.findIndex(x=>x.id==FG.sid);FG.sid=ss[(i+1)%ss.length].id;FGS=new Set([FG.sid])}
+R();fgDraw();pop(count+' entr'+(count==1?'y':'ies')+' saved')}
+
+/* ---- v51: rounding controls inside Auto Fill, using the same 0 / 1 / 2 squares and methods ---- */
+function afSnap(){const q=document.getElementById('rn_q'),b=document.getElementById('rn_b');return{min:rv('rn_min'),max:rv('rn_max'),st:rv('rn_st'),qn:rv('rn_qn'),tg:rv('rn_tg'),q:q?q.checked:undefined,b:b?b.checked:undefined}}
+function afRestore(z){const set=(id,v)=>{const e=document.getElementById(id);if(e&&v!==undefined)e.value=v};
+set('rn_min',z.min);set('rn_max',z.max);set('rn_st',z.st);set('rn_qn',z.qn);set('rn_tg',z.tg);
+const q=document.getElementById('rn_q'),b=document.getElementById('rn_b');if(q&&z.q!==undefined)q.checked=z.q;if(b&&z.b!==undefined)b.checked=z.b;
+if(q&&document.getElementById('rn_qb')){const on=q.checked;document.getElementById('rn_qb').style.display=on?'flex':'none';document.getElementById('rn_rb').style.display=on?'none':'flex'}
+rndMeter()}
+function afRound(dp,m){const c=C();if(!c)return;const z=afSnap(),r=rdOf(c);c.rd={on:true,dp:dp==null?r.dp:dp,m:m||r.m};save();rndOpen();afRestore(z)}
+function afRoundOff(){const c=C();if(!c)return;const z=afSnap(),r=rdOf(c);c.rd=Object.assign({},r,{on:false});save();rndOpen();afRestore(z)}
+function afRoundNow(){const c=C(),a=c.as.find(x=>x.id==FG.aid);if(!a)return;if(!rdOf(c).on)return pop('Turn rounding on first');
+targets(c).forEach(s=>{const v=dv(c,s.id,a.id);if(v!=='')wv(c,s.id,a.id,v)});R();rndMeter();pop('Rounded')}
+
+/* ---- v52: Post Grades works for every progress period (cumulative by due date); checkboxes no longer clash with the .pst style ---- */
+function perEnd(code){const e=((PD[code]||'').split(' - ')[1])||'';const m=e.match(/(\d\d)\/(\d\d)\/(\d{4})/);return m?m[3]+'-'+m[1]+'-'+m[2]:'9999-12-31'}
+function postCalc(c,sid,code){if(D.mode!=='p4')return calc(c,sid,code);
+if(code=='S1')return calc(c,sid,'S1');
+const end=perEnd(code),ids=new Set(c.as.filter(a=>a.portal!==false&&!a.draft&&(a.due||'')<=end).map(a=>a.id));
+return calc(c,sid,'S1',ids)}
+function askPost(){const p4=D.mode==='p4';const o=(p4?[['S1','Overall S1 (all 4 periods)']]:[]).concat(per().map(p=>[p[0],p[1]+' ('+p[0]+')']));
+const endOf=code=>((PD[code]||'').split(' - ')[1])||'end of term';
+$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="mc" style="max-width:520px"><div style="display:flex;justify-content:space-between"><b>Post Grades</b><span class="lnk" onclick="md()">✕</span></div>
+<p><small class="n">Each progress grade counts the assignments due on or before that period's end date. Tick every period you want to post.</small></p>
+<div class="bar"><span class="lnk" onclick="document.querySelectorAll('.pcb').forEach(e=>e.checked=true)">Select all</span> · <span class="lnk" onclick="document.querySelectorAll('.pcb').forEach(e=>e.checked=false)">Select none</span></div>
+${o.map(p=>`<label style="display:block;padding:6px 0;border-bottom:1px solid var(--ln)"><input type="checkbox" class="pcb" value="${p[0]}" ${p[0]==T?'checked':''}> <b>${esc(p[1])}</b> <small class="n">ends ${esc(endOf(p[0]))}</small></label>`).join('')}
+<label style="display:block;padding:6px 0"><input type="checkbox" id="pst_f" checked> Final Avg</label>
+<div class="bar"><button class="btn sv" onclick="postSel()">Post selected</button><button class="btn s" onclick="md()">Cancel</button></div></div></div>`}
+function postSel(){const c=C(),codes=[...document.querySelectorAll('.pcb:checked')].map(e=>e.value),fin=!!(document.getElementById('pst_f')||{}).checked;
+if(!codes.length&&!fin)return pop('Choose at least one');
+c.post=c.post||{};
+codes.forEach(code=>{c.post[code]=c.post[code]||{};stu(c).forEach(s=>{c.post[code][s.id]=postCalc(c,s.id,code).pct})});
+if(fin){c.post.FINAL=c.post.FINAL||{};stu(c).forEach(s=>{c.post.FINAL[s.id]=finalAvg(c,s.id)})}
+save();md();R();pop('Posted '+codes.length+' period'+(codes.length==1?'':'s'))}
+
+/* ---- v53: semester start and end dates; progress period dates follow them automatically ---- */
+const DSEM0={S1:{s:'2026-08-05',e:'2026-12-18'},S2:{s:'2027-01-05',e:'2027-05-28'}};
+const PW={'S1-4.5':4.5,'S1-9':9,'S1-13.5':13.5,'S1-18':18};
+function semOf(k){return Object.assign({},DSEM0[k],((D&&D.sem)||{})[k]||{})}
+function utcOf(str){const[y,m,d]=str.split('-').map(Number);return Date.UTC(y,m-1,d)}
+function dstr(ms){const d=new Date(ms);return String(d.getUTCMonth()+1).padStart(2,'0')+'/'+String(d.getUTCDate()).padStart(2,'0')+'/'+d.getUTCFullYear()}
+function pdSync(){if(!D)return;['S1','S2'].forEach(k=>{const sm=semOf(k);PD[k]=dstr(utcOf(sm.s))+' - '+dstr(utcOf(sm.e))});
+const sm=semOf('S1'),st=utcOf(sm.s),en=utcOf(sm.e),total=Math.round((en-st)/864e5)+1;
+Object.keys(PW).forEach(code=>{const L=Math.max(1,Math.round(total*PW[code]/18)),e=code=='S1-18'?en:st+(L-1)*864e5;PD[code]=dstr(st)+' - '+dstr(e)})}
+function semSet(k,f,v){if(!v)return;D.sem=D.sem||{};D.sem[k]=Object.assign({},D.sem[k]||{});D.sem[k][f]=v;
+if(utcOf(semOf(k).e)<=utcOf(semOf(k).s))return pop('End date must be after the start date');save();pdSync();R();pop(k+' dates updated')}
+const _perEnd53=perEnd;
+perEnd=function(code){pdSync();return _perEnd53(code)};
+const RBx=R;
+R=function(){pdSync();RBx()};
+pdSync();
+
+/* ---- v54: 4 1/2 Week (and other progress) views are cumulative to the period end; unassigned work no longer falls into 4 1/2 ---- */
+function tm(a,t){const tt=t===undefined?T:t;
+if(D.mode==='p4'){if(tt==='S1')return 'S1';if(tt==='S1-18')return tt;if(PW[tt]!==undefined)return (a.due||'')<=perEnd(tt)?tt:'_later';return 'S1'}
+return tm0(a)}
+
+/* ---- v55: missing and cheated work shows as 0 in the score ---- */
+function scTxt(v){if(!String(v==null?'':v).trim())return'Not scored yet';const q=P(v);return q.z?0:(q.n!=null?q.n:'—')}
+
+/* ---- v56: cloud saving to Firebase Realtime Database (Grade well/Users/<uid>), email sign-in, error screens ---- */
+const FBCFG={apiKey:"AIzaSyBrMZ_E8mThJezaRIIf3AgQjgnvG7duCEE",authDomain:"minidiamond-34d40.firebaseapp.com",databaseURL:"https://minidiamond-34d40-default-rtdb.firebaseio.com",projectId:"minidiamond-34d40",storageBucket:"minidiamond-34d40.firebasestorage.app",messagingSenderId:"526380855251",appId:"1:526380855251:web:5807dcc1c6e245aaffc926"};
+let FB=null,FBU=null,FBE=null,LASTV=0,CLOUDST='',CONN=true,CQT=null;
+const FBMAP={
+'auth/user-not-found':['AUTH-404','Account not found','No Gradewell account uses this email address.','Check the spelling, or register first.'],
+'auth/wrong-password':['AUTH-401','Wrong password','The password does not match this account.','Check your password and caps lock, then try again.'],
+'auth/invalid-credential':['AUTH-401','Email or password is wrong','Firebase could not match this email and password.','Check both fields and try again.'],
+'auth/invalid-email':['AUTH-400','Invalid email','The email address is not in a valid format.','Enter a full address such as name@example.com.'],
+'auth/email-already-in-use':['AUTH-409','Email already registered','An account already uses this email address.','Log in instead, or use a different email.'],
+'auth/weak-password':['AUTH-411','Password too short','Firebase needs at least 6 characters.','Choose a longer password.'],
+'auth/too-many-requests':['AUTH-429','Too many attempts','Sign-in is paused after repeated failures.','Wait a few minutes, then try again.'],
+'auth/network-request-failed':['NET-503','Network error','The browser could not reach Firebase.','Check your internet connection, then try again.'],
+'auth/operation-not-allowed':['AUTH-501','Email sign-in is off','The Email/Password provider is not enabled in the Firebase console.','Enable Email/Password under Authentication > Sign-in method.'],
+'EMAIL-UNVERIFIED':['AUTH-403','Email not verified','This account has not confirmed its email address yet.','Open the verification email, click the link, then log in again.'],
+'PERMISSION_DENIED':['DB-403','Database rules blocked this request','The signed-in account is not allowed to read or write this gradebook.','Check that the email is verified and that the Grade well rules are published.'],
+'SDK-LOAD':['SDK-500','Firebase did not load','The Firebase scripts were blocked or could not be downloaded.','Open the downloaded file in a normal browser with internet access.'],
+'SYNC-409':['SYNC-409','Changed on another device','The cloud copy is newer than the copy on this screen, so saving was stopped to protect it.','Reload the page to get the latest copy, then make your change again.'],
+'STU-001':['STU-001','Student sign-in not connected','Student accounts are not linked to the cloud gradebook yet.','Sign in with the teacher account, or ask your teacher for access.']
+};
+function fbMap(e){const k=(e&&(e.code||e.message))||'';const h=FBMAP[k];
+if(h)return{code:h[0],title:h[1],why:h[2],fix:h[3],raw:String(k)+(e&&e.message&&e.message!==k?' — '+e.message:'')};
+return{code:'ERR-000',title:'Unexpected error',why:(e&&e.message)||'Something went wrong.',fix:'Try again. If it keeps happening, copy the technical details below.',raw:String(k||e)}}
+function fbInit(){if(typeof firebase==='undefined')throw {code:'SDK-LOAD'};
+if(!firebase.apps.length)firebase.initializeApp(FBCFG);
+FB={auth:firebase.auth(),db:firebase.database()};
+FB.auth.setPersistence(firebase.auth.Auth.Persistence.NONE).catch(()=>{});
+FB.db.ref('.info/connected').on('value',s=>{CONN=!!s.val();stat()})}
+try{fbInit()}catch(e){FBE=fbMap(e)}
+function cloudPath(){return 'Grade well/Users/'+FBU.uid}
+function stat(){const t=$('#sv');if(t)t.innerHTML=svh()}
+function svh(){const n=draftCount();if(n)return '● '+n+' draft grade'+(n>1?'s':'')+' · not saved to gradebook';
+if(FBU&&!CONN)return '● Offline · will save when reconnected';if(CLOUDST)return CLOUDST;return dirty?'● Unsaved changes':ic('check',16,'#fff')+' All changes saved'}
+function cloudQueue(){if(!FBU||asMode()=='off')return;clearTimeout(CQT);CQT=setTimeout(cloudSave,900)}
+function cloudSave(){if(!FBU||!FB)return Promise.resolve();clearTimeout(CQT);const ref=FB.db.ref(cloudPath());CLOUDST='Saving to cloud…';stat();
+return ref.once('value').then(snap=>{const r=snap.val()||{};if((r.version||0)!==LASTV)throw {code:'SYNC-409'};
+const next=LASTV+1,obj={name:(D.t&&D.t.name)||FBU.email||'Teacher',email:FBU.email||'',provider:'password',emailVerified:true,version:next,updatedAt:Date.now(),data:JSON.stringify(D)};
+return ref.set(obj).then(()=>{LASTV=next;dirty=false;CLOUDST='✓ Saved to cloud '+new Date().toLocaleTimeString()})})
+.catch(e=>{const f=fbMap(e);CLOUDST='● Not saved · '+f.code;dirty=true;fbErrModal(f)})
+.then(stat)}
+function cloudLoad(){return FB.db.ref(cloudPath()).once('value').then(snap=>{const r=snap.val();const found=!!(r&&r.data);
+if(found){D=JSON.parse(r.data);LASTV=r.version||0}else{D=seed();D.mode='p4';D.cur='S1';D.v33=1;D.v34=1;LASTV=0}
+D.t={name:(D.t&&D.t.name)||FBU.displayName||FBU.email||'Teacher',u:FBU.email||'',p:''};
+D.mode=D.mode||'p4';D.cur=D.cur||'S1';return !found})}
+function fbCard(f){return`<div class="fbc"><span class="fbcode">${esc(f.code)}</span><h2 style="color:#c62828;margin:10px 0 4px">Error</h2><h3>${esc(f.title)}</h3><p><b>Reason:</b> ${esc(f.why)}</p><p><b>What to do:</b> ${esc(f.fix)}</p><details><summary>Technical details</summary><pre>${esc(f.raw||'')}</pre></details></div>`}
+function fbErrModal(f){$('#md').innerHTML=`<div class="mb" onclick="if(event.target==this)md()"><div class="lb" style="max-width:480px;margin:0">${fbCard(f)}<div class="bar"><button class="btn" onclick="md()">Close</button> <button class="btn s" onclick="location.reload()">Reload page</button></div></div></div>`}
+function fbSet(f){FBE=f;R()}
+function fbLogin(){if(!FB)return fbSet(fbMap({code:'SDK-LOAD'}));
+const em=((document.getElementById('fbE')||{}).value||'').trim(),pw=(document.getElementById('fbP')||{}).value||'';
+FB.auth.signInWithEmailAndPassword(em,pw).then(cr=>{const u=cr.user;
+if(!u.emailVerified)return FB.auth.signOut().then(()=>{throw {code:'EMAIL-UNVERIFIED'}});
+FBU=u;return cloudLoad().then(created=>{U={role:'t'};T=D.cur;pg='cc';FBE=null;R();if(created)cloudSave();pop(created?'Gradebook created':'Signed in')})})
+.catch(e=>{FBU=null;if(FB)FB.auth.signOut().catch(()=>{});fbSet(fbMap(e))})}
+function fbRegister(){if(!FB)return fbSet(fbMap({code:'SDK-LOAD'}));
+const n=((document.getElementById('fbN')||{}).value||'').trim(),em=((document.getElementById('fbE')||{}).value||'').trim(),pw=(document.getElementById('fbP')||{}).value||'',p2=(document.getElementById('fbP2')||{}).value||'';
+if(!n)return fbSet({code:'FORM-001',title:'Name missing',why:'Enter your full name to create the account.',fix:'Type your name, then try again.',raw:'FORM-001'});
+if(pw!==p2)return fbSet({code:'FORM-002',title:'Passwords do not match',why:'The two password boxes are different.',fix:'Type the same password in both boxes.',raw:'FORM-002'});
+FB.auth.createUserWithEmailAndPassword(em,pw).then(cr=>cr.user.updateProfile({displayName:n}).then(()=>cr.user.sendEmailVerification()).then(()=>FB.auth.signOut()).then(()=>{FBE={ok:true,msg:'Account created. We sent a verification link to '+em+'. Click it, then log in.'};R()}))
+.catch(e=>fbSet(fbMap(e)))}
+function fbLoginScreen(){const a=$('#app');let inner;
+if(FBE&&FBE.ok)inner=`<div class="card"><h3>Account created</h3><p>${esc(FBE.msg)}</p></div><div class="bar"><button class="btn" onclick="FBE=null;lr='t';R()">Go to log in</button></div>`;
+else if(FBE)inner=fbCard(FBE)+`<div class="bar"><button class="btn" onclick="FBE=null;R()">Try again</button> <button class="btn s" onclick="FBE=null;lr='t';R()">Back to log in</button></div>`;
+else if(lr=='s')inner=fbCard(fbMap({code:'STU-001'}))+`<div class="bar"><button class="btn s" onclick="lr='t';R()">Back to teacher log in</button></div>`;
+else{const isR=lr=='r';inner=`${isR?'<label><b>Full name</b></label><input id="fbN">':''}<label><b>Email</b></label><input id="fbE" type="email" autocomplete="username"><label><b>Password</b></label><input id="fbP" type="password" autocomplete="current-password" onkeydown="if(event.key=='Enter')${isR?'fbRegister()':'fbLogin()'}">${isR?'<label><b>Confirm password</b></label><input id="fbP2" type="password">':''}<button class="btn w" onclick="${isR?'fbRegister()':'fbLogin()'}">${isR?'Create teacher account':'Log In'}</button><p><small class="n">Email and password. A verification email is required before the gradebook opens. Google sign-in: coming soon.</small></p>`}
+a.innerHTML=`<div class="lg"><div class="logo" style="display:flex;align-items:center;justify-content:center;gap:10px">${LOGO(48)}<span style="font-size:30px"><b>Grade</b><i>well</i></span></div><div class="lb"><div class="rib">${lr=='s'?'Student':lr=='r'?'Register':'Teacher'} Portal</div><div class="tabs" style="margin-top:8px"><button class="${lr=='t'?'on':''}" onclick="lr='t';FBE=null;R()">Log In</button><button class="${lr=='r'?'on':''}" onclick="lr='r';FBE=null;R()">Register</button><button class="${lr=='s'?'on':''}" onclick="lr='s';FBE=null;R()">Student</button></div>${inner}</div></div>`}
+function persistNow(){cloudQueue()}
+function save(){dirty=true;if(asMode()!='off')cloudQueue();stat()}
+function commit(){const n=draftCount();mergeDrafts();dirty=false;cloudSave();R();pop(n?n+' draft grade'+(n>1?'s':'')+' saved to the cloud gradebook':'Saving to cloud')}
+function out(f){if(dirty&&!f){cfm('You have unsaved changes. Log out anyway? Changes not yet saved to the cloud will be lost.','out(true)');return}
+const done=()=>{clearTimeout(CQT);U=null;FBU=null;D=seed();dirty=false;CLOUDST='';LASTV=0;closeDr();R()};
+if(FB&&FBU)FB.auth.signOut().then(done,done);else done()}
+const RBfb=R;
+R=function(){if(!U){fbLoginScreen();return}RBfb()};
+load();R();let _ok=0;try{_ok=MEM.getItem(K+'ack')}catch(e){}if(!_ok)disc();
+</script></body></html>
